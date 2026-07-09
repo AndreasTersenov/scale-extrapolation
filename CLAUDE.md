@@ -25,3 +25,39 @@ always. Wider context (only if needed):
   CPU-friendly; GPU fine for batched wavelet transforms (`~/software/wl_stats_torch`).
 - Log format: `log/YYYY-MM-DD-<slug>.md`, hypothesis → setup → expectation → result →
   updated belief. Commit early and often; local-only repo (no remote yet).
+
+## Git discipline (decided 2026-07-09)
+
+- **Commit after every meaningful unit**: a validated estimator, a completed measurement
+  grid, a log entry, a RESULTS.md section. WIP commits are fine; uncommitted work at
+  session end is not.
+- **Push after committing** if a remote is configured (`git remote -v`) — currently
+  local-only; Andreas is setting up SSH auth + private GitHub remotes. Never force-push;
+  never rewrite pushed history.
+- Worktrees: NOT used in stage-0 (one sequential agent per repo). They become the tool in
+  the toy phase for parallel variant exploration (note: local-only repos need
+  `worktree.baseRef: "head"` since there is no origin/HEAD yet).
+
+## Backpressure (non-negotiable)
+
+- **Tests-first**: before implementing any estimator, write its validation test in
+  `tests/`. A Stop hook (`.claude/settings.json`) runs pytest and blocks session
+  completion while tests fail — this is deliberate; fix or xfail-with-justification.
+- A number plotted or written into RESULTS.md whose validation test is not green does
+  not exist.
+- Validation gates for THIS repo:
+  1. DWT round-trip: reconstruction error at machine precision.
+  2. GRF null as an executable test: on a synthetic power-law GRF generated in-test,
+     measured drift consistent with zero within bootstrap CI.
+  3. Estimator consistency: doubling the number of maps shrinks bootstrap error ~sqrt(2).
+  4. Symmetry: drift metrics invariant under flips/90-degree rotations within noise.
+
+## Compact instructions
+
+When compacting, preserve: modified file paths, test commands and their latest status,
+the measurement/grid currently running, SLURM job IDs, and any deviation-from-PLAN notes.
+
+## Long jobs
+
+Prefer Bash run_in_background or the Monitor tool to babysit SLURM jobs within a session;
+/loop for periodic in-session polling. Consult the rorqual-jobs skill before submitting.
