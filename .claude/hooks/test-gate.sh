@@ -1,6 +1,8 @@
 #!/bin/bash
 cd "${CLAUDE_PROJECT_DIR:-$(cd "$(dirname "$0")/../.." && pwd)}" || exit 0
 compgen -G "tests/test_*.py" > /dev/null || exit 0   # no tests yet: don't block scaffolding
+# Load the module+venv stack so `python -m pytest` resolves in a fresh hook shell.
+[ -f env.sh ] && source env.sh
 out=$(python -m pytest tests/ -q --tb=short 2>&1); code=$?
 if [ $code -ne 0 ]; then
   echo "$out" | tail -30 >&2

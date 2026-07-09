@@ -1,0 +1,17 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "scaledrift"
+version = "0.1.0"
+description = "Stage-0 measurement of scale-drift of conditional wavelet statistics"
+requires-python = ">=3.10"
+dependencies = ["numpy", "scipy", "PyWavelets"]
+
+[tool.setuptools]
+packages = ["scaledrift"]
+
+[tool.pytest.ini_options]
+addopts = "-q"
+testpaths = ["tests"]
