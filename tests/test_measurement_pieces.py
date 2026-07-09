@@ -4,8 +4,8 @@ Not one of the 4 formal gates, but RESULTS quotes these, so they must be covered
 """
 import numpy as np
 
-from scaledrift import (conditional_moments, cross_octave_coupling,
-                        octave_conditional_moments, running_coupling_pca)
+from scaledrift import (conditional_moments, coupling_scalars, cross_octave_coupling,
+                        octave_conditional_moments, octave_wc, running_coupling_pca)
 from conftest import make_grf, make_lognormal
 
 
@@ -40,6 +40,22 @@ def test_cross_octave_coupling_positive_for_real_field():
     assert -1.0 <= r["rho"] <= 1.0
     assert r["rho"] > 0.0                       # structure correlated across octaves
     assert r["se"] > 0.0
+
+
+def test_coupling_scalars_separate_gaussian_from_nongaussian():
+    """The running-coupling scalars vanish for a GRF and turn on for a lognormal."""
+    def pooled(maps, j):
+        ws, cs = zip(*(octave_wc(m, j) for m in maps))
+        return np.concatenate(ws), np.concatenate(cs)
+
+    g = coupling_scalars(*pooled(make_grf(20, seed=8), j=2), n_bins=10)
+    n = coupling_scalars(*pooled(make_lognormal(20, seed=8), j=2), n_bins=10)
+    # GRF: ~flat conditional variance, ~Gaussian kurtosis
+    assert abs(g["var_slope"]) < 0.1 and abs(g["kurtosis"]) < 0.3
+    # lognormal: positive variance modulation, heavier tails, clear separation
+    assert n["var_slope"] > g["var_slope"] + 0.1
+    assert n["kurtosis"] > 0.3
+    assert n["var_hi_lo"] > 1.3
 
 
 def test_running_coupling_pca_invariants_and_low_dim():

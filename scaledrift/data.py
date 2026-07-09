@@ -36,29 +36,43 @@ def _read_shard(path, column="kappa"):
     return table.column(column)
 
 
-def iter_parent_maps(field_dir, n_parents, column="kappa", seed=0, max_shards=None):
-    """Yield up to ``n_parents`` full convergence maps as float64 arrays.
+def iter_parent_maps(field_dir, n_parents, column="kappa", seed=0, max_shards=None,
+                     per_shard=None):
+    """Yield up to ``n_parents`` FINITE convergence maps as float64 arrays.
 
-    Maps are drawn from the first ``max_shards`` shards (round-robin over shards for
-    physical diversity). Deterministic given ``seed``.
+    Maps are drawn round-robin across the first ``max_shards`` shards for physical
+    diversity. Some entries in these datasets are entirely NaN (masked/blank); those
+    are skipped, and shards are revisited (with fresh random rows) until ``n_parents``
+    finite maps are found or the pool is exhausted. Deterministic given ``seed``.
     """
     paths = shard_paths(field_dir)
     if max_shards is not None:
         paths = paths[:max_shards]
     rng = np.random.default_rng(seed)
+    if per_shard is None:
+        per_shard = int(np.ceil(n_parents / len(paths)))
     got = 0
-    # Pull a few rows from each shard in turn until we have enough parents.
-    per_shard = int(np.ceil(n_parents / len(paths)))
-    for path in paths:
-        col = _read_shard(path, column)
-        n = len(col)
-        take = min(per_shard, n, n_parents - got)
-        idx = rng.choice(n, size=take, replace=False)
-        for i in sorted(idx.tolist()):
-            yield np.asarray(col[i].as_py(), dtype=np.float64)
-            got += 1
-            if got >= n_parents:
-                return
+    seen = {p: set() for p in paths}
+    for _ in range(64):                       # bounded revisits
+        for path in paths:
+            col = _read_shard(path, column)
+            n = len(col)
+            avail = [i for i in range(n) if i not in seen[path]]
+            if not avail:
+                continue
+            take = min(per_shard, len(avail), n_parents - got)
+            idx = rng.choice(avail, size=take, replace=False)
+            for i in sorted(idx.tolist()):
+                seen[path].add(i)
+                m = np.asarray(col[i].as_py(), dtype=np.float64)
+                if not np.any(np.isfinite(m)):
+                    continue                  # skip fully-masked maps (tiles filtered below)
+                yield m
+                got += 1
+                if got >= n_parents:
+                    return
+        if got >= n_parents:
+            return
 
 
 def tile_map(kmap, tile=128, stride=None):
@@ -82,7 +96,7 @@ def load_parent_tiles(field_name, n_parents, tile=128, seed=0, max_shards=8,
     field_dir = os.path.join(root, field_name)
     parents = []
     for kmap in iter_parent_maps(field_dir, n_parents, column, seed, max_shards):
-        t = tile_map(kmap, tile)
+        t = [x for x in tile_map(kmap, tile) if np.all(np.isfinite(x))]
         if t:
             parents.append(t)
     return parents

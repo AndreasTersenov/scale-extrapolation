@@ -60,6 +60,32 @@ def octave_conditional_moments(maps, j, n_bins=10, wavelet=DEFAULT_WAVELET,
     return conditional_moments(np.concatenate(ws), np.concatenate(cs), n_bins)
 
 
+def coupling_scalars(w, c, n_bins=10):
+    """Interpretable per-octave "running couplings" from pooled, standardized (w, c).
+
+    Returns three scalars that summarize the conditional structure a WC-RG model would
+    carry per scale:
+
+    * ``var_slope`` -- OLS slope of conditional Var(w | coarse bin) against the bin's
+      mean coarse value. The conditional-variance modulation: 0 for a Gaussian field,
+      positive when detail power grows with the local coarse amplitude (the physical
+      non-Gaussianity). This is the primary running coupling.
+    * ``var_hi_lo`` -- Var in the top coarse bin divided by Var in the bottom bin
+      (modulation amplitude, dimensionless).
+    * ``kurtosis`` -- marginal excess kurtosis of the detail coefficients (scale-
+      dependent non-Gaussianity; 0 for a GRF).
+    """
+    ws = (np.asarray(w, float) - np.mean(w)) / np.std(w)
+    m = conditional_moments(ws, c, n_bins)
+    cc, var = m["c_center"], m["var"]
+    ok = ~np.isnan(cc) & ~np.isnan(var)
+    var_slope = float(np.polyfit(cc[ok], var[ok], 1)[0]) if ok.sum() >= 2 else np.nan
+    v = var[ok]
+    var_hi_lo = float(v[-1] / v[0]) if v.size >= 2 and v[0] > 0 else np.nan
+    kurtosis = float(np.mean(ws ** 4) - 3.0)
+    return {"var_slope": var_slope, "var_hi_lo": var_hi_lo, "kurtosis": kurtosis}
+
+
 def marginal_pdf(maps, j, bins=None, wavelet=DEFAULT_WAVELET, mode=DEFAULT_MODE):
     """Histogram of standardized detail coefficients at octave ``j`` (measurement a)."""
     ws = [octave_wc(f, j, wavelet, mode)[0] for f in maps]
