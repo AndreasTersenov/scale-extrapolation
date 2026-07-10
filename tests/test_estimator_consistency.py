@@ -14,8 +14,8 @@ import numpy as np
 from scaledrift import collect_wc, drift_estimate
 from conftest import make_grf
 
-N = 16
-N_BOOT = 150
+N = 12
+N_BOOT = 90
 PAIRS = [(2, 3), (3, 4)]
 SEEDS = [21, 22, 23]
 

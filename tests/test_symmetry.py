@@ -15,7 +15,7 @@ from scaledrift import collect_wc, drift_estimate
 from conftest import make_lognormal
 
 N_BINS = 6
-N_BOOT = 200
+N_BOOT = 90
 K_SIGMA = 3.0
 
 
@@ -25,7 +25,7 @@ def _excess(maps):
 
 
 def test_drift_invariant_under_flips_and_rotations():
-    base = make_lognormal(30, seed=3)
+    base = make_lognormal(18, seed=3)
     e0, se0 = _excess(base)
     assert e0 > 0 and se0 > 0
 

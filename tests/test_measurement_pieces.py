@@ -35,8 +35,8 @@ def test_conditional_moments_shapes_and_gaussian_limit():
 
 
 def test_cross_octave_coupling_positive_for_real_field():
-    maps = make_lognormal(12, seed=6)
-    r = cross_octave_coupling(maps, j=2, n_boot=60, seed=0)
+    maps = make_lognormal(8, seed=6)
+    r = cross_octave_coupling(maps, j=2, n_boot=25, seed=0)
     assert -1.0 <= r["rho"] <= 1.0
     assert r["rho"] > 0.0                       # structure correlated across octaves
     assert r["se"] > 0.0

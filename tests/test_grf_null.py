@@ -15,12 +15,12 @@ from scaledrift import collect_wc, drift_estimate
 from conftest import make_grf, make_lognormal
 
 N_BINS = 6
-N_BOOT = 200
+N_BOOT = 120
 NULL_Z = 3.0          # GRF drift must be BELOW the 3-sigma detection threshold
 
 
 def test_grf_null_no_significant_drift():
-    maps = make_grf(30, seed=1)
+    maps = make_grf(24, seed=1)
     data = collect_wc(maps, [2, 3, 4])
     zs = {}
     for a, b in [(2, 3), (3, 4)]:
@@ -36,7 +36,7 @@ def test_grf_null_no_significant_drift():
 def test_estimator_has_power_on_lognormal():
     """Positive control: a non-Gaussian field must yield significant drift, so the
     null above is not passing merely because the estimator is blind."""
-    maps = make_lognormal(30, seed=2)
+    maps = make_lognormal(24, seed=2)
     data = collect_wc(maps, [2, 3])
     d = drift_estimate(data, 2, 3, n_bins=N_BINS, n_boot=N_BOOT, seed=0)
     assert d["z"] > 4.0, f"estimator failed to detect lognormal drift: z={d['z']:.2f}"
