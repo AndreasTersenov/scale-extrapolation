@@ -41,5 +41,30 @@ produce var_slope ~0.9 at octave 1.
 G-null already passed (rung iii). Verdicts use bootstrap CIs. Harvest with
 `scripts/measure_generated.py --npz results/arms_generated.npz` (bootstrap added).
 
-## Result
-(job id + P4/P5/P6 verdicts filled after completion)
+## Result — attempt 1 (additive conditioning), job 15627183, config_hash 71a9fd7e6d
+Completed on MIG (282 s); arm A loss 2.37→0.675, arm B 2.93→0.655. Harvest
+(`results/arms_generated_score.json`, bootstrap N=64):
+
+| octave | metric | real | arm A | arm B |
+|---|---|---|---|---|
+| 1 (extrap) | var_slope | 1.117±0.051 | 0.822±0.005 | 0.629±0.004 |
+| 2 | var_slope | 1.020 | 0.780 | 0.772 |
+| 3 | var_slope | 0.801 | 0.599 | 0.579 |
+| 4 | var_slope | 0.532 | 0.444 | 0.452 |
+
+- **P4 PASS** — octave-1 detail amplitude within 5.3% (A) / 2.5% (B) of real.
+- **P5 HOLDS** (as pre-registered) — arm A octave-1 var_slope 0.822 vs real 1.117:
+  **z = 5.8, 26%** (>3σ AND >10%). The non-Gaussian conditional structure breaks under
+  extrapolation. This is the load-bearing break result. ✓
+- **P6 FAILS with additive conditioning** — arm B = 0.629, *worse* than arm A (repair −65%).
+  Diagnostic: **arm B ≈ arm A at every TRAINED octave** → the network fit octaves 2–4 from
+  the coarse field alone and IGNORED the scale coordinate; at octave 1 the coordinate is
+  out-of-training-range and only injects OOD perturbation. Additive embedding gives the
+  coordinate no real leverage.
+- Secondary: both arms under-shoot var_slope ~20% even at trained octaves (finite
+  capacity/steps) — affects both equally, so it does not confound the A-vs-B comparison.
+
+**Response (per PLAN K-T2 / free periphery "how the coordinate enters"):** this is the
+"P5 holds, P6 fails" branch, which prescribes trying the conditioning MECHANISM before
+reconvening. Attempt 2 = FiLM conditioning (multiplicative), so the coordinate has leverage
+the coarse field cannot substitute for. See `log/2026-07-10-rung-iv-film.md`.
