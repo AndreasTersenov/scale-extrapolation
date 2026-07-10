@@ -1,12 +1,13 @@
 #!/bin/bash
 #SBATCH --account=rrg-lplevass
-#SBATCH --gpus-per-node=1
-#SBATCH --time=02:59:00
+#SBATCH --gpus-per-node=h100_20gb
+#SBATCH --time=00:59:00
 #SBATCH --cpus-per-task=4
 #SBATCH --mem=32G
 #SBATCH --output=results/arms_%j.log
-# Rung (iv) break & repair on gowerstreet (full H100, <3h => fast b1 pool). Load-bearing
-# run. rrg-lplevass GPU account. Submit from repo root:  sbatch scripts/train_gowerstreet.slurm
+# Rung (iv) break & repair on gowerstreet. MIG h100_20gb slice (near-instant start; the
+# model is small — same sizes as the rung-iii run that finished in 217s). <3h => fast b1
+# pool. rrg-lplevass GPU account. Submit from repo root:  sbatch scripts/train_gowerstreet.slurm
 cd "$SLURM_SUBMIT_DIR" || exit 1
 module load cuda/12.6 2>/dev/null || true
 PY="$HOME/wl-challenge-env/bin/python"
