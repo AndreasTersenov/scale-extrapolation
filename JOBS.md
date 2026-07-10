@@ -13,9 +13,36 @@ generation. GPU via SLURM only.
 - Rung (v) transfer P13 + `RESULTS-toy.md` — not started.
 
 ## IN FLIGHT
-**None.** Job 15617056 (rung iii P-null) completed and was harvested — P-NULL PASS.
-GPU env confirmed working: `scripts/train_gpu.slurm` on a MIG `h100_20gb` slice sees
-`CudaDevice(id=0)` and finishes an 8000-step GRF run in ~217 s.
+
+### Job 15627183 — rung (iv) gowerstreet break & repair  (config_hash `71a9fd7e6d`)
+- `sbatch scripts/train_gowerstreet.slurm` (MIG h100_20gb). Pre-registration:
+  `log/2026-07-10-prereg-rung-iv-gowerstreet.md`. Output `results/arms_generated.npz`
+  (gen_A, gen_B, real) + checkpoints `data_cache/ckpt/arm{A,B}_gowerstreet.pkl`; job log
+  `results/arms_15627183.log`.
+
+**Harvest (when results/arms_generated.npz exists)**
+```bash
+source env.sh
+python scripts/measure_generated.py --npz results/arms_generated.npz   # P4/P5/P6
+```
+- Convergence sanity FIRST: arm A/B var_slope at TRAINED octaves 2,3,4 should approach real
+  (stage-0 ~0.66–1.15). If they sit near ~0.15 (as the 400-step CPU dry-run did), the run is
+  under-trained — raise `--steps` and rerun (a convergence fix, predictions unchanged).
+- Then read octave-1 verdicts: P5 BREAK (arm A z>3 & >10%), P6 repair ≥70%, P4 amplitude
+  <10%. Update the prereg log Result, commit `arms_generated_score.json`, then rung (v).
+
+### Rung (v) transfer (P13) — READY, run AFTER rung iv green
+Needs the arm-B checkpoint from job 15627183. Then (CPU ok, no training):
+```bash
+JAX_PLATFORMS=cpu ~/wl-challenge-env/bin/python scripts/run_transfer.py   # gowerstreet ckpts -> hf_pm
+source env.sh && python scripts/measure_generated.py --npz results/transfer_generated.npz
+```
+P13: arm B repairs >40% of arm A's octave-1 var_slope error on hf_pm (hf_pm tiles + coords
+already prepared in data_cache).
+
+## DONE
+Job 15617056 (rung iii P-null) — P-NULL PASS. GPU env confirmed: MIG `h100_20gb` sees
+`CudaDevice(id=0)`, ~217 s for an 8000-step run. (Benign ptxas 12.6.77 clamping warning.)
 
 ## NEXT (after rung iii green)
 Rung (iv): reuse `run_pnull.py` with `--field gowerstreet` (add gowerstreet's real stage-0
