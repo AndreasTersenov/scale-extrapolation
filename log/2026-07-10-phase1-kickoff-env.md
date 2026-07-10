@@ -46,3 +46,12 @@ optional 2-D scale-coord à la arm B), `cfm.py` (conditional CFM loss + sampler,
   `scaledrift` suite untouched and green (backpressure d).
 - Belief: the FM core + conditional UNet + JAX Haar recursion atoms all work. Proceed to
   rung (ii) two-octave recursion.
+- **Rung (ii) GREEN + committed.** A SINGLE weight-tied model overfit on octaves 1 & 2 of
+  one gowerstreet field; full field generated coarse-to-fine from its true coarsest coarse
+  (sample detail|coarse → invert one Haar level → repeat). Recursive-vs-true field
+  relative L2 = **0.069** (< 0.2 gate); recursion bit-exact deterministic under fixed seed.
+  ~90 s CPU/4-core. `tests_wfm/` now 9 tests, ~126 s; scaledrift instrument still green.
+- Belief: the recursion machinery (weight-tied multi-octave training + coarse-to-fine
+  generation) is correct on one field. Next: rung (iii) GRF end-to-end null (P-null) —
+  needs a multi-field trainer, extrapolated-resolution generation, and the scaledrift
+  measurement bridge; that is the first rung wanting a GPU SLURM job.
