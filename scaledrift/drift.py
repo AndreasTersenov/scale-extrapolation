@@ -29,6 +29,12 @@ from scipy.stats import wasserstein_distance
 from .wavelet import DEFAULT_MODE, DEFAULT_WAVELET, octave_wc
 
 _MIN_BIN = 8   # skip conditional bins with fewer than this many samples on a side
+# Cap the matched per-side sample count in the W1 computation. W1 is already very
+# precise at this many samples, so this only speeds up the large real-data octave
+# pools (e.g. ~7e5 at octave 2 for 20 parents) without changing the estimate. Gate
+# tests keep M below this cap (their coarse octave holds <= ~25k), so their behavior
+# -- including the sqrt(N) error scaling -- is unchanged.
+MAX_W1_SAMPLES = 40000
 
 
 def _standardize(w, c):
@@ -98,6 +104,13 @@ def _pool(sel):
     return w, c
 
 
+def _subsample(w, c, M, rng):
+    if w.size <= M:
+        return w, c
+    take = rng.permutation(w.size)[:M]
+    return w[take], c[take]
+
+
 def _measured_once(list_j, list_k, idx, n_bins, rng):
     """Cross-octave conditional W1 for a map resample ``idx``, sizes matched to M.
 
@@ -108,9 +121,10 @@ def _measured_once(list_j, list_k, idx, n_bins, rng):
     wk, ck = _standardize(*_pool([list_k[i] for i in idx]))
     if wj.size < wk.size:            # "fine" = larger (higher-frequency) pool
         wj, cj, wk, ck = wk, ck, wj, cj
-    M = wk.size
-    perm = rng.permutation(wj.size)
-    fw, fc = wj[perm[:M]], cj[perm[:M]]
+    M = min(wk.size, MAX_W1_SAMPLES)
+    fw, fc = _subsample(wj, cj, M, rng)
+    if wk.size > M:                  # match the coarse side to M as well
+        wk, ck = _subsample(wk, ck, M, rng)
     edges = np.quantile(np.concatenate([fc, ck]), np.linspace(0, 1, n_bins + 1))
     return binned_w1(fw, fc, wk, ck, n_bins, edges)
 
@@ -127,7 +141,7 @@ def _floor(list_j, list_k, n_bins, rng, n_rep=8):
     """
     pj_w, pj_c = _pool(list_j)
     pk_w, _pk_c = _pool(list_k)
-    M = min(pj_w.size, pk_w.size)
+    M = min(pj_w.size, pk_w.size, MAX_W1_SAMPLES)
     # standardize the finer (larger) octave's full pool
     if pj_w.size >= pk_w.size:
         wj, cj = _standardize(pj_w, pj_c)
