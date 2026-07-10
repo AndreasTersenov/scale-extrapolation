@@ -45,13 +45,59 @@ def cfm_loss(params, apply_fn, detail, coarse, key, cond_vec=None):
     return jnp.mean((v - target) ** 2)
 
 
-def make_step(cond_vec=None):
-    """Return a jitted training step closing over a fixed ``cond_vec`` (or None)."""
+def _per_bin_std(w, onehot, cnt):
+    """Std of ``w`` within each coarse quantile bin (differentiable in w)."""
+    m = (onehot.T @ w) / cnt
+    msq = (onehot.T @ (w * w)) / cnt
+    return jnp.sqrt(jnp.maximum(msq - m * m, 1e-8))
+
+
+def cfm_loss_dispersion(params, apply_fn, detail, coarse, key, cond_vec=None,
+                        lam=0.3, n_bins=8):
+    """CFM loss + a conditional-DISPERSION matching regularizer (step-(c) objective).
+
+    L = L_cfm + lam * mean_bin ( sd_pred(bin) - sd_data(bin) )^2, where per coarse quantile
+    bin (over the minibatch at this octave): sd_data = std of the target detail, and
+    sd_pred = std of the model's one-step (Tweedie) data estimate x1_hat = x_t + (1-t)*v.
+    L2 flow matching mean-collapses => sd_pred(bin) shrinks below sd_data(bin); this penalty
+    opposes the collapse directly, with no sampling in the training loop. The coarse-bin
+    assignment is data (constant in params); gradients flow only through sd_pred.
+    """
+    key_t, key_n = jax.random.split(key)
+    B = detail.shape[0]
+    t = jax.random.uniform(key_t, (B,))
+    x0 = jax.random.normal(key_n, detail.shape)
+    x_t = ot_interpolate(x0, detail, t)
+    v = apply_fn({"params": params}, x_t, t, coarse, cond_vec)
+    cfm = jnp.mean((v - (detail - x0)) ** 2)
+
+    t_bc = t.reshape(B, *([1] * (detail.ndim - 1)))
+    x1_hat = x_t + (1.0 - t_bc) * v                       # Tweedie mean E[x1|x_t]
+    w_pred = x1_hat.reshape(-1)
+    w_data = detail.reshape(-1)
+    c = jnp.broadcast_to(coarse, detail.shape).reshape(-1)   # coarse per detail location
+    edges = jnp.quantile(c, jnp.linspace(0.0, 1.0, n_bins + 1))
+    idx = jnp.clip(jnp.digitize(c, edges[1:-1]), 0, n_bins - 1)
+    onehot = jax.nn.one_hot(idx, n_bins)
+    cnt = onehot.sum(0) + 1e-6
+    reg = jnp.mean((_per_bin_std(w_pred, onehot, cnt)
+                    - _per_bin_std(w_data, onehot, cnt)) ** 2)
+    return cfm + lam * reg
+
+
+def make_step(cond_vec=None, lam=0.0, n_bins=8):
+    """Return a jitted training step. ``lam`` > 0 adds the dispersion regularizer."""
     @jax.jit
     def step(state, detail, coarse):
         key, new_key = jax.random.split(state.key)
-        loss, grads = jax.value_and_grad(cfm_loss)(
-            state.params, state.apply_fn, detail, coarse, key, cond_vec)
+
+        def loss_fn(p):
+            if lam > 0:
+                return cfm_loss_dispersion(p, state.apply_fn, detail, coarse, key,
+                                           cond_vec, lam, n_bins)
+            return cfm_loss(p, state.apply_fn, detail, coarse, key, cond_vec)
+
+        loss, grads = jax.value_and_grad(loss_fn)(state.params)
         state = state.apply_gradients(grads=grads).replace(key=new_key)
         return state, loss
     return step
