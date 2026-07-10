@@ -61,3 +61,9 @@ the measurement/grid currently running, SLURM job IDs, and any deviation-from-PL
 
 Prefer Bash run_in_background or the Monitor tool to babysit SLURM jobs within a session;
 /loop for periodic in-session polling. Consult the rorqual-jobs skill before submitting.
+
+## Scripted-edit rule (added 2026-07-10 after three silent no-op edits)
+
+Every scripted find/replace (sed/python -c/etc.) must be followed by a grep verifying
+the change landed (and, for outputs, a check that results are not byte-identical to the
+prior run when a change was intended). Silent no-ops corrupt attribution.
