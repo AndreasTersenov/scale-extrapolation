@@ -33,22 +33,24 @@ of real; frozen P6/P13 bars unchanged.
   (job 15648042). Bar NOT met (oct2,3 still 6–9σ low). Diagnosis: the candidate matches the
   std of the Tweedie MEAN E[x1|x_t], which is structurally below the data std (total
   variance) and t-dependent → mis-specified. `log/2026-07-10-prereg-varfaithful-c-objective.md`.
-- **(c') corrected objective — PRE-REGISTERED, HANDED OFF (next step).** Target the SAMPLED
-  conditional variance, not the mean's: either a late-t / t-consistent dispersion penalty, or
-  a Gaussian-NLL detail head (log-variance). Same frozen bar.
+- **(c') option 1 (t-consistent late-t penalty) — DONE, INSUFFICIENT** (job 15671262, tests
+  green, `--disp-t-lo 0.6`, λ∈{0.3,1,3}). Bar NOT met (oct2,3 still 6–10σ low). Twice-confirmed:
+  a training-time penalty on the deterministic model can't fix the ODE-pushforward
+  under-dispersion.
+- **(c') option 2 — HANDED TO RECONVENE for a design decision.** Fix must change the generative
+  process (stochastic, learned conditional noise). (2a) hybrid learned-σ SDE = FM augmentation
+  (free periphery, recommended); (2b) pure Gaussian detail head = a FROZEN-CORE change (replaces
+  FM) → reconvene, not silent redesign. Details in `log/2026-07-10-prereg-varfaithful-c-objective.md`.
 
-## To run step (c') (next)
+## Next (after the 2a/2b reconvene decision)
 ```bash
-# Implement ONE in wfm/cfm.py (see the c-objective log for both):
-#  (1) late-t penalty: weight the sd penalty toward t~1, OR penalize the model's implied
-#      E[Var(x1|x_t)] (residual x1 - x1_hat) vs the data conditional variance; or
-#  (2) Gaussian-NLL detail head: 2nd output channel-group = log-variance, NLL detail loss.
-# Then sweep its weight (MIG, ~2-4k steps, early stop), verify trained-octave var_slope
-# within 1σ of real at oct 2,3,4 SIMULTANEOUSLY (deterministic ODE, no churn) + GRF null,
-# THEN re-run arms A/B (full H100, <=2:59) and re-adjudicate P6/P13 (frozen bars).
+# 2a (recommended, within FM): add a per-pixel log-sigma head to ConditionalUNet; train by
+# Gaussian NLL on r = detail-(x_t+(1-t)v): NLL=0.5*(r^2/e^{2g}+2g); sample via sample_sde with
+# per-location noise scaled by e^{g}. Sweep, verify trained-octave var_slope within 1σ (det. ODE
+# + learned noise) at oct 2,3,4 + GRF null, THEN re-run arms A/B (full H100, <=2:59) -> P6/P13.
 ```
-Strong prior from (a)+(b): 90% octave-1 repair once dispersion is restored. Do NOT over-train
-(var_slope peaks ~2k) and do NOT hand-tune per-octave churn.
+Prior from (a)+(b): 90% octave-1 repair once dispersion is restored. Do NOT over-train (peak
+~2k) or hand-tune per-octave churn.
 
 ## DONE (env facts)
 GPU: MIG `h100_20gb` sees `CudaDevice(id=0)`; ~217 s (8k steps) / ~270 s (10k) / ~430 s

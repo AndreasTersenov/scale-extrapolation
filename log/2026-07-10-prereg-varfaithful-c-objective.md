@@ -89,3 +89,37 @@ concrete form before submitting.
 
 **On success:** re-run arms A/B at the winning λ (full H100, ≤2:59) and re-adjudicate P6/P13
 with the unchanged frozen bars.
+
+### Result — c'-option-1 INSUFFICIENT (job 15671262); frozen bar NOT met
+Swept λ∈{0.3,1.0,3.0}, t_lo=0.6, 3000 steps, deterministic ODE (real oct2/3/4 = 1.02/0.80/0.53):
+
+| λ | oct2 | oct3 | oct4 |
+|---|---|---|---|
+| 0.3 | 0.80 (8.4σ) | 0.64 (5.9σ) | 0.48 (1.4σ) |
+| 1.0 | 0.79 (9.1σ) | 0.63 (6.5σ) | 0.49 (1.2σ) |
+| 3.0 | 0.76 (10.1σ) | 0.60 (7.6σ) | 0.48 (1.5σ) |
+
+Bar NOT met at any λ (oct2,3 still 6–10σ low; no better than random-t (c)); arm B
+destabilized (repair < 0). **Twice-confirmed conclusion:** a training-time penalty on the
+deterministic model — whether it shares the CFM t (c) or uses a late-t window (c'-1) — cannot
+fix the generated under-dispersion, because the deterministic-ODE PUSHFORWARD variance is what
+under-shoots and it is not a function of the penalized training-data quantities. The fix must
+change the GENERATIVE PROCESS (stochastic sampling with a learned, conditional noise scale).
+
+### Escalation → option 2 (Gaussian-NLL / learned-variance) — needs a design decision
+Two concrete forms, with a FROZEN-CORE caveat:
+- **(2a) Hybrid, WITHIN flow matching (recommended):** keep the velocity head; ADD a per-pixel
+  log-σ head g(x_t,t,coarse,cond) trained by Gaussian NLL on the residual
+  r = detail − (x_t+(1−t)v):  NLL = ½[ r²/e^{2g} + 2g ]  (so e^{g} ≈ conditional std). Sample
+  with the score-SDE (`sample_sde`) but scale the injected noise per-location by e^{g}/mean(e^{g})
+  — a LEARNED, coarse/scale-dependent churn (fixes the octave-dependent deficit that global
+  churn could not). This is an FM augmentation → free periphery.
+- **(2b) Pure Gaussian detail head:** model detail|coarse ~ N(μ,σ²) directly, NLL, sample μ+σε.
+  Captures var_slope exactly and would test P6 cleanly, BUT it REPLACES flow matching for the
+  detail — a change to the FROZEN-CORE "conditional flow-matching generator". **This is a
+  frozen-core redesign → per the hard rules it must go to reconvene, not silent redesign.**
+
+**Status: HANDED to reconvene for the design decision** (2a vs 2b), then implement/pre-register/
+submit. Everything else (coords, both arms, scoring, the score-SDE sampler, the NLL machinery
+sketched above) is in place. Prior unchanged: (a)+(b) showed 90% octave-1 repair once dispersion
+is restored, so P6 is expected to pass once the generator disperses natively.
