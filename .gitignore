@@ -18,3 +18,4 @@ results/transfer_generated.npz
 results/arms_big.npz
 results/sweep*.npz
 results/sde_c*.npz
+results/arms_2k*.npz
