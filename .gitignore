@@ -7,3 +7,5 @@ venv/
 # scratch measurement artifacts (keep the final measurement.json + plots + npz)
 results/*.log
 results/measurement_quick.json
+# derived data cache (reproducible from wl_chall_data via scaledrift.data)
+data_cache/
