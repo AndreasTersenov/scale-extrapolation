@@ -109,7 +109,7 @@ def overfit_field_recursive(field, j_max=2, channels=(48, 96), steps=2500, lr=2e
 
 def train_generator(tiles, train_octaves, arm="A", cond_by_octave=None,
                     channels=(32, 64, 128), steps=3000, batch=16, lr=1e-3, seed=0,
-                    cond_mode="add"):
+                    cond_mode="add", ckpt_steps=(), on_checkpoint=None):
     """Train the shared conditional generator on many tiles across ``train_octaves``.
 
     arm "A": no scale input (cond_dim=0). arm "B": conditions on the per-octave scale
@@ -143,6 +143,7 @@ def train_generator(tiles, train_octaves, arm="A", cond_by_octave=None,
         step_fn[j] = make_step(cv)
 
     rng = np.random.default_rng(seed)
+    ckpt_set = set(ckpt_steps)
     loss0 = None
     for i in range(steps):
         j = train_octaves[i % len(train_octaves)]
@@ -151,6 +152,8 @@ def train_generator(tiles, train_octaves, arm="A", cond_by_octave=None,
         state, loss = step_fn[j](state, detail[idx], coarse[idx])
         if i == 0:
             loss0 = float(loss)
+        if on_checkpoint is not None and (i + 1) in ckpt_set:
+            on_checkpoint(i + 1, state, float(loss))
     meta = {"std_by_j": std_by_j, "train_octaves": list(train_octaves), "arm": arm,
             "cond_by_octave": cond_by_octave, "cond_dim": cond_dim,
             "cond_mode": cond_mode, "loss0": loss0, "lossN": float(loss)}

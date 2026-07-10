@@ -16,3 +16,5 @@ results/arms_*.npz
 results/film_smoke.npz
 results/transfer_generated.npz
 results/arms_big.npz
+results/sweep*.npz
+results/sde_c*.npz
