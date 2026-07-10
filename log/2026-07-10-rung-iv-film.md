@@ -50,5 +50,38 @@ arm A loss →0.668 (== attempt 1 baseline), arm B-FiLM →0.599. Octave 1 (boot
   premature. Honest next step: lift fidelity (bigger model + more steps), then re-test P6.
 
 **Attempt 3:** channels 48/96/192, steps 25000, FiLM — to raise the trained-octave fidelity
-toward real and get an uncapped P6 read. See `log/2026-07-10-rung-iv-film.md` (this file)
-Result-attempt-3 below.
+toward real and get an uncapped P6 read.
+
+## Result — attempt 3 (bigger + longer FiLM), job 15629332, config_hash 63423d9af3
+Loss crashed to ~0.08 (from ~0.6), but var_slope got WORSE, not better:
+
+| octave | real | arm A | arm B (FiLM) | vs attempt 2 armB |
+|---|---|---|---|---|
+| 1 (extrap) var_slope | 1.117 | 0.539 | 0.512 | 0.872 (was better!) |
+| 2 | 1.020 | 0.513 | 0.492 | 0.773 |
+| 3 | 0.801 | 0.445 | 0.450 | 0.534 |
+| detail_std oct3 | 1.799 | 1.441 | 1.187 | 1.796 (was near-real) |
+
+- P4 still PASS; **P5 HOLDS even harder** (arm A z=11.3, 52%). P6 repair −5%.
+- **KEY FINDING (objection, logged here per rules):** the L2 flow-matching objective
+  UNDER-DISPERSES conditional variance, and OVER-TRAINING makes it worse — heavy fitting
+  pulls the flow toward the conditional MEAN, collapsing the sample spread that var_slope
+  (and detail_std, and kurtosis) measure. Moderate training (attempt 2) gave the BEST
+  var_slope; attempt 3's lower loss = lower fidelity for the variance structure. So the
+  generator ceiling cannot be lifted by more compute with this objective.
+
+## Rung (iv) conclusion (all three attempts)
+- **P4 PASS** — power-spectrum amplitude extrapolates within ~5–7%, both arms, every config.
+- **P5 HOLDS (robust, load-bearing)** — arm A's conditional non-Gaussianity breaks at the
+  first extrapolated octave: var_slope z = 5.8 / 4.8 / 11.3 and 26–52% across the three
+  configs. The pre-registered 85% break is confirmed strongly. This is the phase result.
+- **P6 NOT DEMONSTRATED** — best repair 16% (FiLM, moderate training) « 70%. FiLM makes the
+  2-D coordinate act in the RIGHT direction (attempt 2 arm B > arm A toward real), so the
+  conditioning is not obviously wrong (not a clean K-T2). The blocker is the CFM generator
+  UNDER-DISPERSING conditional variance — a generator-objective issue, worse with training.
+- **Refined objection vs PLAN K-T2:** K-T2 attributes a P6 failure to the 2-D conditioning
+  hypothesis. Evidence says otherwise: the coordinate acts correctly under FiLM but the
+  repair is capped by the generator's variance under-dispersion. **Next lever is the
+  GENERATOR (variance-preserving / stochastic sampler, or a non-L2 objective), not the
+  conditioning or architecture scale.** Recommend reconvene on this before more compute.
+  P5 (the break) stands regardless.
