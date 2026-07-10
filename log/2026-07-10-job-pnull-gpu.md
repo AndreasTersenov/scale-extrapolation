@@ -31,6 +31,16 @@ Rungs (i) single-octave overfit and (ii) two-octave recursion are green + commit
 This job is the compute for rung (iii). Not a multi-hour risk: small model, MIG slice,
 GRF is the easy null; pipeline pre-validated on CPU.
 
-## Result
-- Submitted as **SLURM job 15617056** (2026-07-10, MIG h100_20gb, def queue b1). Log:
-  `results/train_15617056.log`. Harvest verdict to be filled after completion — see JOBS.md.
+## Result — P-NULL PASS (rung iii GREEN)
+- **SLURM job 15617056** COMPLETED on rg12601 (MIG h100_20gb), 217 s, `CudaDevice(id=0)`
+  confirmed. Both arms converged: arm A loss 2.35→0.357, arm B 2.67→0.340.
+- Harvest (`measure_generated.py`, `results/pnull_generated_score.json`):
+  - **var_slope** at the extrapolated octave 1 — real 0.001, armA −0.000, armB 0.003;
+    |Δ| ≤ 0.002 ≪ 0.1 → **both arms extrapolate the GRF conditional structure**. ✓
+  - **detail_std** (amplitude, P4) within ~1–8% at octaves 1–3 (octave 4 ~14% low).
+  - **kurtosis** under-shot at the finest octaves (octave 1: 0.02/0.00 vs real 0.39). This
+    is the inter-tile-amplitude POOLING kurtosis flagged in stage-0 RESULTS, not intrinsic
+    conditional non-Gaussianity — the generator makes each field from one coarse so it lacks
+    the cross-tile amplitude spread. The clean discriminator (var_slope) is correct, so the
+    G-null gate holds. Track it as a known eval caveat for rung (iv).
+- **Verdict: P-NULL PASS.** Pipeline is sound → cleared for real-field (gowerstreet) verdicts.
