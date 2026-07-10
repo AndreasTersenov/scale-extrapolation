@@ -78,3 +78,43 @@ def sample(apply_fn, params, key, coarse, out_channels, n_steps=100,
 
     x1, _ = jax.lax.scan(euler if solver == "euler" else heun, x0, ts)
     return x1
+
+
+def score_from_velocity(v, x, t):
+    """Score s(x,t)=grad log p_t(x) from the OT/linear-path velocity: (t*v - x)/(1-t).
+
+    Exact for x_t=(1-t)x0 + t*x1, x0~N(0,I). ``t`` is a scalar or per-sample array.
+    """
+    return (t * v - x) / (1.0 - t)
+
+
+def sample_sde(apply_fn, params, key, coarse, out_channels, n_steps=100,
+               cond_vec=None, churn=0.0):
+    """Marginal-preserving churn-SDE sampler (t: 0->1).
+
+    dx = [v + eps(t)*s] dt + sqrt(2 eps(t)) dW with eps(t)=churn*(1-t) and
+    s=(t*v - x)/(1-t), so the update is
+        x += [v + churn*(t*v - x)] dt + sqrt(2*churn*(1-t)*dt) * z.
+    ``churn=0`` reduces to the deterministic probability-flow (Euler) ODE; any churn>=0
+    preserves the marginals (so it corrects velocity-approximation error / under-dispersion
+    without changing the target distribution).
+    """
+    B, H, W, _ = coarse.shape
+    key0, key_path = jax.random.split(key)
+    x0 = jax.random.normal(key0, (B, H, W, out_channels))
+    dt = 1.0 / n_steps
+    ts = jnp.arange(n_steps) * dt
+    keys = jax.random.split(key_path, n_steps)
+
+    def vf(t, x):
+        return apply_fn({"params": params}, x, jnp.full((B,), t), coarse, cond_vec)
+
+    def step(x, inp):
+        t, k = inp
+        v = vf(t, x)
+        drift = v + churn * (t * v - x)                 # v + eps(t)*score
+        noise = jnp.sqrt(2.0 * churn * (1.0 - t) * dt) * jax.random.normal(k, x.shape)
+        return x + drift * dt + noise, None
+
+    x1, _ = jax.lax.scan(step, x0, (ts, keys))
+    return x1

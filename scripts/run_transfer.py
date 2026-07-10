@@ -65,6 +65,8 @@ def main():
     ap.add_argument("--gen-from", type=int, default=4)
     ap.add_argument("--n-heldout", type=int, default=64)
     ap.add_argument("--sample-steps", type=int, default=80)
+    ap.add_argument("--churn", type=float, default=0.0,
+                    help="SDE churn eps0 (0=deterministic ODE); variance-faithful sampling")
     ap.add_argument("--data", default=os.path.join(REPO, "data_cache", "tiles_pnull.npz"))
     ap.add_argument("--coords-file",
                     default=os.path.join(REPO, "data_cache", "running_couplings.json"))
@@ -91,7 +93,7 @@ def main():
                                        (coarse.shape[0], 2)))
         gen = generate_recursive(model.apply, params, coarse, args.gen_from,
                                  jax.random.PRNGKey(args.seed + 1), std, cond_fn=cond_fn,
-                                 n_steps=args.sample_steps)
+                                 n_steps=args.sample_steps, churn=args.churn)
         results[f"gen_{arm}"] = np.asarray(gen[..., 0])
         print(f"[transfer] arm {arm} (cond_dim={ck['cond_dim']}) gen {gen.shape} "
               f"std1={std[1]:.3f}", flush=True)
