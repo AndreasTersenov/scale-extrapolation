@@ -4,45 +4,41 @@ Last updated 2026-07-10. Phase-1 toy (break & repair). Envs: `source env.sh` (sc
 CPU, has pywt) for measurement; `~/wl-challenge-env/bin/python` (JAX) for training/
 generation. GPU via SLURM only.
 
-## Ladder status
-- Rung (i) single-octave overfit — **GREEN**, committed (`7045cea`).
-- Rung (ii) two-octave recursion — **GREEN**, committed (`9343214`).
-- Rung (iii) GRF end-to-end null (P-null) — **GREEN** (job 15617056 harvested; P-NULL PASS,
-  both arms extrapolate GRF; verdict in `log/2026-07-10-job-pnull-gpu.md`).
-- Rung (iv) arms A/B on gowerstreet (P4/P5/P6) — **NEXT** (cleared; see below).
-- Rung (v) transfer P13 + `RESULTS-toy.md` — not started.
+## Ladder status — phase 1 COMPLETE (see RESULTS-toy.md)
+- Rung (i) single-octave overfit — **GREEN** (`7045cea`).
+- Rung (ii) two-octave recursion — **GREEN** (`9343214`).
+- Rung (iii) GRF end-to-end null — **GREEN / P-NULL PASS** (job 15617056).
+- Rung (iv) gowerstreet P4/P5/P6 — **CONCLUDED**: P4 PASS, **P5 HOLDS (robust break)**,
+  P6 NOT demonstrated. 3 configs run (jobs 15627183 add, 15628956 FiLM, 15629332 big).
+- Rung (v) transfer P13 — **CONCLUDED**: not demonstrated (same cap; arm B transfers an
+  amplitude fix). `RESULTS-toy.md` written.
 
 ## IN FLIGHT
+**None.** All jobs harvested.
 
-### Job 15627183 — rung (iv) gowerstreet break & repair  (config_hash `71a9fd7e6d`)
-- `sbatch scripts/train_gowerstreet.slurm` (MIG h100_20gb). Pre-registration:
-  `log/2026-07-10-prereg-rung-iv-gowerstreet.md`. Output `results/arms_generated.npz`
-  (gen_A, gen_B, real) + checkpoints `data_cache/ckpt/arm{A,B}_gowerstreet.pkl`; job log
-  `results/arms_15627183.log`.
+## RECONVENE RECOMMENDATION (the one open scientific issue)
+P5 (the non-Gaussian break under extrapolation) is confirmed. P6/P13 (the repair) are
+blocked by a diagnosed generator property: **the L2 flow-matching objective under-disperses
+conditional variance, and it worsens with training** (attempt 3, loss 0.6→0.08, made
+var_slope WORSE and collapsed the detail amplitude). The FiLM scale-coordinate acts in the
+RIGHT direction (repair −65% → +16%), so the conditioning is not the blocker. Next lever is
+the **generator** (variance-preserving / stochastic sampler, or a non-L2 / dispersion-aware
+objective, or early stopping), NOT the conditioning or architecture scale — see the logged
+objection in `log/2026-07-10-rung-iv-film.md`. The whole pipeline (coordinates, both arms,
+scoring, transfer) is in place to re-run once the generator is fixed.
 
-**Harvest (when results/arms_generated.npz exists)**
+## To resume the P6 attempt after a generator fix
 ```bash
-source env.sh
-python scripts/measure_generated.py --npz results/arms_generated.npz   # P4/P5/P6
+# edit wfm/cfm.py sampler (add SDE/Langevin noise) or the objective, then:
+sbatch scripts/train_gowerstreet_film.slurm     # arm B FiLM, moderate steps (best var_slope so far)
+source env.sh && python scripts/measure_generated.py --npz results/arms_film.npz
 ```
-- Convergence sanity FIRST: arm A/B var_slope at TRAINED octaves 2,3,4 should approach real
-  (stage-0 ~0.66–1.15). If they sit near ~0.15 (as the 400-step CPU dry-run did), the run is
-  under-trained — raise `--steps` and rerun (a convergence fix, predictions unchanged).
-- Then read octave-1 verdicts: P5 BREAK (arm A z>3 & >10%), P6 repair ≥70%, P4 amplitude
-  <10%. Update the prereg log Result, commit `arms_generated_score.json`, then rung (v).
+Note: moderate training (~10k steps) gave BETTER var_slope than 25k — do NOT over-train.
 
-### Rung (v) transfer (P13) — READY, run AFTER rung iv green
-Needs the arm-B checkpoint from job 15627183. Then (CPU ok, no training):
-```bash
-JAX_PLATFORMS=cpu ~/wl-challenge-env/bin/python scripts/run_transfer.py   # gowerstreet ckpts -> hf_pm
-source env.sh && python scripts/measure_generated.py --npz results/transfer_generated.npz
-```
-P13: arm B repairs >40% of arm A's octave-1 var_slope error on hf_pm (hf_pm tiles + coords
-already prepared in data_cache).
-
-## DONE
-Job 15617056 (rung iii P-null) — P-NULL PASS. GPU env confirmed: MIG `h100_20gb` sees
-`CudaDevice(id=0)`, ~217 s for an 8000-step run. (Benign ptxas 12.6.77 clamping warning.)
+## DONE (env facts)
+GPU: MIG `h100_20gb` sees `CudaDevice(id=0)`; ~217 s (8k steps) / ~270 s (10k) / ~430 s
+(25k, 48/96/192). Benign ptxas 12.6.77 clamping warning. CPU generation (transfer) via
+affinity-pinned `~/wl-challenge-env` python.
 
 ## NEXT (after rung iii green)
 Rung (iv): reuse `run_pnull.py` with `--field gowerstreet` (add gowerstreet's real stage-0
