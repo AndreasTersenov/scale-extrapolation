@@ -65,6 +65,8 @@ def main():
                     help="how arm B's scale coordinate enters (add=embedding, film=modulation)")
     ap.add_argument("--lambda-disp", type=float, default=0.0,
                     help="weight of the conditional-dispersion regularizer (step-c objective)")
+    ap.add_argument("--disp-t-lo", type=float, default=0.0,
+                    help="late-t window lower bound for the dispersion penalty (c' option 1; 0.6)")
     ap.add_argument("--steps", type=int, default=10000)
     ap.add_argument("--batch", type=int, default=32)
     ap.add_argument("--lr", type=float, default=1e-3)
@@ -98,7 +100,7 @@ def main():
             cond_by_octave=(coords if arm == "B" else None),
             channels=tuple(args.channels), steps=args.steps, batch=args.batch,
             lr=args.lr, seed=args.seed, cond_mode=args.cond_mode,
-            lambda_disp=args.lambda_disp)
+            lambda_disp=args.lambda_disp, disp_t_lo=args.disp_t_lo)
         std = dict(meta["std_by_j"])
         for j in range(1, min(args.train_octaves)):
             std[j] = extrapolate_std(meta["std_by_j"], j)
@@ -114,7 +116,7 @@ def main():
         ckpt = {"params": jax.tree_util.tree_map(np.asarray, state.params),
                 "channels": list(args.channels), "cond_dim": meta["cond_dim"],
                 "cond_mode": meta["cond_mode"], "lambda_disp": meta["lambda_disp"],
-                "std_by_j": std,
+                "disp_t_lo": meta["disp_t_lo"], "std_by_j": std,
                 "coord_norm": COORD_NORM.tolist(),
                 "train_octaves": list(args.train_octaves), "field": args.field}
         with open(os.path.join(args.ckpt_dir, f"arm{arm}_{args.field}.pkl"), "wb") as fh:

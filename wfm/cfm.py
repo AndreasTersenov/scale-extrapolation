@@ -52,41 +52,60 @@ def _per_bin_std(w, onehot, cnt):
     return jnp.sqrt(jnp.maximum(msq - m * m, 1e-8))
 
 
-def cfm_loss_dispersion(params, apply_fn, detail, coarse, key, cond_vec=None,
-                        lam=0.3, n_bins=8):
-    """CFM loss + a conditional-DISPERSION matching regularizer (step-(c) objective).
+def _dispersion_penalty(detail, coarse, x1_hat, n_bins):
+    """mean over coarse quantile bins of ( std(x1_hat) - std(detail) )^2."""
+    w_pred = x1_hat.reshape(-1)
+    w_data = detail.reshape(-1)
+    c = jnp.broadcast_to(coarse, detail.shape).reshape(-1)
+    edges = jnp.quantile(c, jnp.linspace(0.0, 1.0, n_bins + 1))
+    idx = jnp.clip(jnp.digitize(c, edges[1:-1]), 0, n_bins - 1)
+    onehot = jax.nn.one_hot(idx, n_bins)
+    cnt = onehot.sum(0) + 1e-6
+    return jnp.mean((_per_bin_std(w_pred, onehot, cnt)
+                     - _per_bin_std(w_data, onehot, cnt)) ** 2)
 
-    L = L_cfm + lam * mean_bin ( sd_pred(bin) - sd_data(bin) )^2, where per coarse quantile
-    bin (over the minibatch at this octave): sd_data = std of the target detail, and
-    sd_pred = std of the model's one-step (Tweedie) data estimate x1_hat = x_t + (1-t)*v.
-    L2 flow matching mean-collapses => sd_pred(bin) shrinks below sd_data(bin); this penalty
-    opposes the collapse directly, with no sampling in the training loop. The coarse-bin
-    assignment is data (constant in params); gradients flow only through sd_pred.
+
+def cfm_loss_dispersion(params, apply_fn, detail, coarse, key, cond_vec=None,
+                        lam=0.3, n_bins=8, t_lo=0.0):
+    """CFM loss + a conditional-DISPERSION matching regularizer.
+
+    L = L_cfm + lam * mean_bin ( std(x1_hat) - std(detail) )^2, per coarse quantile bin,
+    with x1_hat = x_t + (1-t)*v the one-step (Tweedie) data estimate. ``t_lo`` selects the
+    variant:
+      * ``t_lo == 0`` (step-c original): the penalty shares the CFM t~U(0,1). But x1_hat is
+        E[x1|x_t], structurally under-dispersed for t<1 -> mis-specified target (it failed).
+      * ``t_lo > 0`` (step-c' option 1, t-consistent): a SECOND forward at t~U(t_lo,1) with
+        fresh noise, where x_t already carries most of x1 so x1_hat is a faithful estimate and
+        std(x1_hat)~std(detail) for a good model, while a collapsed velocity still shows a
+        spread deficit. Recommended t_lo=0.6.
+    Bin assignment is data (constant in params); gradients flow through x1_hat only.
     """
-    key_t, key_n = jax.random.split(key)
+    key_t, key_n, key_rt, key_rn = jax.random.split(key, 4)
     B = detail.shape[0]
     t = jax.random.uniform(key_t, (B,))
     x0 = jax.random.normal(key_n, detail.shape)
     x_t = ot_interpolate(x0, detail, t)
     v = apply_fn({"params": params}, x_t, t, coarse, cond_vec)
     cfm = jnp.mean((v - (detail - x0)) ** 2)
+    if lam == 0:
+        return cfm
 
-    t_bc = t.reshape(B, *([1] * (detail.ndim - 1)))
-    x1_hat = x_t + (1.0 - t_bc) * v                       # Tweedie mean E[x1|x_t]
-    w_pred = x1_hat.reshape(-1)
-    w_data = detail.reshape(-1)
-    c = jnp.broadcast_to(coarse, detail.shape).reshape(-1)   # coarse per detail location
-    edges = jnp.quantile(c, jnp.linspace(0.0, 1.0, n_bins + 1))
-    idx = jnp.clip(jnp.digitize(c, edges[1:-1]), 0, n_bins - 1)
-    onehot = jax.nn.one_hot(idx, n_bins)
-    cnt = onehot.sum(0) + 1e-6
-    reg = jnp.mean((_per_bin_std(w_pred, onehot, cnt)
-                    - _per_bin_std(w_data, onehot, cnt)) ** 2)
-    return cfm + lam * reg
+    if t_lo > 0.0:                                    # option 1: late-t second forward
+        tr = t_lo + (1.0 - t_lo) * jax.random.uniform(key_rt, (B,))
+        x0r = jax.random.normal(key_rn, detail.shape)
+        x_tr = ot_interpolate(x0r, detail, tr)
+        vr = apply_fn({"params": params}, x_tr, tr, coarse, cond_vec)
+        t_bc = tr.reshape(B, *([1] * (detail.ndim - 1)))
+        x1_hat = x_tr + (1.0 - t_bc) * vr
+    else:                                             # original: reuse the CFM t
+        t_bc = t.reshape(B, *([1] * (detail.ndim - 1)))
+        x1_hat = x_t + (1.0 - t_bc) * v
+    return cfm + lam * _dispersion_penalty(detail, coarse, x1_hat, n_bins)
 
 
-def make_step(cond_vec=None, lam=0.0, n_bins=8):
-    """Return a jitted training step. ``lam`` > 0 adds the dispersion regularizer."""
+def make_step(cond_vec=None, lam=0.0, n_bins=8, t_lo=0.0):
+    """Return a jitted training step. ``lam`` > 0 adds the dispersion regularizer (t_lo>0
+    selects the option-1 late-t variant)."""
     @jax.jit
     def step(state, detail, coarse):
         key, new_key = jax.random.split(state.key)
@@ -94,7 +113,7 @@ def make_step(cond_vec=None, lam=0.0, n_bins=8):
         def loss_fn(p):
             if lam > 0:
                 return cfm_loss_dispersion(p, state.apply_fn, detail, coarse, key,
-                                           cond_vec, lam, n_bins)
+                                           cond_vec, lam, n_bins, t_lo)
             return cfm_loss(p, state.apply_fn, detail, coarse, key, cond_vec)
 
         loss, grads = jax.value_and_grad(loss_fn)(state.params)

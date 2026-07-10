@@ -58,3 +58,34 @@ bar):
    modelled explicitly, then sample with it. Cleanest, heaviest.
 The (a)+(b) evidence (90% octave-1 repair once dispersion is restored) still stands as the
 prior that P6 passes once the generator is per-octave faithful. Pipeline unchanged.
+
+---
+
+## PRE-REGISTRATION — c'-option-1 (concrete form), before submitting
+Reconvene endorsed (c'); implement cheapest-first = option 1 (t-consistent penalty).
+
+**Diagnosis of why the original (c) failed:** it matched std(x1_hat) to std(detail) averaging
+over t~U(0,1); but x1_hat=E[x1|x_t] is the conditional MEAN, whose variance
+Var(E[x1|x_t]) < Var(x1) for all t<1 (total variance), and →0 as t→0. So the target was
+mis-specified, worst at small t.
+
+**Option-1 fix (t-consistent):** evaluate the dispersion penalty only in a LATE-t window,
+where x_t already carries most of x1 so x1_hat is a faithful estimate and Var(x1_hat)≈Var(x1)
+for a good model, while a mean-collapsed velocity still shows a spread deficit. Concretely,
+in `cfm_loss_dispersion(..., t_lo)`: keep the CFM loss at t~U(0,1); add a SECOND forward at
+t~U(t_lo, 1) with fresh noise, form x1_hat = x_t + (1−t)·v, and penalize per coarse quantile
+bin  mean_bin ( std(x1_hat) − std(detail) )². **t_lo = 0.6, n_bins = 8.**
+
+**Sweep:** λ ∈ {0.3, 1.0, 3.0} (late-t penalty is weaker; allow larger λ), gowerstreet FiLM,
+early stop 3000 steps (~ the 2–4k dispersion window), deterministic ODE.
+
+**Frozen success bar (unchanged):** trained-octave var_slope within 1σ of real at oct 2,3,4
+SIMULTANEOUSLY, deterministic ODE, no churn; GRF null preserved.
+
+**Escalation trigger (pre-authorized):** if NO λ meets the bar, escalate to option 2
+(Gaussian-NLL detail head: a second output group predicts log-variance; train the detail
+conditional with NLL and sample stochastically with the learned variance) — pre-register its
+concrete form before submitting.
+
+**On success:** re-run arms A/B at the winning λ (full H100, ≤2:59) and re-adjudicate P6/P13
+with the unchanged frozen bars.
