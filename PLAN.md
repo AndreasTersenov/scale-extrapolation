@@ -1,96 +1,111 @@
-# PLAN — Stage-0 for RG-consistent generation ("train small, sample any scale")
+# PLAN — Toy phase: RG-consistent generation (break & repair)
 
-**Project claim (context):** a wavelet-factorized flow-matching generator with
-scale-shared (tied) weights — RG fixed-point as architectural prior — trained at ≤128²,
-generating at 4–16× that resolution, with certified multi-scale statistics. Per the
-novelty sweep, the load-bearing contribution is NOT the architecture (wavelet FM exists:
-arXiv:2605.16573; 1D tied-weight equivariance proof: arXiv:2605.17582; theory ancestor
-WC-RG: arXiv:2207.04941) but **P5/P6**: the predicted breakdown of non-Gaussian
-statistics in the first extrapolated octave, and its repair by scale-conditioning
-("running couplings"). Background: `~/claude-notes/brainstorms/2026-07-09-dl-project-directions.md`
-(§D4, v1.1, v2) and `...novelty-sweep-RESULTS.md` (§D4). D6b (single-realization mode)
-is deferred until after stage-0 + toy.
+**Phase 1.** Stage-0 passed (`PLAN-stage0.md`, `RESULTS.md`, 2026-07-10): N-body
+conditional-wavelet statistics drift 3–7σ across adjacent octaves (GRF null clean at
+|z|=0.15), the drift is **effectively 2-dimensional** (2 PCA components ≥85%), the
+running-coupling coordinates are extracted (var_slope, kurtosis, cross-octave ρ — smooth,
+monotonic), and the same drift shape appears in different sim physics (hf_pm_1024).
+This phase runs the pre-registered break-and-repair experiment: P4/P5/P6 (+ new P13).
+Context: `~/claude-notes/brainstorms/2026-07-09-dl-project-directions.md` (§D4, v1.1
+predictions, v2/v3). **Positioning per novelty sweep:** the contribution is NOT
+weight-tied wavelet FM (WFM arXiv:2605.16573 exists; 1D equivariance proof
+arXiv:2605.17582; ancestor WC-RG arXiv:2207.04941) — it is the measured **non-Gaussian
+break under extrapolation and its low-dimensional repair**.
 
-**Stage-0 purpose:** P5 is a claim about the FIELDS, not about any network. Measure the
-scale-drift of conditional wavelet statistics directly on data. No generative model, no
-training.
+**Stack (binding, per CLAUDE.md):** JAX, jax_flows FM core; `scaledrift/` (this repo,
+gate-tested) is the measurement instrument — reuse, never reimplement; `wl_stats_torch`
+for wavelet-L1/peaks validation at the numpy boundary. GPU via SLURM only
+(rrg-lplevass GPU / def-lplevass CPU).
 
 ---
 
-## FROZEN CORE — do not modify (pre-registered 2026-07-09)
+## FROZEN CORE — do not modify (pre-registered 2026-07-10)
 
-### Measurement M1 — scale-drift of conditional wavelet statistics
+### The system under test
 
-For each field class, wavelet-decompose (2D DWT, ≥5 octaves) many maps and estimate,
-per octave j: (a) the marginal PDF of normalized detail coefficients; (b) the
-conditional statistics of detail coefficients given the coarse field at that scale
-(binned conditional means/variances/skewness — the objects WC-RG models per scale);
-(c) cross-octave coefficient couplings (correlation of |w_j| with |w_{j+1}| at aligned
-positions). Then quantify DRIFT between octaves: a distance (e.g. W1 between per-octave
-conditional PDFs) as a function of octave separation. A weight-tied network can only be
-exactly right if these objects are octave-invariant; the drift profile is the exact
-gap the "running couplings" conditioning must absorb.
+Wavelet-factorized conditional flow-matching generator: per-octave conditional model
+p(detail_j | coarse_j), **weights shared across octaves**. Two arms, identical except
+one input:
+- **Arm A (naive tying):** no scale information — the RG-fixed-point assumption taken
+  literally.
+- **Arm B (running couplings):** arm A + conditioning on the 2-D scale coordinate from
+  stage-0 (the measured running-coupling values at octave j; exact parameterization is
+  free periphery, the *dimensionality* ≤ 3 is frozen — that's the P9b bet being cashed).
 
-### The control ladder (all data already at `/project/rrg-lplevass/shared/wl_chall_data/`)
+Training: gowerstreet patches at ≤128² (octaves j ≤ j_train). Generation: recursive
+coarse-to-fine to 256² and 512² (2 and 4 extrapolated octaves). Controls: GRF_HF
+(null — both arms must extrapolate it perfectly), lognormal (analytic control).
+Transfer: hf_pm_1024, zero retraining.
 
-1. **GRF (`GRF_HF`) — null gate.** For a power-law GRF, suitably normalized wavelet
-   statistics are scale-invariant: measured drift ≈ 0 within estimator noise. If the
-   pipeline shows drift on GRF, the pipeline is buggy — fix before proceeding. (For a
-   non-power-law spectrum, the Gaussian conditional structure is still analytic —
-   whatever drift the spectrum implies is computable in closed form; verify against it.)
-2. **Lognormal (`lognormal`) — analytic control.** Known pointwise non-Gaussianity;
-   drift expected, partially computable; estimator sanity check in the non-Gaussian
-   regime.
-3. **N-body (`gowerstreet*`) — the measurement.** The physical scale-dependence of
-   non-Gaussianity (quasi-linear → nonlinear transition) is the thing D4's repair must
-   capture.
-4. **Cross-check field (choose one, implementer's pick):** a second real field with
-   different physics — e.g. a JHU turbulence database slice, or any local hydro/κ map —
-   to test whether the drift profile's SHAPE is field-specific or qualitatively
-   universal. (Qualitative agreement → method is general; disagreement → interesting,
-   report it.)
+### Evaluation (frozen)
 
-### Pre-registered predictions
+Per-octave, on generated vs held-out real fields, with bootstrap CIs, measured by the
+gate-tested `scaledrift` instrument: (a) power-spectrum amplitude/slope; (b)
+conditional-W1 drift profile; (c) running-coupling scalars (var_slope, kurtosis,
+cross-octave ρ); (d) wavelet-L1 + peak counts (`wl_stats_torch`). "Wrong" = >3σ AND
+>10% relative, per stage-0 conventions.
 
-- **P9a (70%):** GRF drift consistent with zero (after the analytic spectrum correction);
-  N-body maps show drift between adjacent octaves that is large compared to estimator
-  noise (operationally: >3σ and >10% in the chosen distance) across the
-  train-vs-extrapolation octave range.
-- **P9b (55%):** the drift is LOW-DIMENSIONAL: ≥80% of the cross-octave variation in the
-  conditional statistics is captured by 1–3 smooth functions of scale ("running
-  couplings" exist and are few). This is the load-bearing bet for P6's repair being a
-  small conditioning, not a full per-scale model.
+### Pre-registered predictions (updated confidences, logged 2026-07-10)
 
-### Kill / gate criteria
+- **P4 (70%):** power-spectrum slope/amplitude extrapolate within a few % in the first
+  extrapolated octave, BOTH arms (spectra are cheap; weight-tying enforces them).
+- **P5 (85%, raised from 60% — stage-0 forces it):** arm A's non-Gaussian statistics
+  are wrong (>3σ, >10%) in the first extrapolated octave, worsening with octave depth.
+  A weight-tied net without scale input cannot represent conditionals that measurably
+  drift.
+- **P6 (55%):** arm B repairs ≥70% of arm A's non-Gaussian drift error in the first
+  two extrapolated octaves, without degrading trained octaves (≤1σ change there).
+  **This is the paper's load-bearing result.**
+- **P13 (new, 55%):** zero-retrain transfer — arm B with couplings *measured on
+  hf_pm_1024's coarse octaves* (measurement allowed; no training) repairs >40% of the
+  drift on hf_pm generation. Tests "field-general method" vs "gowerstreet fit".
+- **P-null (90%):** both arms extrapolate GRF_HF with all metrics consistent with real
+  GRF (the end-to-end null gate — if this fails, the pipeline is buggy, not the physics).
 
-- **K-M1a:** GRF null fails after reasonable debugging → estimator problem; do not
-  proceed to interpretation until fixed.
-- **K-M1b (project gate):** if N-body drift across the intended extrapolation range is
-  NOT significant (P9a false), then naive weight-tying already suffices → the P5/P6
-  paper does not exist as scoped → STOP, report; pivot options (certification-only
-  angle, or fold effort into D1/D6a) are decided at reconvene.
-- If P9a true but P9b false (drift high-dimensional): project lives but gets harder —
-  report the effective dimensionality; the toy-phase conditioning design will need it.
+### Gate / kill / reframe criteria
 
-### Out of scope for stage-0 (do NOT build)
+- **G-null:** P-null must pass before any real-field verdict is claimed (analog of
+  K-M1a).
+- **K-T1(D4) — reframe, not kill:** if P5 fails (arm A just works), the break-and-repair
+  paper doesn't exist; the fallback claim is "certified extrapolation via weight-tying"
+  — weaker vs WFM; STOP and reconvene on framing before more compute.
+- **K-T2(D4):** if P5 holds but P6 fails (<30% repair after honest tuning), the 2-D
+  conditioning hypothesis is wrong despite P9b — reconvene; next lever is conditioning
+  *mechanism* (e.g. per-octave FiLM vs input concat), not architecture scale.
+- **Budget: 15 H100-days cap.** Karpathy ladder, ordered and committed at each rung:
+  (i) single-octave conditional FM overfits one field; (ii) two-octave recursion on one
+  field; (iii) GRF end-to-end null (P-null); (iv) full arms A/B on gowerstreet;
+  (v) transfer (P13). No multi-hour job before the previous rung is green.
 
-Any generative model or training; 512² generation; TRACE/typicality certificates;
-D6b single-realization mode; comparisons to arXiv:2507.01707 (that's toy-phase).
+### Out of scope (do NOT build)
+
+D6b single-realization mode (explicitly deferred until P4–P6 verdicts); >512²;
+non-cosmology demo fields (paper-stage decision); TRACE/typicality certificates;
+comparisons against arXiv:2507.01707 beyond citing (paper-stage); any per-field
+fine-tuning at eval time.
 
 ---
 
 ## FREE PERIPHERY — implementer's choice
 
-Wavelet family (start db4 or Haar; check robustness with one alternative), binning
-schemes, distance metric details (W1 vs KS vs L2 on normalized PDFs — justify in log),
-number of maps (enough that estimator noise ≪ measured drift; bootstrap error bars
-required), torch (`~/software/wl_stats_torch` may be reused) vs pywt vs jax, GPU usage.
+Conditional-FM parameterization, how the 2-D coupling coordinate enters (embedding,
+FiLM, concat), patch/boundary handling, recursion details (sampling per octave),
+optimizer/schedule/curriculum, exact train-octave split, how many fields per batch,
+Haar vs db4 for the *generator* (the instrument stays Haar per stage-0), checkpoint
+cadence, SLURM shapes (consult rorqual-jobs; MIG slices were sufficient for D1 studies).
 
-## Logging (required)
+## Backpressure additions (existing gates stay)
 
-Same convention as the sibling repos: `log/YYYY-MM-DD-<slug>.md` entries
-(hypothesis → setup → expectation → result → updated belief). Final `RESULTS.md`:
-the drift-vs-octave-separation curves per field class with error bars, the GRF null
-verdict, P9a/P9b verdicts with numbers, gate status, and — if alive — the empirical
-"running coupling" functions extracted (the toy-phase design spec). Written for a
-reconvene session that has read PLAN.md but not the code.
+New required tests before training: (a) wavelet synthesis round-trip through the
+generator's transform at machine precision; (b) recursion determinism (fixed seed →
+identical field); (c) single-octave overfit gate as executable test; (d) `scaledrift`
+suite untouched and green (it is the instrument — any modification needs written
+justification in log/). Every SLURM job logged pre-submission with config hash +
+expected outcome.
+
+## Logging & deliverable
+
+Standard log discipline. Deliverable: `RESULTS-toy.md` — P4/P5/P6/P13/P-null verdicts
+with numbers, the per-octave drift profiles of both arms (the fan-out figure, generated
+version), the repair-fraction table, transfer results, honest limits. Written for the
+reconvene; assumes PLAN.md, not the code.
