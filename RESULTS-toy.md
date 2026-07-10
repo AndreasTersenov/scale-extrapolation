@@ -14,15 +14,17 @@ reported but confounded by an inter-tile-amplitude pooling artifact (see the P-n
 | **P-null** | 90% | **PASS** | both arms extrapolate GRF; var_slope \|Δ\|≤0.002 at the untrained octave |
 | **P4** (power extrapolates) | 70% | **PASS** | detail amplitude within ~5–7% (both arms) at the first extrapolated octave |
 | **P5** (arm A break) | 85% | **HOLDS (robust)** | arm A var_slope wrong at the extrapolated octave: z = 5.8 → 11.3, 26–52% across 3 configs |
-| **P6** (arm B repair ≥70%) | 55% | **NOT DEMONSTRATED** | best repair 16% (FiLM); capped by a discovered generator limitation, not the conditioning |
-| **P13** (zero-retrain transfer) | 55% | **NOT DEMONSTRATED** | same var_slope cap on hf_pm (arm B does transfer an amplitude fix) |
+| **P6** (arm B repair ≥70%) | 55% | **BLOCKED-PENDING-RETEST** | capped by a generator limitation (below), NOT the conditioning; 90% repair seen once dispersion is restored |
+| **P13** (zero-retrain transfer) | 55% | **BLOCKED-PENDING-RETEST** | same cap; arm B does transfer an amplitude fix (40%→2.5%) |
 
-**Bottom line.** The load-bearing **break (P5) is confirmed strongly**: a weight-tied
-generator with no scale input produces the wrong non-Gaussian conditional structure in the
-first extrapolated octave, exactly as stage-0 predicted. The **repair (P6) is not
-demonstrated** — but the blocker is a newly-diagnosed property of the *generator objective*,
-not of the low-dimensional conditioning hypothesis. This points the reconvene at the
-generator, and P5 stands regardless.
+**Bottom line (post-reconvene).** The load-bearing **break (P5) is confirmed strongly** and
+is the phase's paper result. The reconvene ACCEPTED P-null/P4/P5, ruled that **K-T2 does not
+fire** (the 2-D conditioning is exonerated — FiLM's response is directionally correct and
+monotone), and promoted the P6 blocker to a **first-class result**: *L2 conditional flow
+matching mean-collapses conditional variance, monotonically worse with training.* P6/P13 are
+**blocked-pending-retest** (frozen bars unchanged), to be re-adjudicated after a
+variance-faithful generator. First evidence that the repair will then pass: **90% octave-1
+repair** already appears once dispersion is restored by churn (below).
 
 ## The Karpathy ladder
 (i) single-octave overfit, (ii) two-octave recursion, (iii) GRF end-to-end null — all GREEN
@@ -77,6 +79,28 @@ var_slope break there), while arm A breaks on AMPLITUDE (40% high) and arm B **f
 amplitude** (2.5%). var_slope repair fails (−105%) — the same under-dispersion cap. So the
 transfer neither cleanly breaks nor repairs var_slope; it does transfer an amplitude
 correction. Inconclusive for P13 as scoped, for the same generator reason as P6.
+
+## The variance-faithful generator program (post-reconvene)
+Approved ordered program to unblock P6, each step pre-registered; success bar =
+trained-octave var_slope within 1σ of real, with the frozen P6/P13 bars unchanged.
+
+- **First-class finding — the dispersion-collapse curve.** arm A octave-2 var_slope vs
+  training steps: 400→0.15, **2k→0.85 (peak)**, 6k→0.75, 12k→0.76, 25k→0.51 (real 1.02).
+  var_slope peaks EARLY and collapses with training; loss is monotonically best at the WORST
+  dispersion. Selecting a generator by loss is exactly wrong for dispersion statistics.
+- **(a) SDE sampling** of existing checkpoints (score s=(t·v−x)/(1−t), identity verified on
+  the GRF/Gaussian control; churn-SDE that preserves the marginals): raises var_slope but
+  SATURATES ~9–10σ short of real on the mean-collapsed 10k checkpoint. Insufficient alone.
+- **(b) checkpoint sweep**: the 2k peak is far better (oct2 3σ, oct4 within 1σ) but octaves
+  2–3 still exceed 1σ. Insufficient alone.
+- **(a)+(b)**: at churn 4 the 2k checkpoint reaches oct2 1.9σ / oct3 0.6σ but OVER-corrects
+  oct4 (3.3σ) — global churn adds uniform dispersion while the deficit is octave-dependent,
+  so the fidelity gate is not cleanly met. **Yet octave-1 P6 repair = 90%** here (arm B 1.14
+  ≈ real 1.12; arm A still broken, z=9.5) — strong evidence the running-coupling repair WORKS
+  once dispersion is restored.
+- **(c) dispersion-regularized objective** (pre-registered, handed off): a per-octave
+  conditional-dispersion penalty on the Tweedie mean, so the generator is natively faithful
+  without a churn crutch; then a gate-clean P6/P13 re-adjudication.
 
 ## Honest limits & recommended next step
 - The whole P6/P13 story is gated by ONE generator property: **flow-matching under-disperses

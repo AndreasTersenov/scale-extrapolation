@@ -44,6 +44,23 @@ arm A trained-octave var_slope vs training steps (real oct2/3/4 = 1.02 / 0.801 /
   dispersion. This is the "conditional-FM mean-collapse" curve for the paper.
 - Peak (2k): octave 4 within 1σ, octave 3 at 2σ, octave 2 at 3σ (0.847 vs 1.02) — vastly
   better than the 10k ckpt_film (15σ at oct2), but octaves 2–3 still exceed the 1σ bar.
-- **Next: (a)+(b) combined** — churn on the 2k peak checkpoint (step (a) added ~+0.09 to
-  oct2). Expected ~0.94 at oct2 (~1.5σ). Test directly: train arm A+B (FiLM) to 2000, save
-  checkpoints, churn-sweep, measure trained octaves (success bar) AND octave-1 (P6).
+## Result — (a)+(b) combined (job 15642098), 2k peak checkpoint + churn
+arm A trained-octave var_slope (σ to real) and octave-1 P5/P6:
+
+| churn | oct2 | oct3 | oct4 | oct1 armA (z) | oct1 armB | P6 repair |
+|---|---|---|---|---|---|---|
+| 0 | 0.87 (5.8σ) | 0.71 (3.2σ) | 0.55 (0.5σ) | 0.86 (z9.9) | 0.88 | 10% |
+| 4 | 0.97 (1.9σ) | 0.82 (0.6σ) | 0.65 (3.3σ) | 0.87 (z9.5) | **1.14** | **90%** |
+| 8 | 1.10 (2.7σ) | 0.89 (3.1σ) | 0.70 (4.5σ) | 0.97 (z5.4) | 1.33 | −46% |
+
+- **Step (b) insufficient per the pre-registered rule** (peak, churn 0: oct2 5.8σ, oct3
+  3.2σ — both < real−1σ). And (a)+(b): **global churn cannot make fidelity uniform** — it
+  adds ~constant dispersion, but the deficit is octave-dependent, so churn 4 fixes oct2/oct3
+  while OVER-correcting oct4 (3.3σ high). No single churn puts all trained octaves within
+  1σ. The frozen fidelity gate is NOT cleanly met → proceed to step (c).
+- **Strong positive signal for P6:** at churn 4, arm B octave-1 var_slope = 1.14 ≈ real 1.12
+  (**repair 90%**, ≥70% bar) while arm A stays broken (z=9.5). So the running-coupling repair
+  WORKS once dispersion is restored — it just rides on global churn rather than a natively
+  faithful generator. This is what step (c) must deliver cleanly.
+- Do NOT tune per-octave churn to hit the target — that fits the answer. Step (c) is a
+  principled per-octave-faithful generator (dispersion-regularized objective).

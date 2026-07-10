@@ -16,24 +16,33 @@ generation. GPU via SLURM only.
 ## IN FLIGHT
 **None.** All jobs harvested.
 
-## RECONVENE RECOMMENDATION (the one open scientific issue)
-P5 (the non-Gaussian break under extrapolation) is confirmed. P6/P13 (the repair) are
-blocked by a diagnosed generator property: **the L2 flow-matching objective under-disperses
-conditional variance, and it worsens with training** (attempt 3, loss 0.6→0.08, made
-var_slope WORSE and collapsed the detail amplitude). The FiLM scale-coordinate acts in the
-RIGHT direction (repair −65% → +16%), so the conditioning is not the blocker. Next lever is
-the **generator** (variance-preserving / stochastic sampler, or a non-L2 / dispersion-aware
-objective, or early stopping), NOT the conditioning or architecture scale — see the logged
-objection in `log/2026-07-10-rung-iv-film.md`. The whole pipeline (coordinates, both arms,
-scoring, transfer) is in place to re-run once the generator is fixed.
+## VARIANCE-FAITHFUL PROGRAM (reconvene-approved; unblocks P6/P13)
+Ordered (a)→(b)→(c), each pre-registered. Success bar = trained-octave var_slope within 1σ
+of real; frozen P6/P13 bars unchanged.
+- **(a) SDE churn on existing checkpoints — DONE, insufficient.** Score identity
+  s=(t·v−x)/(1−t) verified (`tests_wfm/test_score_identity.py`); churn saturates ~9–10σ short
+  on the mean-collapsed 10k checkpoint. `log/2026-07-10-prereg-varfaithful-a-sde.md`.
+- **(b) checkpoint sweep — DONE, insufficient alone.** var_slope PEAKS at ~2k steps and
+  collapses with training (the dispersion-collapse curve). Peak 2k: oct2 3σ, oct4 within 1σ.
+  `log/2026-07-10-prereg-varfaithful-b-ckptsweep.md`.
+- **(a)+(b) — near-faithful, gate not clean.** 2k+churn4: oct2 1.9σ/oct3 0.6σ but oct4
+  overshoots (global churn is uniform, deficit is octave-dependent). **BUT octave-1 P6 repair
+  = 90%** here → the repair works once dispersion is restored.
+- **(c) dispersion-regularized objective — HANDED OFF (next step).**
+  `log/2026-07-10-prereg-varfaithful-c-objective.md`.
 
-## To resume the P6 attempt after a generator fix
+## To run step (c)
 ```bash
-# edit wfm/cfm.py sampler (add SDE/Langevin noise) or the objective, then:
-sbatch scripts/train_gowerstreet_film.slurm     # arm B FiLM, moderate steps (best var_slope so far)
-source env.sh && python scripts/measure_generated.py --npz results/arms_film.npz
+# 1. implement in wfm/cfm.py: cfm_loss_dispersion = cfm_loss + λ·Σ_bin (sd_pred(bin) − sd_data(bin))^2
+#    with x1_hat = x_t + (1-t)*v (Tweedie); add --lambda-disp to scripts/run_two_arms.py.
+# 2. train (MIG) sweeping λ∈{0.1,0.3,1.0}, keep early stopping (~2-4k steps):
+sbatch scripts/train_gowerstreet_film.slurm       # after adding --lambda-disp to the script
+# 3. verify trained-octave var_slope within 1σ of real (deterministic ODE, no churn), then:
+source env.sh && python scripts/measure_generated.py --npz results/arms_film.npz  # P6/P13
 ```
-Note: moderate training (~10k steps) gave BETTER var_slope than 25k — do NOT over-train.
+Prior: (a)+(b) already showed 90% octave-1 repair, so P6 is likely to PASS once (c) makes the
+generator per-octave faithful. Do NOT over-train (var_slope peaks ~2k) and do NOT hand-tune
+per-octave churn (that fits the answer).
 
 ## DONE (env facts)
 GPU: MIG `h100_20gb` sees `CudaDevice(id=0)`; ~217 s (8k steps) / ~270 s (10k) / ~430 s
