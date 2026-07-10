@@ -12,3 +12,6 @@ data_cache/
 # large generated-field bundles (regenerate via run_pnull.py); keep small *_score.json
 results/pnull_*.npz
 results/*_validate*
+results/arms_*.npz
+results/film_smoke.npz
+results/transfer_generated.npz

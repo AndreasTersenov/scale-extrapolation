@@ -108,7 +108,8 @@ def overfit_field_recursive(field, j_max=2, channels=(48, 96), steps=2500, lr=2e
 
 
 def train_generator(tiles, train_octaves, arm="A", cond_by_octave=None,
-                    channels=(32, 64, 128), steps=3000, batch=16, lr=1e-3, seed=0):
+                    channels=(32, 64, 128), steps=3000, batch=16, lr=1e-3, seed=0,
+                    cond_mode="add"):
     """Train the shared conditional generator on many tiles across ``train_octaves``.
 
     arm "A": no scale input (cond_dim=0). arm "B": conditions on the per-octave scale
@@ -124,7 +125,8 @@ def train_generator(tiles, train_octaves, arm="A", cond_by_octave=None,
         cond_dim = len(np.atleast_1d(cond_by_octave[train_octaves[0]]))
 
     model = ConditionalUNet(out_channels=3, channels=tuple(channels),
-                            bottleneck=channels[-1] * 2, cond_dim=cond_dim)
+                            bottleneck=channels[-1] * 2, cond_dim=cond_dim,
+                            cond_mode=cond_mode)
     key = jax.random.PRNGKey(seed)
     k_init, _ = jax.random.split(key)
     j0 = min(train_octaves)
@@ -151,6 +153,6 @@ def train_generator(tiles, train_octaves, arm="A", cond_by_octave=None,
             loss0 = float(loss)
     meta = {"std_by_j": std_by_j, "train_octaves": list(train_octaves), "arm": arm,
             "cond_by_octave": cond_by_octave, "cond_dim": cond_dim,
-            "loss0": loss0, "lossN": float(loss)}
+            "cond_mode": cond_mode, "loss0": loss0, "lossN": float(loss)}
     return state, meta
 

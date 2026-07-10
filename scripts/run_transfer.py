@@ -40,7 +40,8 @@ REPO = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 def load_arm(ckpt_path):
     ck = pickle.load(open(ckpt_path, "rb"))
     model = ConditionalUNet(out_channels=3, channels=tuple(ck["channels"]),
-                            bottleneck=ck["channels"][-1] * 2, cond_dim=ck["cond_dim"])
+                            bottleneck=ck["channels"][-1] * 2, cond_dim=ck["cond_dim"],
+                            cond_mode=ck.get("cond_mode", "add"))
     params = jax.tree_util.tree_map(jnp.asarray, ck["params"])
     return model, params, ck
 

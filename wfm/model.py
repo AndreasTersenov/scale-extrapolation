@@ -45,19 +45,30 @@ class ConditionalUNet(nn.Module):
     bottleneck: int = 256
     embed_dim: int = 128
     cond_dim: int = 0
+    cond_mode: str = "add"      # "add" (embedding sum) or "film" (per-channel modulation)
 
     @nn.compact
     def __call__(self, detail, t, coarse, cond_vec=None):
-        # global conditioning embedding: time (+ optional scale coordinate)
+        # time embedding (always additive)
         emb = sinusoidal_time_embedding(t, self.embed_dim)
+        cemb = None
         if self.cond_dim > 0:
             if cond_vec is None:
                 cond_vec = jnp.zeros((detail.shape[0], self.cond_dim), detail.dtype)
-            emb = emb + nn.Dense(self.embed_dim)(nn.silu(nn.Dense(self.embed_dim)(cond_vec)))
+            cemb = nn.Dense(self.embed_dim)(nn.silu(nn.Dense(self.embed_dim)(cond_vec)))
+            if self.cond_mode == "add":
+                emb = emb + cemb        # coordinate folded into the additive embedding
 
         def inject(h, ch):
             p = nn.Dense(ch)(nn.silu(nn.Dense(ch)(emb)))
-            return h + p[:, None, None, :]
+            h = h + p[:, None, None, :]
+            if self.cond_mode == "film" and cemb is not None:
+                # FiLM: the scale coordinate modulates features multiplicatively, so it
+                # cannot be substituted by the coarse field the way additive bias can.
+                gb = nn.Dense(2 * ch)(nn.silu(nn.Dense(ch)(cemb)))
+                g, b = jnp.split(gb, 2, axis=-1)
+                h = h * (1.0 + g[:, None, None, :]) + b[:, None, None, :]
+            return h
 
         h = jnp.concatenate([detail, coarse], axis=-1)   # condition on coarse via channels
         skips = []
