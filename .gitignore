@@ -19,3 +19,6 @@ results/arms_big.npz
 results/sweep*.npz
 results/sde_c*.npz
 results/arms_2k*.npz
+results/sde_c*_score.json
+results/sweep*_score.json
+results/arms_2k*_score.json
