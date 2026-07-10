@@ -28,21 +28,27 @@ of real; frozen P6/P13 bars unchanged.
 - **(a)+(b) — near-faithful, gate not clean.** 2k+churn4: oct2 1.9σ/oct3 0.6σ but oct4
   overshoots (global churn is uniform, deficit is octave-dependent). **BUT octave-1 P6 repair
   = 90%** here → the repair works once dispersion is restored.
-- **(c) dispersion-regularized objective — HANDED OFF (next step).**
-  `log/2026-07-10-prereg-varfaithful-c-objective.md`.
+- **(c) dispersion-regularized objective (Tweedie-mean-std matching) — DONE, INSUFFICIENT.**
+  Implemented (`cfm_loss_dispersion`, `--lambda-disp`, tests green); swept λ∈{0.1,0.3,1.0}
+  (job 15648042). Bar NOT met (oct2,3 still 6–9σ low). Diagnosis: the candidate matches the
+  std of the Tweedie MEAN E[x1|x_t], which is structurally below the data std (total
+  variance) and t-dependent → mis-specified. `log/2026-07-10-prereg-varfaithful-c-objective.md`.
+- **(c') corrected objective — PRE-REGISTERED, HANDED OFF (next step).** Target the SAMPLED
+  conditional variance, not the mean's: either a late-t / t-consistent dispersion penalty, or
+  a Gaussian-NLL detail head (log-variance). Same frozen bar.
 
-## To run step (c)
+## To run step (c') (next)
 ```bash
-# 1. implement in wfm/cfm.py: cfm_loss_dispersion = cfm_loss + λ·Σ_bin (sd_pred(bin) − sd_data(bin))^2
-#    with x1_hat = x_t + (1-t)*v (Tweedie); add --lambda-disp to scripts/run_two_arms.py.
-# 2. train (MIG) sweeping λ∈{0.1,0.3,1.0}, keep early stopping (~2-4k steps):
-sbatch scripts/train_gowerstreet_film.slurm       # after adding --lambda-disp to the script
-# 3. verify trained-octave var_slope within 1σ of real (deterministic ODE, no churn), then:
-source env.sh && python scripts/measure_generated.py --npz results/arms_film.npz  # P6/P13
+# Implement ONE in wfm/cfm.py (see the c-objective log for both):
+#  (1) late-t penalty: weight the sd penalty toward t~1, OR penalize the model's implied
+#      E[Var(x1|x_t)] (residual x1 - x1_hat) vs the data conditional variance; or
+#  (2) Gaussian-NLL detail head: 2nd output channel-group = log-variance, NLL detail loss.
+# Then sweep its weight (MIG, ~2-4k steps, early stop), verify trained-octave var_slope
+# within 1σ of real at oct 2,3,4 SIMULTANEOUSLY (deterministic ODE, no churn) + GRF null,
+# THEN re-run arms A/B (full H100, <=2:59) and re-adjudicate P6/P13 (frozen bars).
 ```
-Prior: (a)+(b) already showed 90% octave-1 repair, so P6 is likely to PASS once (c) makes the
-generator per-octave faithful. Do NOT over-train (var_slope peaks ~2k) and do NOT hand-tune
-per-octave churn (that fits the answer).
+Strong prior from (a)+(b): 90% octave-1 repair once dispersion is restored. Do NOT over-train
+(var_slope peaks ~2k) and do NOT hand-tune per-octave churn.
 
 ## DONE (env facts)
 GPU: MIG `h100_20gb` sees `CudaDevice(id=0)`; ~217 s (8k steps) / ~270 s (10k) / ~430 s

@@ -28,8 +28,33 @@ deterministic ODE (no churn crutch). GRF null preserved. THEN re-adjudicate octa
 with the frozen bars (arm A break z>3 & >10%; arm B repair ≥70%). The (a)+(b) run already
 gives a strong prior that P6 will pass (90% repair at churn 4 once dispersion is restored).
 
-## Status: HANDED OFF (not run this session)
-Heavier build; this session executed the ordered program (a)+(b) with pre-registration and
-the fidelity diagnosis. (c) is the next step — see JOBS.md. Implement the regularizer in
-`wfm/cfm.py` (new `cfm_loss_dispersion`), add a `--lambda-disp` arm to `run_two_arms.py`,
-train (MIG), sweep λ, then re-adjudicate with `measure_generated.py` (pipeline unchanged).
+## Result — candidate objective INSUFFICIENT (job 15648042); frozen bar NOT met
+Implemented (`wfm.cfm.cfm_loss_dispersion`, tests green), swept λ∈{0.1,0.3,1.0} on
+gowerstreet, 3000 steps, deterministic ODE. Trained-octave var_slope (real 1.02/0.80/0.53):
+
+| λ | oct2 | oct3 | oct4 | oct1 armA(z) | armB | repair |
+|---|---|---|---|---|---|---|
+| 0.1 | 0.79 (8.6σ) | 0.64 (5.9σ) | 0.51 (0.5σ) | 0.93 (z6.6) | 0.66 | −149% |
+| 0.3 | 0.82 (7.6σ) | 0.64 (6.1σ) | 0.50 (0.9σ) | 1.04 (z2.6) | 0.72 | −426% |
+| 1.0 | 0.79 (9.1σ) | 0.60 (7.3σ) | 0.45 (2.3σ) | 0.93 (z7.0) | 0.64 | −151% |
+
+- **Fidelity bar NOT met at any λ** (oct2,3 still 6–9σ low); arm B destabilized (repair < 0).
+- **Diagnosis — the pre-registered candidate targets the wrong quantity.** `sd_pred` is the
+  std of the Tweedie conditional MEAN E[x1|x_t]; by total variance
+  Var(x1)=Var(E[x1|x_t])+E[Var(x1|x_t)], so sd_pred is STRUCTURALLY < sd_data, and it depends
+  on t (→0 at t→0, →sd_data at t→1). Averaged over random t, matching sd_pred to sd_data is
+  mis-specified — it cannot be satisfied and perturbs training. Not a coding bug; a
+  specification bug in the candidate.
+
+## Next: (c') CORRECTED objective — pre-registered, HANDED OFF
+The dispersion penalty must target the SAMPLED conditional variance, not the mean's. Two
+concrete, pre-registered options (implement one, sweep, adjudicate against the SAME frozen
+bar):
+1. **Late-t / t-consistent penalty:** evaluate sd_pred only near t≈1 (x1_hat faithful), or
+   compare per-bin std of the residual (x1 − E[x1|x_t]) to E[Var(x1|x_t)] — i.e. penalize the
+   model's implied conditional variance, computed consistently in t.
+2. **Gaussian-NLL detail head (fallback (i) from the original pre-reg):** a second head
+   predicts log-variance; train the detail conditional with a proper NLL so variance is
+   modelled explicitly, then sample with it. Cleanest, heaviest.
+The (a)+(b) evidence (90% octave-1 repair once dispersion is restored) still stands as the
+prior that P6 passes once the generator is per-octave faithful. Pipeline unchanged.

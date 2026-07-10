@@ -98,9 +98,14 @@ trained-octave var_slope within 1σ of real, with the frozen P6/P13 bars unchang
   so the fidelity gate is not cleanly met. **Yet octave-1 P6 repair = 90%** here (arm B 1.14
   ≈ real 1.12; arm A still broken, z=9.5) — strong evidence the running-coupling repair WORKS
   once dispersion is restored.
-- **(c) dispersion-regularized objective** (pre-registered, handed off): a per-octave
-  conditional-dispersion penalty on the Tweedie mean, so the generator is natively faithful
-  without a churn crutch; then a gate-clean P6/P13 re-adjudication.
+- **(c) dispersion-regularized objective — RUN, insufficient.** Penalizing the Tweedie-mean
+  per-bin std to match the data (`cfm_loss_dispersion`, λ∈{0.1,0.3,1.0}) did NOT meet the bar
+  (oct2,3 still 6–9σ low). Diagnostic: the Tweedie mean E[x1|x_t] is *structurally* less
+  dispersed than the data (total variance) and t-dependent, so matching its std is a
+  mis-specified target. **(c') corrected objective** (target the sampled conditional variance
+  — a late-t/t-consistent penalty or a Gaussian-NLL detail head) is pre-registered and handed
+  off; the (a)+(b) 90%-repair signal remains the prior that P6 passes once the generator is
+  per-octave faithful.
 
 ## Honest limits & recommended next step
 - The whole P6/P13 story is gated by ONE generator property: **flow-matching under-disperses
