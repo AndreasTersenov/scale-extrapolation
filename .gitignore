@@ -9,3 +9,6 @@ results/*.log
 results/measurement_quick.json
 # derived data cache (reproducible from wl_chall_data via scaledrift.data)
 data_cache/
+# large generated-field bundles (regenerate via run_pnull.py); keep small *_score.json
+results/pnull_*.npz
+results/*_validate*
