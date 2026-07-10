@@ -5,11 +5,14 @@ rungs (recursion, full arms A/B) build on the same conditional CFM pieces in ``w
 """
 from __future__ import annotations
 
+import numpy as np
+
 import jax
 import jax.numpy as jnp
 
 from . import haar
 from .cfm import make_step, make_train_state, sample
+from .dataset import field_to_octaves
 from .generate import generate_recursive
 from .model import ConditionalUNet
 
@@ -102,3 +105,52 @@ def overfit_field_recursive(field, j_max=2, channels=(48, 96), steps=2500, lr=2e
         "field_shape": tuple(f.shape),
         "deterministic": bool(jnp.array_equal(gen_field, gen_field2)),
     }
+
+
+def train_generator(tiles, train_octaves, arm="A", cond_by_octave=None,
+                    channels=(32, 64, 128), steps=3000, batch=16, lr=1e-3, seed=0):
+    """Train the shared conditional generator on many tiles across ``train_octaves``.
+
+    arm "A": no scale input (cond_dim=0). arm "B": conditions on the per-octave scale
+    coordinate ``cond_by_octave[j]`` (a length-D vector; the 2-D stage-0 running-coupling
+    coordinate). Returns ``(state, meta)`` with ``std_by_j`` and normalization info needed
+    for generation. The same weights train on every octave -- the weight-tying prior.
+    """
+    pools, std_by_j = field_to_octaves(tiles, train_octaves)
+    if arm == "A":
+        cond_dim = 0
+    else:
+        assert cond_by_octave is not None, "arm B needs cond_by_octave"
+        cond_dim = len(np.atleast_1d(cond_by_octave[train_octaves[0]]))
+
+    model = ConditionalUNet(out_channels=3, channels=tuple(channels),
+                            bottleneck=channels[-1] * 2, cond_dim=cond_dim)
+    key = jax.random.PRNGKey(seed)
+    k_init, _ = jax.random.split(key)
+    j0 = min(train_octaves)
+    d0, c0 = pools[j0]
+    state = make_train_state(model, k_init, (batch,) + d0.shape[1:],
+                             (batch,) + c0.shape[1:], cond_dim, lr,
+                             total_steps=steps, warmup=max(1, steps // 10))
+
+    # one jitted step per octave (fixed cond vector broadcast to the batch)
+    step_fn = {}
+    for j in train_octaves:
+        cv = None if arm == "A" else jnp.broadcast_to(
+            jnp.asarray(cond_by_octave[j], jnp.float32), (batch, cond_dim))
+        step_fn[j] = make_step(cv)
+
+    rng = np.random.default_rng(seed)
+    loss0 = None
+    for i in range(steps):
+        j = train_octaves[i % len(train_octaves)]
+        detail, coarse = pools[j]
+        idx = rng.integers(0, detail.shape[0], batch)
+        state, loss = step_fn[j](state, detail[idx], coarse[idx])
+        if i == 0:
+            loss0 = float(loss)
+    meta = {"std_by_j": std_by_j, "train_octaves": list(train_octaves), "arm": arm,
+            "cond_by_octave": cond_by_octave, "cond_dim": cond_dim,
+            "loss0": loss0, "lossN": float(loss)}
+    return state, meta
+
