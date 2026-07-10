@@ -28,5 +28,27 @@ arm A at trained octaves? If arm B still ≈ arm A, FiLM also failed to engage t
   insufficient with these mechanisms; STOP and reconvene on mechanism (not architecture
   scale). P5 (the break) still stands as the phase's confirmed result.
 
-## Result
-(job id + repair verdict filled after completion)
+## Result — attempt 2 (FiLM), job 15628956, config_hash ee62f09bb1
+arm A loss →0.668 (== attempt 1 baseline), arm B-FiLM →0.599. Octave 1 (bootstrap N=64):
+
+| octave | real | arm A | arm B (FiLM) |
+|---|---|---|---|
+| 1 (extrap) var_slope | 1.117±0.051 | 0.824±0.006 | **0.872±0.005** |
+| 2 | 1.020 | 0.778 | 0.773 |
+| 3 | 0.801 | 0.585 | 0.534 |
+| 4 | 0.532 | 0.449 | 0.355 |
+
+- P4 PASS; **P5 HOLDS** (arm A z=5.7, 26%).
+- **P6: repair = 16%** (up from −65% with additive). FiLM DOES engage the coordinate: arm B
+  now differs from arm A and moves the RIGHT way at octave 1 (0.872 > 0.824, toward real),
+  monotone in the coordinate (up where coord high = oct 1, down where low = oct 3,4). But
+  16% < 70%, and it slightly degraded trained octaves 3–4.
+- **Key diagnosis (changes the K-T2 read):** both arms under-shoot var_slope ~25% at every
+  TRAINED octave (fidelity ~0.73–0.84 × real). The generator's octave-1 ceiling is therefore
+  ~0.85–0.94; arm B-FiLM (0.872) is AT that ceiling. So P6 is capped by **generator
+  fidelity, not the conditioning mechanism** — K-T2 (which blames the 2-D conditioning) is
+  premature. Honest next step: lift fidelity (bigger model + more steps), then re-test P6.
+
+**Attempt 3:** channels 48/96/192, steps 25000, FiLM — to raise the trained-octave fidelity
+toward real and get an uncapped P6 read. See `log/2026-07-10-rung-iv-film.md` (this file)
+Result-attempt-3 below.
