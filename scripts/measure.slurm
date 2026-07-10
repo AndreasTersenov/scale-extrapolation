@@ -1,7 +1,7 @@
 #!/bin/bash
 #SBATCH --account=def-lplevass   # CPU jobs use def-lplevass; rrg-lplevass is GPU-only
 #SBATCH --job-name=scaledrift-M1
-#SBATCH --time=00:40:00
+#SBATCH --time=01:30:00
 #SBATCH --cpus-per-task=4
 #SBATCH --mem=32G
 #SBATCH --output=results/measure_%j.log
@@ -11,4 +11,4 @@
 cd "$SLURM_SUBMIT_DIR" || exit 1
 source env.sh                     # modules (incl. arrow) + venv; needed even in a job
 export OMP_NUM_THREADS=$SLURM_CPUS_PER_TASK
-python scripts/measure.py --n-parents 32 --max-shards 12 --n-boot 300 --out measurement
+python scripts/measure.py --n-parents 18 --max-shards 10 --n-boot 150 --out measurement

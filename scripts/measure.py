@@ -107,14 +107,15 @@ def measure_field(key, path, column, role, args):
         "key": key, "role": role, "n_parents": len(parents), "n_tiles": n_tiles,
         "octaves": list(octs), "wavelet": args.wavelet,
         "adjacent": adjacent, "separation": separation,
-        "moments": {int(j): {k: v.tolist() for k, v in m.items()}
+        # str keys so the dict is identical live and after a JSON round-trip
+        "moments": {str(j): {k: v.tolist() for k, v in m.items()}
                     for j, m in moments.items()},
-        "couplings": {int(j): c for j, c in couplings.items()},
+        "couplings": {str(j): c for j, c in couplings.items()},
         "cross_octave": cross,
         "pca": {"eff_dim_80": pca["eff_dim_80"],
                 "explained_var_ratio": pca["explained_var_ratio"].tolist(),
                 "cumulative": pca["cumulative"].tolist()},
-        "pdfs": {int(j): {"x": x.tolist(), "p": p.tolist()} for j, (x, p) in pdfs.items()},
+        "pdfs": {str(j): {"x": x.tolist(), "p": p.tolist()} for j, (x, p) in pdfs.items()},
     }
 
 
@@ -161,8 +162,8 @@ def plot_all(results, outdir):
                            "marginal excess kurtosis"]):
         for r in results:
             js = r["octaves"]
-            y = [r["couplings"][int(j)][k] for j in js]
-            se = [r["couplings"][int(j)][k + "_se"] for j in js]
+            y = [r["couplings"][str(j)][k] for j in js]
+            se = [r["couplings"][str(j)][k + "_se"] for j in js]
             ax.errorbar(js, y, yerr=se, marker="o", capsize=2, color=colors[r["key"]],
                         label=r["key"])
         ax.axhline(0 if k != "var_hi_lo" else 1, color="k", lw=0.7, ls=":")
@@ -179,7 +180,7 @@ def plot_all(results, outdir):
         js = r["octaves"]
         cmap = plt.cm.plasma(np.linspace(0, 0.85, len(js)))
         for j, col in zip(js, cmap):
-            m = r["moments"][int(j)]
+            m = r["moments"][str(j)]
             ax.plot(m["c_center"], m["var"], marker=".", color=col, label=f"j={j}")
         ax.set_xlabel("coarse field (std units)")
         ax.set_ylabel("Var(detail | coarse)")
@@ -204,28 +205,42 @@ def main():
     ap.add_argument("--fields", nargs="+", default=[f[0] for f in FIELDS])
     ap.add_argument("--out", default="measurement")
     ap.add_argument("--quick", action="store_true")
+    ap.add_argument("--plot-only", action="store_true",
+                    help="regenerate plots+npz from an existing results/<out>.json and exit")
     args = ap.parse_args()
     if args.quick:
         args.n_parents, args.n_boot, args.max_shards = 6, 100, 4
 
     os.makedirs(RESULTS, exist_ok=True)
+    json_path = os.path.join(RESULTS, f"{args.out}.json")
+
+    if args.plot_only:
+        results = json.load(open(json_path))["fields"]
+        _write_derived(results)
+        print(f"regenerated plots + profiles.npz from {json_path}", flush=True)
+        return
+
     results = []
     for key, path, column, role in FIELDS:
         if key not in args.fields:
             continue
         results.append(measure_field(key, path, column, role, args))
+        # checkpoint after EACH field so a wall-clock timeout keeps finished fields
+        with open(json_path, "w") as f:
+            json.dump({"config": vars(args), "fields": results}, f, indent=1)
+        print(f"  checkpointed {len(results)} field(s) -> {args.out}.json", flush=True)
 
-    bundle = {"config": vars(args), "fields": results}
-    with open(os.path.join(RESULTS, f"{args.out}.json"), "w") as f:
-        json.dump(bundle, f, indent=1)
-    # profiles npz (arrays), keyed field/octave/stat
+    _write_derived(results)
+    print(f"\nwrote {args.out}.json, profiles.npz, and plots to {RESULTS}", flush=True)
+
+
+def _write_derived(results):
+    """npz profiles + plots from the in-memory (or reloaded) results list."""
     np.savez(os.path.join(RESULTS, "profiles.npz"),
              **{f"{r['key']}_j{j}_{k}": np.array(v)
                 for r in results for j, m in r["moments"].items()
                 for k, v in m.items()})
-    if not args.quick or True:
-        plot_all(results, RESULTS)
-    print(f"\nwrote {args.out}.json, profiles.npz, and plots to {RESULTS}", flush=True)
+    plot_all(results, RESULTS)
 
 
 if __name__ == "__main__":
