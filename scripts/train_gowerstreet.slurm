@@ -13,6 +13,7 @@ module load cuda/12.6 2>/dev/null || true
 PY="$HOME/wl-challenge-env/bin/python"
 echo "=== node $(hostname) GPU check ==="
 $PY -c "import jax; print('jax devices:', jax.devices())" || exit 1
+# args left at their (absolute-path) defaults so the runtime config_hash matches the
+# pre-registered 71a9fd7e6d (do not pass a relative --out — it changes the hash).
 $PY scripts/run_two_arms.py --field gowerstreet --train-octaves 2 3 4 --gen-from 4 \
-    --channels 32 64 128 --steps 10000 --batch 32 --n-heldout 64 --sample-steps 80 \
-    --out results/arms_generated.npz
+    --channels 32 64 128 --steps 10000 --batch 32 --n-heldout 64 --sample-steps 80
