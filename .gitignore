@@ -24,3 +24,5 @@ results/sweep*_score.json
 results/arms_2k*_score.json
 results/disp_*.npz
 results/arms_disp*.npz
+results/arms_opt1*.npz
+results/opt1_smoke.npz
