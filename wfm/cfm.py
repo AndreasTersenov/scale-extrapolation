@@ -103,14 +103,73 @@ def cfm_loss_dispersion(params, apply_fn, detail, coarse, key, cond_vec=None,
     return cfm + lam * _dispersion_penalty(detail, coarse, x1_hat, n_bins)
 
 
-def make_step(cond_vec=None, lam=0.0, n_bins=8, t_lo=0.0):
+G_CLIP = (-5.0, 3.0)     # log-sigma numerical guard (free periphery)
+
+
+def cfm_loss_nll(params, apply_fn, detail, coarse, key, cond_vec=None):
+    """Phase-1c option-2 loss: CFM on the velocity + Gaussian NLL for the log-sigma head.
+
+    The model outputs [v, g] (``variance_head=True``). The velocity trains with the
+    standard CFM L2 at random (x0, t) -- unchanged. The NLL is anchored at the flow's
+    center point (x_t = 0, t = 0), where the one-step OT-path predictor
+    mu = x_t + (1-t) v = v(0, 0 | coarse, cond) equals E[detail | coarse, cond] at the
+    CFM optimum (x0 is independent of x1, so v(x, 0) = E[x1] - x). There
+
+        NLL = mean( 0.5 * ( (detail - mu)^2 * e^{-2g} + 2 g ) ),
+
+    i.e. the full (mean, variance) Gaussian conditional is NLL-trained at the anchor.
+    Training mu through the NLL is necessary: with CFM gradients alone, v(0, 0) is
+    contaminated by nearby t > 0 targets (which are smaller in magnitude) and the
+    conditional mean comes out shrunk ~15% at extreme coarse values (seen in the
+    validation gate). e^{2g(0,0|coarse,cond)} regresses the per-coefficient conditional
+    variance Var(detail | coarse, cond) -- exactly the object var_slope measures.
+    """
+    key_t, key_n = jax.random.split(key)
+    B = detail.shape[0]
+    C = detail.shape[-1]
+    t = jax.random.uniform(key_t, (B,))
+    x0 = jax.random.normal(key_n, detail.shape)
+    x_t = ot_interpolate(x0, detail, t)
+    out = apply_fn({"params": params}, x_t, t, coarse, cond_vec)
+    cfm = jnp.mean((out[..., :C] - (detail - x0)) ** 2)
+
+    out0 = apply_fn({"params": params}, jnp.zeros_like(detail), jnp.zeros((B,)),
+                    coarse, cond_vec)
+    mu = out0[..., :C]
+    g = jnp.clip(out0[..., C:], *G_CLIP)
+    r = detail - mu
+    nll = jnp.mean(0.5 * (r * r * jnp.exp(-2.0 * g) + 2.0 * g))
+    return cfm + nll
+
+
+def sample_nll(apply_fn, params, key, coarse, out_channels, cond_vec=None, **_):
+    """Pre-registered phase-1c sampler: deterministic mean-path endpoint + explicit
+    variance, no churn.
+
+    detail = mu + e^{g} * z with (mu, g) = model(x_t=0, t=0 | coarse, cond) and
+    z ~ N(0, I). mu is the flow's conditional-mean estimate (the OT mean-path endpoint
+    from the distribution center); ALL conditional variance is carried explicitly by the
+    learned per-coefficient e^{2g} -- no pushforward/noise double-counting.
+    """
+    B, H, W, _ = coarse.shape
+    zeros = jnp.zeros((B, H, W, out_channels))
+    out0 = apply_fn({"params": params}, zeros, jnp.zeros((B,)), coarse, cond_vec)
+    mu = out0[..., :out_channels]
+    g = jnp.clip(out0[..., out_channels:], *G_CLIP)
+    z = jax.random.normal(key, mu.shape)
+    return mu + jnp.exp(g) * z
+
+
+def make_step(cond_vec=None, lam=0.0, n_bins=8, t_lo=0.0, nll=False):
     """Return a jitted training step. ``lam`` > 0 adds the dispersion regularizer (t_lo>0
-    selects the option-1 late-t variant)."""
+    selects the option-1 late-t variant); ``nll=True`` uses the phase-1c NLL-head loss."""
     @jax.jit
     def step(state, detail, coarse):
         key, new_key = jax.random.split(state.key)
 
         def loss_fn(p):
+            if nll:
+                return cfm_loss_nll(p, state.apply_fn, detail, coarse, key, cond_vec)
             if lam > 0:
                 return cfm_loss_dispersion(p, state.apply_fn, detail, coarse, key,
                                            cond_vec, lam, n_bins, t_lo)

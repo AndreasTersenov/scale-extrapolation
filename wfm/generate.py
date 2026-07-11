@@ -14,22 +14,26 @@ from __future__ import annotations
 import jax
 
 from . import haar
-from .cfm import sample, sample_sde
+from .cfm import sample, sample_nll, sample_sde
 
 
 def generate_recursive(apply_fn, params, coarse, j_start, key, detail_std,
-                       cond_fn=None, n_steps=80, solver="heun", churn=0.0):
+                       cond_fn=None, n_steps=80, solver="heun", churn=0.0, nll=False):
     """Recursively refine ``coarse`` (at octave ``j_start``) down to the full field.
 
     ``detail_std`` maps octave j -> amplitude (dict or callable). ``cond_fn`` maps octave
     j -> scale-coordinate vector (B, cond_dim) for arm B, or None for arm A. ``churn`` > 0
     switches from the deterministic ODE sampler to the marginal-preserving churn-SDE sampler
-    (variance-faithful; see cfm.sample_sde). Deterministic given ``key``.
+    (variance-faithful; see cfm.sample_sde). ``nll=True`` (phase 1c) uses the pre-registered
+    mean-path + explicit-variance sampler of the NLL-head model (no churn). Deterministic
+    given ``key``.
     """
     for j in range(j_start, 0, -1):
         key, k = jax.random.split(key)
         cond = None if cond_fn is None else cond_fn(j)
-        if churn > 0:
+        if nll:
+            det_n = sample_nll(apply_fn, params, k, coarse, 3, cond_vec=cond)
+        elif churn > 0:
             det_n = sample_sde(apply_fn, params, k, coarse, 3, n_steps=n_steps,
                                cond_vec=cond, churn=churn)
         else:

@@ -110,7 +110,7 @@ def overfit_field_recursive(field, j_max=2, channels=(48, 96), steps=2500, lr=2e
 def train_generator(tiles, train_octaves, arm="A", cond_by_octave=None,
                     channels=(32, 64, 128), steps=3000, batch=16, lr=1e-3, seed=0,
                     cond_mode="add", ckpt_steps=(), on_checkpoint=None, lambda_disp=0.0,
-                    disp_t_lo=0.0):
+                    disp_t_lo=0.0, nll=False):
     """Train the shared conditional generator on many tiles across ``train_octaves``.
 
     arm "A": no scale input (cond_dim=0). arm "B": conditions on the per-octave scale
@@ -127,7 +127,7 @@ def train_generator(tiles, train_octaves, arm="A", cond_by_octave=None,
 
     model = ConditionalUNet(out_channels=3, channels=tuple(channels),
                             bottleneck=channels[-1] * 2, cond_dim=cond_dim,
-                            cond_mode=cond_mode)
+                            cond_mode=cond_mode, variance_head=nll)
     key = jax.random.PRNGKey(seed)
     k_init, _ = jax.random.split(key)
     j0 = min(train_octaves)
@@ -141,7 +141,7 @@ def train_generator(tiles, train_octaves, arm="A", cond_by_octave=None,
     for j in train_octaves:
         cv = None if arm == "A" else jnp.broadcast_to(
             jnp.asarray(cond_by_octave[j], jnp.float32), (batch, cond_dim))
-        step_fn[j] = make_step(cv, lam=lambda_disp, t_lo=disp_t_lo)
+        step_fn[j] = make_step(cv, lam=lambda_disp, t_lo=disp_t_lo, nll=nll)
 
     rng = np.random.default_rng(seed)
     ckpt_set = set(ckpt_steps)
@@ -158,6 +158,6 @@ def train_generator(tiles, train_octaves, arm="A", cond_by_octave=None,
     meta = {"std_by_j": std_by_j, "train_octaves": list(train_octaves), "arm": arm,
             "cond_by_octave": cond_by_octave, "cond_dim": cond_dim,
             "cond_mode": cond_mode, "lambda_disp": lambda_disp, "disp_t_lo": disp_t_lo,
-            "loss0": loss0, "lossN": float(loss)}
+            "nll": nll, "loss0": loss0, "lossN": float(loss)}
     return state, meta
 

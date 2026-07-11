@@ -46,6 +46,7 @@ class ConditionalUNet(nn.Module):
     embed_dim: int = 128
     cond_dim: int = 0
     cond_mode: str = "add"      # "add" (embedding sum) or "film" (per-channel modulation)
+    variance_head: bool = False  # phase-1c NLL head: also output per-coefficient log-sigma
 
     @nn.compact
     def __call__(self, detail, t, coarse, cond_vec=None):
@@ -88,4 +89,11 @@ class ConditionalUNet(nn.Module):
             h = _ConvBlock(ch)(h)
             h = inject(h, ch)
 
-        return nn.Conv(self.out_channels, (1, 1))(h)
+        v = nn.Conv(self.out_channels, (1, 1))(h)
+        if not self.variance_head:
+            return v
+        # log-sigma head off the shared trunk; zeros-init so sigma starts at 1 (the
+        # standardized-detail scale). Output is [v, g] -- consumers slice.
+        g = nn.Conv(self.out_channels, (1, 1),
+                    kernel_init=nn.initializers.zeros)(h)
+        return jnp.concatenate([v, g], axis=-1)
