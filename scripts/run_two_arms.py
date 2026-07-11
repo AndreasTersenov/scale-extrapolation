@@ -67,6 +67,11 @@ def main():
                     help="weight of the conditional-dispersion regularizer (step-c objective)")
     ap.add_argument("--disp-t-lo", type=float, default=0.0,
                     help="late-t window lower bound for the dispersion penalty (c' option 1; 0.6)")
+    ap.add_argument("--nll-head", action="store_true",
+                    help="phase-1c option 2: Gaussian-NLL log-sigma head, mean-path + "
+                         "explicit-variance sampling (both arms symmetrically)")
+    ap.add_argument("--ckpt-steps", type=int, nargs="*", default=[],
+                    help="also save arm checkpoints at these step counts (params only)")
     ap.add_argument("--steps", type=int, default=10000)
     ap.add_argument("--batch", type=int, default=32)
     ap.add_argument("--lr", type=float, default=1e-3)
@@ -95,12 +100,21 @@ def main():
     os.makedirs(args.ckpt_dir, exist_ok=True)
     results, t0 = {}, time.time()
     for arm in ("A", "B"):
+        def save_ckpt(step_i, st, loss_i, _arm=arm):
+            path = os.path.join(args.ckpt_dir, f"arm{_arm}_{args.field}_s{step_i}.pkl")
+            with open(path, "wb") as fh:
+                pickle.dump({"params": jax.tree_util.tree_map(np.asarray, st.params),
+                             "step": step_i, "loss": loss_i}, fh)
+            print(f"[run_two_arms] arm {_arm} ckpt @{step_i} loss={loss_i:.4f}", flush=True)
+
         state, meta = train_generator(
             train, args.train_octaves, arm=arm,
             cond_by_octave=(coords if arm == "B" else None),
             channels=tuple(args.channels), steps=args.steps, batch=args.batch,
             lr=args.lr, seed=args.seed, cond_mode=args.cond_mode,
-            lambda_disp=args.lambda_disp, disp_t_lo=args.disp_t_lo)
+            lambda_disp=args.lambda_disp, disp_t_lo=args.disp_t_lo, nll=args.nll_head,
+            ckpt_steps=tuple(args.ckpt_steps),
+            on_checkpoint=(save_ckpt if args.ckpt_steps else None))
         std = dict(meta["std_by_j"])
         for j in range(1, min(args.train_octaves)):
             std[j] = extrapolate_std(meta["std_by_j"], j)
@@ -111,12 +125,12 @@ def main():
                                        (coarse.shape[0], 2)))
         gen = generate_recursive(state.apply_fn, state.params, coarse, args.gen_from,
                                  jax.random.PRNGKey(args.seed + 1), std, cond_fn=cond_fn,
-                                 n_steps=args.sample_steps)
+                                 n_steps=args.sample_steps, nll=args.nll_head)
         results[f"gen_{arm}"] = np.asarray(gen[..., 0])
         ckpt = {"params": jax.tree_util.tree_map(np.asarray, state.params),
                 "channels": list(args.channels), "cond_dim": meta["cond_dim"],
                 "cond_mode": meta["cond_mode"], "lambda_disp": meta["lambda_disp"],
-                "disp_t_lo": meta["disp_t_lo"], "std_by_j": std,
+                "disp_t_lo": meta["disp_t_lo"], "nll": meta["nll"], "std_by_j": std,
                 "coord_norm": COORD_NORM.tolist(),
                 "train_octaves": list(args.train_octaves), "field": args.field}
         with open(os.path.join(args.ckpt_dir, f"arm{arm}_{args.field}.pkl"), "wb") as fh:

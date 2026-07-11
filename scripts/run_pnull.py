@@ -65,6 +65,9 @@ def main():
     ap.add_argument("--lr", type=float, default=1e-3)
     ap.add_argument("--n-heldout", type=int, default=64)
     ap.add_argument("--sample-steps", type=int, default=80)
+    ap.add_argument("--nll-head", action="store_true",
+                    help="phase-1c option 2: Gaussian-NLL log-sigma head, mean-path + "
+                         "explicit-variance sampling (both arms symmetrically)")
     ap.add_argument("--data", default=os.path.join(REPO, "data_cache", "tiles_pnull.npz"))
     ap.add_argument("--out", default=os.path.join(REPO, "results", "pnull_generated.npz"))
     ap.add_argument("--seed", type=int, default=0)
@@ -91,7 +94,7 @@ def main():
             train, args.train_octaves, arm=arm,
             cond_by_octave=(cond if arm == "B" else None),
             channels=tuple(args.channels), steps=args.steps, batch=args.batch,
-            lr=args.lr, seed=args.seed)
+            lr=args.lr, seed=args.seed, nll=args.nll_head)
         std = dict(meta["std_by_j"])
         for j in range(1, min(args.train_octaves)):          # extrapolated finer octaves
             std[j] = extrapolate_std(meta["std_by_j"], j)
@@ -102,7 +105,7 @@ def main():
                                        (coarse.shape[0], 2)))
         gen = generate_recursive(state.apply_fn, state.params, coarse, args.gen_from,
                                  jax.random.PRNGKey(args.seed + 1), std, cond_fn=cond_fn,
-                                 n_steps=args.sample_steps)
+                                 n_steps=args.sample_steps, nll=args.nll_head)
         results[f"gen_{arm}"] = np.asarray(gen[..., 0])
         print(f"[run_pnull] arm {arm}: loss {meta['loss0']:.3f}->{meta['lossN']:.4f} "
               f"gen {results['gen_'+arm].shape} std_by_j={ {k: round(v,3) for k,v in std.items()} }",
