@@ -110,7 +110,7 @@ def overfit_field_recursive(field, j_max=2, channels=(48, 96), steps=2500, lr=2e
 def train_generator(tiles, train_octaves, arm="A", cond_by_octave=None,
                     channels=(32, 64, 128), steps=3000, batch=16, lr=1e-3, seed=0,
                     cond_mode="add", ckpt_steps=(), on_checkpoint=None, lambda_disp=0.0,
-                    disp_t_lo=0.0, nll=False, augment=False):
+                    disp_t_lo=0.0, nll=False, augment=False, corrupt_smax=0.0):
     """Train the shared conditional generator on many tiles across ``train_octaves``.
 
     arm "A": no scale input (cond_dim=0). arm "B": conditions on the per-octave scale
@@ -127,6 +127,8 @@ def train_generator(tiles, train_octaves, arm="A", cond_by_octave=None,
     else:
         assert cond_by_octave is not None, "arm B needs cond_by_octave"
         cond_dim = len(np.atleast_1d(cond_by_octave[train_octaves[0]]))
+    if corrupt_smax > 0:
+        cond_dim += 1                  # the exposed corruption level (4b')
 
     model = ConditionalUNet(out_channels=3, channels=tuple(channels),
                             bottleneck=channels[-1] * 2, cond_dim=cond_dim,
@@ -139,12 +141,15 @@ def train_generator(tiles, train_octaves, arm="A", cond_by_octave=None,
                              (batch,) + c0.shape[1:], cond_dim, lr,
                              total_steps=steps, warmup=max(1, steps // 10))
 
-    # one jitted step per octave (fixed cond vector broadcast to the batch)
+    # one jitted step per octave (fixed cond vector broadcast to the batch; the
+    # corruption level, if any, is appended per-example inside the step)
+    base_dim = cond_dim - (1 if corrupt_smax > 0 else 0)
     step_fn = {}
     for j in train_octaves:
         cv = None if arm == "A" else jnp.broadcast_to(
-            jnp.asarray(cond_by_octave[j], jnp.float32), (batch, cond_dim))
-        step_fn[j] = make_step(cv, lam=lambda_disp, t_lo=disp_t_lo, nll=nll)
+            jnp.asarray(cond_by_octave[j], jnp.float32), (batch, base_dim))
+        step_fn[j] = make_step(cv, lam=lambda_disp, t_lo=disp_t_lo, nll=nll,
+                               corrupt_smax=corrupt_smax)
 
     rng = np.random.default_rng(seed)
     ckpt_set = set(ckpt_steps)
@@ -161,6 +166,7 @@ def train_generator(tiles, train_octaves, arm="A", cond_by_octave=None,
     meta = {"std_by_j": std_by_j, "train_octaves": list(train_octaves), "arm": arm,
             "cond_by_octave": cond_by_octave, "cond_dim": cond_dim,
             "cond_mode": cond_mode, "lambda_disp": lambda_disp, "disp_t_lo": disp_t_lo,
-            "nll": nll, "augment": augment, "loss0": loss0, "lossN": float(loss)}
+            "nll": nll, "augment": augment, "corrupt_smax": corrupt_smax,
+            "loss0": loss0, "lossN": float(loss)}
     return state, meta
 

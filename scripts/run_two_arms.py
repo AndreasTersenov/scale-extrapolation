@@ -74,6 +74,10 @@ def main():
                     help="also save arm checkpoints at these step counts (params only)")
     ap.add_argument("--augment", action="store_true",
                     help="attempt 4a: D4 (flip/rotation) field-level training augmentation")
+    ap.add_argument("--cond-corrupt", type=float, default=0.0,
+                    help="attempt 4b': corrupt the coarse conditioning during training "
+                         "(relative level s~U(0,SMAX), s exposed to the model; s=0 at "
+                         "generation)")
     ap.add_argument("--steps", type=int, default=10000)
     ap.add_argument("--batch", type=int, default=32)
     ap.add_argument("--lr", type=float, default=1e-3)
@@ -115,16 +119,27 @@ def main():
             channels=tuple(args.channels), steps=args.steps, batch=args.batch,
             lr=args.lr, seed=args.seed, cond_mode=args.cond_mode,
             lambda_disp=args.lambda_disp, disp_t_lo=args.disp_t_lo, nll=args.nll_head,
-            augment=args.augment, ckpt_steps=tuple(args.ckpt_steps),
+            augment=args.augment, corrupt_smax=args.cond_corrupt,
+            ckpt_steps=tuple(args.ckpt_steps),
             on_checkpoint=(save_ckpt if args.ckpt_steps else None))
         std = dict(meta["std_by_j"])
         for j in range(1, min(args.train_octaves)):
             std[j] = extrapolate_std(meta["std_by_j"], j)
         pools, _ = field_to_octaves(heldout, [args.gen_from])
         coarse = pools[args.gen_from][1]
-        cond_fn = None if arm == "A" else (
-            lambda j: jnp.broadcast_to(jnp.asarray(coords[j], jnp.float32),
-                                       (coarse.shape[0], 2)))
+        B = coarse.shape[0]
+
+        def cond_fn(j, _arm=arm):
+            parts = []
+            if _arm == "B":
+                parts.append(jnp.broadcast_to(
+                    jnp.asarray(coords[j], jnp.float32), (B, 2)))
+            if args.cond_corrupt > 0:
+                parts.append(jnp.zeros((B, 1), jnp.float32))   # generation: s = 0
+            return jnp.concatenate(parts, axis=1) if parts else None
+
+        if arm == "A" and args.cond_corrupt == 0:
+            cond_fn = None
         gen = generate_recursive(state.apply_fn, state.params, coarse, args.gen_from,
                                  jax.random.PRNGKey(args.seed + 1), std, cond_fn=cond_fn,
                                  n_steps=args.sample_steps, nll=args.nll_head)
@@ -132,7 +147,9 @@ def main():
         ckpt = {"params": jax.tree_util.tree_map(np.asarray, state.params),
                 "channels": list(args.channels), "cond_dim": meta["cond_dim"],
                 "cond_mode": meta["cond_mode"], "lambda_disp": meta["lambda_disp"],
-                "disp_t_lo": meta["disp_t_lo"], "nll": meta["nll"], "std_by_j": std,
+                "disp_t_lo": meta["disp_t_lo"], "nll": meta["nll"],
+                "augment": meta["augment"], "corrupt_smax": meta["corrupt_smax"],
+                "std_by_j": std,
                 "coord_norm": COORD_NORM.tolist(),
                 "train_octaves": list(args.train_octaves), "field": args.field}
         with open(os.path.join(args.ckpt_dir, f"arm{arm}_{args.field}.pkl"), "wb") as fh:

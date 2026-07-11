@@ -160,20 +160,38 @@ def sample_nll(apply_fn, params, key, coarse, out_channels, cond_vec=None, **_):
     return mu + jnp.exp(g) * z
 
 
-def make_step(cond_vec=None, lam=0.0, n_bins=8, t_lo=0.0, nll=False):
+def make_step(cond_vec=None, lam=0.0, n_bins=8, t_lo=0.0, nll=False, corrupt_smax=0.0):
     """Return a jitted training step. ``lam`` > 0 adds the dispersion regularizer (t_lo>0
-    selects the option-1 late-t variant); ``nll=True`` uses the phase-1c NLL-head loss."""
+    selects the option-1 late-t variant); ``nll=True`` uses the phase-1c NLL-head loss.
+
+    ``corrupt_smax`` > 0 (attempt 4b', anti-compounding): corrupt the coarse
+    conditioning input with per-example Gaussian noise, coarse' = coarse +
+    s*std(coarse)*eps with s ~ U(0, corrupt_smax), and EXPOSE s as an extra conditioning
+    dimension appended to ``cond_vec`` (the cascaded-diffusion conditioning-augmentation
+    recipe: the model learns p(detail | corrupted coarse, s), so at generation, where
+    the coarse is its own slightly-drifted output, it does not over-trust the
+    conditioning texture). Generation uses s = 0.
+    """
     @jax.jit
     def step(state, detail, coarse):
         key, new_key = jax.random.split(state.key)
+        coarse_in, cv = coarse, cond_vec
+        if corrupt_smax > 0:
+            key, key_s, key_e = jax.random.split(key, 3)
+            B = detail.shape[0]
+            s = jax.random.uniform(key_s, (B,), maxval=corrupt_smax)
+            noise = jax.random.normal(key_e, coarse.shape)
+            coarse_in = coarse + s[:, None, None, None] * coarse.std() * noise
+            cv = s[:, None] if cond_vec is None else jnp.concatenate(
+                [cond_vec, s[:, None]], axis=1)
 
         def loss_fn(p):
             if nll:
-                return cfm_loss_nll(p, state.apply_fn, detail, coarse, key, cond_vec)
+                return cfm_loss_nll(p, state.apply_fn, detail, coarse_in, key, cv)
             if lam > 0:
-                return cfm_loss_dispersion(p, state.apply_fn, detail, coarse, key,
-                                           cond_vec, lam, n_bins, t_lo)
-            return cfm_loss(p, state.apply_fn, detail, coarse, key, cond_vec)
+                return cfm_loss_dispersion(p, state.apply_fn, detail, coarse_in, key,
+                                           cv, lam, n_bins, t_lo)
+            return cfm_loss(p, state.apply_fn, detail, coarse_in, key, cv)
 
         loss, grads = jax.value_and_grad(loss_fn)(state.params)
         state = state.apply_gradients(grads=grads).replace(key=new_key)
