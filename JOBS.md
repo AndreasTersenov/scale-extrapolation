@@ -14,7 +14,16 @@ generation. GPU via SLURM only.
   amplitude fix). `RESULTS-toy.md` written.
 
 ## IN FLIGHT
-**None.** All phase-1c step-1 and attempt-4a jobs harvested.
+**None.** All phase-1c jobs harvested (step 1, 4a, 4b′).
+
+## HARVESTED (attempt 4b′ — conditioning robustness)
+- **15753842/15753843** (s_max 0.1/0.3, hashes 4f5bbe7b0f/9f56a059ad): **LEVER BAR
+  FAILED** both values, both arms (oct-2 z 4.7–7.6 vs the fixed ceiling); project bar
+  failed; stopped at the readout. Decomposition: corruption RAISED the heads' own
+  ceilings (~at real at oct 2) and kurtosis, but s_gen=0 sampling never engages the
+  robustness — end-to-end unmoved. Zero-training follow-up candidate: re-sample the
+  existing s=0.3 ckpts (`data_cache/ckpt_4bp_s0.3/`) with pre-registered s_gen>0.
+  `RESULTS-phase1c.md` §4b′, `results/readout_4bp.png`.
 
 ## HARVESTED (attempt 4a — augmentation diagnosis test)
 - **15744601** (`scripts/arms_aug.slurm`, hash 1e61bd812a): collapse GONE within 20k

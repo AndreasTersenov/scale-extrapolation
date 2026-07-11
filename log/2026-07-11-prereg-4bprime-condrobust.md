@@ -69,6 +69,20 @@ Expected ~8–10 min each (4a ran 453 s; no mid-training checkpoints here). Harv
 (descriptive: did corruption training lower the head's own given-real-coarse response?
 — the attenuation risk).
 
+## RESULT (2026-07-11, harvested same day): LEVER BAR FAILED — STOPPED at the readout
+
+Jobs 15753842/15753843 completed (491/507 s, hashes verified). Oct-2 end-to-end vs the
+fixed ceiling: z≈6.7/4.7 (arm A, s=0.1/0.3), z≈7.6 (arm B, both) → lever FAILED both
+sweep values, both arms (oct 3–4 pass, already at ceiling). Project bar also failed;
+ceiling-binds branch not reached. KEY decomposition: corruption training RAISED the
+heads' own ceilings (A oct-2 0.956→0.996 ≈ real; oct-3 0.683→0.748) and moved kurtosis
+toward real (A s=0.3 oct-3 at real), but end-to-end did not move — the trained
+robustness is never engaged because generation samples at s_gen=0. The literature's
+operating mode (inference-time matched conditioning noise) was excluded by this
+prereg's own s_gen=0 choice; re-sampling the EXISTING s=0.3 checkpoints with a
+pre-registered s_gen>0 is the zero-training follow-up candidate — reconvene's call.
+Full record: RESULTS-phase1c.md §4b′, results/readout_4bp.png.
+
 ## Predictions (Claude; reconvene's alongside)
 
 - P-lever (either s_max passes the lever bar): **60%** (reconvene: 55%). Precedented

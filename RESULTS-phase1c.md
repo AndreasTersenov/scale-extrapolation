@@ -120,6 +120,43 @@ Also descriptive: arm B's OOD amplitude blow-up is GONE under augmentation (oct-
 detail_std 0.689–0.729 vs real 0.743, was +71%/+43%); P4 at oct 1 PASSES (1.9%/7.2%);
 P5 break intact (z≈8); kurtosis still fails (~3.0 vs 6.7 at oct 2).
 
+## Attempt 4b′ — conditioning robustness (ruling of 2026-07-11, post-4a)
+
+Pre-registered `log/2026-07-11-prereg-4bprime-condrobust.md`; jobs 15753842/15753843,
+hashes 4f5bbe7b0f/9f56a059ad verified. Figure: `results/readout_4bp.png`.
+
+**LEVER BAR: FAILED** (both s_max, both arms; binding at octave 2). End-to-end oct-2
+var_slope vs the fixed 4a ceiling: arm A 0.709±0.012 (s=0.1) / 0.773±0.018 (s=0.3) vs
+0.956±0.035 → z≈6.7 / 4.7; arm B 0.700/0.701 vs 1.016±0.039 → z≈7.6. Octaves 3–4 pass
+(already at ceiling). **Project bar: also failed** (oct 2–3 vs real). Ceiling-binds
+branch: NOT reached (it presupposes the lever passing). Bounded-OOD: still satisfied
+descriptively (oct-1 amplitude 0.700–0.736 vs real 0.743).
+
+**The decomposition is the finding.** The pre-registered attenuation check inverted:
+corruption training RAISED the heads' own given-real-coarse ceilings — arm A oct 2:
+0.956→0.996 (≈ real 1.020), oct 3: 0.683→0.748 (real 0.801); similar at s=0.1 — a free
+regularization gain that also moved kurtosis (arm A s=0.3: oct-3 kurtosis 3.88±0.73 vs
+real 3.94±0.68 — at real; oct 2: 3.90 vs 2.99 before, real 6.69). Yet end-to-end did
+not move (s=0.1 slightly WORSE than no corruption: 0.709 vs 0.746): the
+end-to-end-minus-ceiling gap widened. **The robustness was trained but is never
+engaged: generation samples at s=0, the "trust the conditioning fully" mode.** The
+recipe's own literature applies non-zero conditioning noise at INFERENCE matched to the
+drift; the pre-registered s_gen=0 choice (made to avoid a hand-tuned knob) plausibly
+discarded the operating mode the mechanism needs.
+
+**Prediction verdicts:** P-lever 60% → failed. P-s0.3>s0.1 at oct 2 → correct
+(0.773 vs 0.709, arm A). P-project 20% → failed as expected. P-ceiling-binds → n/a.
+
+**For the reconvene (observations only, stopped at the readout):** (1) the cheapest
+next probe reuses the EXISTING s=0.3 checkpoints with inference-time matched corruption
+(corrupt the generated coarse at a pre-registered s_gen>0 and expose it) — zero
+training, one generation job; principled per the cascaded-diffusion literature, though
+it must be pre-registered as a sampling-procedure change, not tuned. (2) The ceiling is
+NOT immovable (corruption training raised it toward real at every octave) — relevant to
+the oct-3 ceiling-binds concern and possibly to the kurtosis branch. (3) Original-4b
+revival remains pre-named but its premise (head under-response binding) is now weaker
+at oct 2 (own-ceiling ≈ real) and the binding failure is squarely the recursion.
+
 ## For the reconvene (observations, not actions — G-1c bars further variants)
 
 The mechanism points at the MEAN's finite-data memorization as the single upstream
