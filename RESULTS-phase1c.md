@@ -157,6 +157,28 @@ the oct-3 ceiling-binds concern and possibly to the kurtosis branch. (3) Origina
 revival remains pre-named but its premise (head under-response binding) is now weaker
 at oct 2 (own-ceiling ≈ real) and the binding failure is squarely the recursion.
 
+## Attempt 4b′-ii — inference-time matched corruption: STOPPED AT ITS OWN GATE
+
+Ruling `log/2026-07-11-reconvene-4bprime.md` authorized engaging the trained
+robustness at inference (existing s=0.3 checkpoints, zero training), gated on a
+pre-generation drift measurement: primary adjudication only at s_gen = s_matched, and
+**stop if s_matched > 0.3**. The measurement (`scripts/measure_drift_smatched.py`,
+`results/smatched_4bpii.{json,png}`) fired the stop: white-noise corruption of real
+coarse cannot reproduce the measured end-to-end attenuation anywhere in the trained
+range (head reaches only 0.86/0.85 at s=0.35 vs targets 0.773/0.701 at oct 2; the only
+crossing at all is arm A oct 3 at 0.335 > 0.3). Aligned generated-vs-real coarse
+residual: 0.91–1.15. **No generation was run.**
+
+**What this measured (the round's second methods datum):** the conditioning drift is
+NOT additive noise — per unit amplitude, white noise is far less damaging to the
+head's modulation than the actual drift (white noise averages out over the receptive
+field; the drift's structure does not). Matched white-noise corruption is therefore
+the wrong noise model for anti-compounding here; a drift-shaped corruption (self-
+conditioning on generated coarse, or corruption by an alternative conditional sample)
+is the measurement's direct suggestion — reconvene's call. The 4b′ regularization gain
+stands (the s=0.3 heads' own ceilings ≈ real, now with SEs: A oct-2 0.996±0.041,
+oct-3 0.748±0.026).
+
 ## For the reconvene (observations, not actions — G-1c bars further variants)
 
 The mechanism points at the MEAN's finite-data memorization as the single upstream

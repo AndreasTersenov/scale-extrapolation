@@ -14,7 +14,9 @@ generation. GPU via SLURM only.
   amplitude fix). `RESULTS-toy.md` written.
 
 ## IN FLIGHT
-**None.** All phase-1c jobs harvested (step 1, 4a, 4b′).
+**None.** All phase-1c jobs harvested (step 1, 4a, 4b′). 4b′-ii submitted NO job — it
+terminated at its pre-registered gate (s_matched > 0.3; the drift is not additive
+noise). `log/2026-07-11-prereg-4bpii-smatched.md`, `results/smatched_4bpii.png`.
 
 ## HARVESTED (attempt 4b′ — conditioning robustness)
 - **15753842/15753843** (s_max 0.1/0.3, hashes 4f5bbe7b0f/9f56a059ad): **LEVER BAR
