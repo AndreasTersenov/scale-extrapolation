@@ -14,11 +14,11 @@ steps = [
     (10.4, "STAGE 0 — measure real fields", "The non-Gaussian statistics DRIFT with scale, and the drift is low-dimensional (2 numbers).", GREEN, "DONE"),
     (9.0, "Toy ladder (i)(ii)(iii)", "Single-octave overfit ✓, coarse-to-fine recursion ✓, GRF end-to-end NULL (P-null) ✓.", GREEN, "GREEN"),
     (7.6, "P4 — power spectrum extrapolates", "Both arms get the amplitude right at the untrained octave (~5%).", GREEN, "PASS"),
-    (6.2, "P5 — THE BREAK (load-bearing)", "Weight-tied arm A (no scale input) gets the conditional non-Gaussianity WRONG at the untrained octave (5.8-11.3 sigma). Confirmed, robust.", GREEN, "CONFIRMED"),
+    (6.2, "P5 — THE BREAK (load-bearing)", "Weight-tied arm A (no scale input) gets the conditional non-Gaussianity WRONG\nat the untrained octave (5.8-11.3 sigma). Confirmed, robust.", GREEN, "CONFIRMED"),
     (4.6, "P6 — the repair", "Arm B (given the 2-D scale coordinate) should fix it. BLOCKED: see diagnosis.", RED, "BLOCKED"),
-    (3.2, "DIAGNOSIS (reconvene: K-T2 did NOT fire)", "The conditioning is fine (FiLM moves the right way). The blocker is the GENERATOR: L2 flow matching under-disperses conditional variance, WORSE with training.", AMBER, "cause found"),
-    (1.6, "Variance-faithful program", "(a) SDE churn, (b) checkpoint sweep, (c)+(c') dispersion penalties — ALL fall short of the fidelity bar. Twice-confirmed: a training penalty can't fix a deterministic-sampler problem.", RED, "a,b,c,c' fail"),
-    (0.1, "NOW → option 2 (learned noise) + decision", "Fix the SAMPLING: a learned conditional noise (SDE) / Gaussian-NLL head. 2a stays inside flow matching; 2b would replace it -> reconvene picks.", AMBER, "pending"),
+    (3.2, "DIAGNOSIS (reconvene: K-T2 did NOT fire)", "The conditioning is fine (FiLM moves the right way). The blocker is the GENERATOR:\nL2 flow matching under-disperses conditional variance, WORSE with training.", AMBER, "cause found"),
+    (1.6, "Variance-faithful program", "(a) SDE churn, (b) checkpoint sweep, (c)+(c') dispersion penalties — ALL fall short of\nthe fidelity bar. Twice-confirmed: a training penalty can't fix a deterministic-sampler problem.", RED, "a,b,c,c' fail"),
+    (0.1, "NOW — PHASE 1c: the Gaussian-NLL head (reconvene-approved)", "The model now PREDICTS the conditional spread and samples with it (mean-path +\nlearned noise, no churn). Built, unit gates green (results/nllhead_gate.png). GRF-null +\narms A/B jobs queued behind cluster maintenance -> G-1c verdict, then the fair P6 retest.", BLUE, "in flight"),
 ]
 fig, ax = plt.subplots(figsize=(12, 11))
 ax.set_xlim(0, 10); ax.set_ylim(-0.6, 11.4); ax.axis("off")
