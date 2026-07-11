@@ -3,6 +3,16 @@
 All fields are synthetic and generated in-test (the GRF null gate is executable, per
 CLAUDE.md): no dependence on the cluster data directory, so the gate runs anywhere.
 """
+import os
+
+# MUST precede numpy: on the shared login node the cgroup thread limit can make
+# OpenBLAS's per-core thread spawn die at pthread_create, and the C library then
+# exits(1) SILENTLY mid-test (pytest prints dots, no summary, exit 1 -- seen 2026-07-11
+# as a Stop-hook failure). These tests are small-matrix; BLAS threads buy nothing here.
+for _v in ("OMP_NUM_THREADS", "OPENBLAS_NUM_THREADS", "MKL_NUM_THREADS",
+           "NUMEXPR_NUM_THREADS"):
+    os.environ.setdefault(_v, "1")
+
 import numpy as np
 
 from scaledrift import lognormal_field, powerlaw_grf
