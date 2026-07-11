@@ -51,6 +51,20 @@ out `results/arms_aug.npz`, ckpt-dir `data_cache/ckpt_aug`.
 **config_hash 1e61bd812a** (absolute paths pinned in the SLURM script).
 Expected wall: ~35–45 min (2 arms × 20k NLL steps at MIG ~2/7 compute).
 
+## RESULT (2026-07-11, harvested same day): readout delivered — rule-dependent, STOPPED
+
+Job 15744601 completed (453 s, hash 1e61bd812a verified). **The collapse is gone within
+the horizon**: augmented oct-2 implied var_slope flat at 0.95–1.01 from 4k to 20k
+(real 1.02; baseline had sunk to 0.75 by 10k); σ-share 86–93% vs baseline 81→17%.
+**Rule caveat, reported honestly:** the literal onset rule fires at 2k on a warm-up dip
+that PRECEDES the curve's peak (6k) → literal reading REFUTED; the running-peak intent
+reading gives onset censored >20k → CONFIRMED (strongest form). Both computed in
+`scripts/signature_4a.py`; reconvene adjudicates. Descriptive extras: end-to-end frozen
+scorer still 0.746±0.014 at oct 2 (~7σ) — the deficit moved from the head (fixed) to
+RECURSION COMPOUNDING (generated coarse flattens octave-by-octave); arm B's OOD
+amplitude instability disappeared under augmentation; P5 intact; kurtosis still short.
+Stopped at the readout per the ruling.
+
 ## Predictions
 
 P-4a-shift (signature CONFIRMED): **65%** (the ruling's number; mine agrees — the

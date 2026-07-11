@@ -87,6 +87,39 @@ the unit-scale toy passed while the real fields failed — the toy had no
 memorization-capacity mismatch (its σ carried all signal; the real fields' mean can
 substitute for variance), which is exactly the gap the diagnosis exposes.
 
+## Attempt 4a — the diagnosis test (D4 augmentation alone; ruling of 2026-07-11)
+
+Pre-registered `log/2026-07-11-prereg-4a-augment.md`; job 15744601, hash 1e61bd812a
+verified. Figure: `results/signature_4a.png`.
+
+**Readout: the collapse is GONE within the 20k horizon.** Implied var_slope (oct 2,
+arm A): baseline 0.97@2k → 0.75@10k (collapse); augmented 0.94@1k → dip 0.85@2k →
+**0.97–1.01 flat from 4k to 20k** (real: 1.02). The σ-head's share of generated
+variance: baseline crashes 81%→17%; augmented holds **86–93% throughout** — the
+variance channel stays alive. Training loss floors at 1.26 vs 0.43 un-augmented (less
+memorization headroom), as the diagnosis predicts.
+
+**Signature adjudication — honest rule caveat.** The LITERAL pre-registered onset rule
+("first checkpoint ≥0.10 below the curve's maximum") fires at 2k — on the warm-up dip
+that PRECEDES the curve's own peak (6k), which cannot be a collapse onset; the rule was
+written against curves that peak first (true of the baseline, where both readings
+coincide at 4k). Under the rule as written: REFUTED. Under its manifest intent (drop
+from the RUNNING peak): censored >20k → CONFIRMED in the strongest form. Both readings
+are computed and reported (`scripts/signature_4a.py`); the visual fact is not in
+dispute. **Stopped at the readout; the reconvene adjudicates the rule.**
+
+**Second finding (descriptive, frozen scorer on the 20k fields —
+`results/arms_aug_score.json`): the head is fixed but the RECURSION now limits.**
+End-to-end (coarse-to-fine from octave 4), oct-2 var_slope measures 0.746±0.014 vs
+real 1.020±0.038 (~7σ) even though the head's conditional response GIVEN REAL COARSE
+is 0.96. The deficit has moved: no longer the head's collapse, but octave-to-octave
+compounding — each octave conditions on generated (slightly flattened) coarse, and the
+flattening accumulates (oct 4: 0.475 vs 0.532 mild → oct 2: 0.75). Note for any 4b
+decision: the two-stage residual-fit targets head calibration, not compounding.
+Also descriptive: arm B's OOD amplitude blow-up is GONE under augmentation (oct-1
+detail_std 0.689–0.729 vs real 0.743, was +71%/+43%); P4 at oct 1 PASSES (1.9%/7.2%);
+P5 break intact (z≈8); kurtosis still fails (~3.0 vs 6.7 at oct 2).
+
 ## For the reconvene (observations, not actions — G-1c bars further variants)
 
 The mechanism points at the MEAN's finite-data memorization as the single upstream

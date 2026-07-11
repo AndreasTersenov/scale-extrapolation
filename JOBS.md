@@ -14,7 +14,15 @@ generation. GPU via SLURM only.
   amplitude fix). `RESULTS-toy.md` written.
 
 ## IN FLIGHT
-**None.** All phase-1c step-1 jobs harvested.
+**None.** All phase-1c step-1 and attempt-4a jobs harvested.
+
+## HARVESTED (attempt 4a — augmentation diagnosis test)
+- **15744601** (`scripts/arms_aug.slurm`, hash 1e61bd812a): collapse GONE within 20k
+  (implied oct-2 var_slope flat at ~real; σ-share ~90%); literal onset rule mis-fires
+  on the pre-peak warm-up dip (literal REFUTED / running-peak intent CONFIRMED) —
+  **stopped at the readout, reconvene adjudicates the rule.** End-to-end scorer still
+  ~7σ at oct 2: deficit moved to recursion compounding. `RESULTS-phase1c.md` §4a,
+  `results/signature_4a.png`, `results/arms_aug_score.json`.
 
 ## HARVESTED (phase 1c, step 1 — Gaussian-NLL detail head)
 Pre-registered `log/2026-07-11-prereg-1c-nllhead.md`.
