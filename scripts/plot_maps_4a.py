@@ -74,10 +74,14 @@ show(ax[0, 2], gN[i], "G-1c generator\n(σ collapsed: memorized texture)",
      vmin=v[0], vmax=v[1])
 show(ax[0, 3], gA[i], "4a generator (8x augmented:\nσ-channel alive, ~90%)",
      vmin=v[0], vmax=v[1])
+from matplotlib.patches import Rectangle
+for col in (1, 2, 3):        # mark the SAME zoom window on each full map
+    ax[0, col].add_patch(Rectangle((-0.5, -0.5), Z, Z, fill=False, edgecolor="white",
+                                   ls="--", lw=1.4))
 vz = clim(real[i][:Z, :Z])
 ax[1, 0].axis("off")
-ax[1, 0].text(0.5, 0.5, "ZOOM on the fine\ntexture (40x40) →", ha="center",
-              va="center", fontsize=11, transform=ax[1, 0].transAxes)
+ax[1, 0].text(0.5, 0.5, "ZOOM: the SAME 40x40\nwindow of each map\n(dashed box above) →",
+              ha="center", va="center", fontsize=11, transform=ax[1, 0].transAxes)
 for col, (img, lab) in enumerate(((real[i], "real texture"), (gN[i], "G-1c texture"),
                                   (gA[i], "4a texture")), start=1):
     show(ax[1, col], img[:Z, :Z], "", vmin=vz[0], vmax=vz[1])
