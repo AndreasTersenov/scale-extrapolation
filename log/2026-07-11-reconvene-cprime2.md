@@ -66,3 +66,21 @@ Phase-2 frozen-core candidates from this review:
   Vilasini/Jean-Luc (alliance, not competition; candidate collaboration).
 - Cosmology-conditioning (Gower Street grid) noted as the answer to GOLCONDA's
   parameterization advantage — phase-2+ scope decision.
+
+## ADDENDUM 3 (2026-07-11) — Dai–Seljak lineage positioning (Andreas's question)
+
+TRENF (2202.05282) / MultiscaleFlow (2306.04689) / CTFM (2505.00632) — Andreas has
+deep-reads of the latter two (claude-notes, 2026-07-03, verdict build-on). Phase-2
+consequences:
+1. **Related work:** MultiscaleFlow = nearest cosmology relative (same Haar hierarchical
+   conditional decomposition, verified volume-preserving) — cite alongside WC-RG;
+   differences: per-scale training with data at all scales (no tying → no extrapolation),
+   likelihood-first (flows), detection-flavored robustness. TRENF = the design-philosophy
+   ancestor: hard-coded exact symmetries; D4 = the same move on the APPROXIMATE scale
+   symmetry with the measured 2-D breaking as conditioning (positioning line).
+2. **Under-dispersion novelty kill-test SCOPE (binding):** must sweep the
+   Kirichenko-2020 / CTFM-GLOW "generative-family characteristic pathology" lineage —
+   our finding is plausibly the FM-side counterpart of the flows-side likelihood
+   pathology; the claim's edge must be located there.
+3. Candidate baseline/validation borrow: MultiscaleFlow's cross-scale likelihood
+   consistency as another held-out judge (their instrument, like the ST covariance).
