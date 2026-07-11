@@ -68,6 +68,8 @@ def main():
     ap.add_argument("--nll-head", action="store_true",
                     help="phase-1c option 2: Gaussian-NLL log-sigma head, mean-path + "
                          "explicit-variance sampling (both arms symmetrically)")
+    ap.add_argument("--augment", action="store_true",
+                    help="attempt 4a: D4 (flip/rotation) field-level training augmentation")
     ap.add_argument("--data", default=os.path.join(REPO, "data_cache", "tiles_pnull.npz"))
     ap.add_argument("--out", default=os.path.join(REPO, "results", "pnull_generated.npz"))
     ap.add_argument("--seed", type=int, default=0)
@@ -94,7 +96,7 @@ def main():
             train, args.train_octaves, arm=arm,
             cond_by_octave=(cond if arm == "B" else None),
             channels=tuple(args.channels), steps=args.steps, batch=args.batch,
-            lr=args.lr, seed=args.seed, nll=args.nll_head)
+            lr=args.lr, seed=args.seed, nll=args.nll_head, augment=args.augment)
         std = dict(meta["std_by_j"])
         for j in range(1, min(args.train_octaves)):          # extrapolated finer octaves
             std[j] = extrapolate_std(meta["std_by_j"], j)

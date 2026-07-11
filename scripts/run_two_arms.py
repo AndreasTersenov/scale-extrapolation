@@ -72,6 +72,8 @@ def main():
                          "explicit-variance sampling (both arms symmetrically)")
     ap.add_argument("--ckpt-steps", type=int, nargs="*", default=[],
                     help="also save arm checkpoints at these step counts (params only)")
+    ap.add_argument("--augment", action="store_true",
+                    help="attempt 4a: D4 (flip/rotation) field-level training augmentation")
     ap.add_argument("--steps", type=int, default=10000)
     ap.add_argument("--batch", type=int, default=32)
     ap.add_argument("--lr", type=float, default=1e-3)
@@ -113,7 +115,7 @@ def main():
             channels=tuple(args.channels), steps=args.steps, batch=args.batch,
             lr=args.lr, seed=args.seed, cond_mode=args.cond_mode,
             lambda_disp=args.lambda_disp, disp_t_lo=args.disp_t_lo, nll=args.nll_head,
-            ckpt_steps=tuple(args.ckpt_steps),
+            augment=args.augment, ckpt_steps=tuple(args.ckpt_steps),
             on_checkpoint=(save_ckpt if args.ckpt_steps else None))
         std = dict(meta["std_by_j"])
         for j in range(1, min(args.train_octaves)):
