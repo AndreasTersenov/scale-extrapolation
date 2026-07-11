@@ -14,9 +14,17 @@ generation. GPU via SLURM only.
   amplitude fix). `RESULTS-toy.md` written.
 
 ## IN FLIGHT
-**None.** All phase-1c jobs harvested (step 1, 4a, 4b′). 4b′-ii submitted NO job — it
-terminated at its pre-registered gate (s_matched > 0.3; the drift is not additive
-noise). `log/2026-07-11-prereg-4bpii-smatched.md`, `results/smatched_4bpii.png`.
+**None.** All phase-1c jobs harvested (step 1, 4a, 4b′, attempt 5). 4b′-ii submitted
+no job (gate-stop). **THE GENERATOR IS FROZEN** (attempt-5 pre-commitment): no further
+generator variants without a new phase + Andreas's sign-off.
+
+## HARVESTED (attempt 5 — self-conditioning, FINAL)
+- **15762584/15762585** (p=0.5/1.0, hashes ffdeac4d4b/ccc86ccf1b): **branch B5 —
+  lever FAILED with degradation** (oct-2 end-to-end 0.41–0.48 vs 4a's 0.73–0.77);
+  the discriminator proved the compounding limit is INFORMATIONAL (4a's end-to-end =
+  its drifted-input response 0.742≈0.746; honest conditional given drifted coarse ≈
+  0.53). Generator frozen at calibrated heads + measured limit.
+  `RESULTS-phase1c.md` §attempt-5, `results/readout_a5.png`.
 
 ## HARVESTED (attempt 4b′ — conditioning robustness)
 - **15753842/15753843** (s_max 0.1/0.3, hashes 4f5bbe7b0f/9f56a059ad): **LEVER BAR

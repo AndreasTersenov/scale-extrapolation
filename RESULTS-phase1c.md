@@ -179,6 +179,40 @@ is the measurement's direct suggestion — reconvene's call. The 4b′ regulariz
 stands (the s=0.3 heads' own ceilings ≈ real, now with SEs: A oct-2 0.996±0.041,
 oct-3 0.748±0.026).
 
+## Attempt 5 — self-conditioning (FINAL generator attempt): LEVER FAILED, branch B5 — GENERATOR FROZEN
+
+Pre-registered `log/2026-07-11-prereg-attempt5-selfcond.md` (weighted branches); jobs
+15762584/15762585, hashes ffdeac4d4b/ccc86ccf1b verified. Figure: `results/readout_a5.png`.
+
+**Branch B5 (degradation; my weight 5%, largest single miss of my distribution —
+though B4+B5 = 40% carried the mechanism).** Octave-2 end-to-end DROPPED: 4a reference
+A 0.746 / B 0.734 → p=0.5: 0.482/0.410; p=1.0: 0.467/0.444. Extrapolated octave
+collapsed to 0.24–0.39. Bounded-OOD amplitude still holds (oct-1 within 10%). p=1.0
+also lost the real-coarse ceiling (0.611/0.502 at oct 2 — pure self-conditioning
+withers the clean conditional); p=0.5 kept it (0.992/1.005).
+
+**The mechanism, measured (the discriminator):** on the SAME drifted (4a-generated)
+coarse at oct 2, the 4a model responds 0.742 — equal to its end-to-end 0.746 within
+0.004 (end-to-end IS the drifted-input response, confirmed) — while the
+self-conditioned models respond 0.530/0.524: they learned the HONEST,
+information-limited conditional given drifted coarse, and honesty is LOWER than the
+4a model's over-trusting extrapolation. Conclusion, closing the anti-compounding
+program: **the compounding limit is informational.** The generated coarse carries only
+~half the modulation; naive over-trust already extracts ~0.74 of it; no
+conditioning-side or head-side training can exceed that without making the generated
+coarse itself more faithful — and octaves 3–4 are already at their own ceilings on
+var_slope, so the leak is in off-manifold texture the tracked couplings don't see.
+
+**Per the pre-commitment (`log/2026-07-11-reconvene-4bpii.md`): the generator FREEZES
+at "calibrated heads + measured compounding limit". No attempt 6.** The banked
+contribution: the P5 break (robust, every config); the collapse law (causally
+confirmed by intervention); calibrated heads (given real coarse: var_slope ≈ real at
+oct 2, kurtosis at real at oct 3); the drift measurements (structured, not additive;
+informational limit; end-to-end = drifted-input response); and the validation
+architecture. Prediction verdicts: reconvene P-lever 55% → miss; my B-distribution
+(B1 20 / B2 15 / B3 25 / B4 35 / B5 5) → B5 fired: directionally right about
+no-recovery (B4+B5=40 vs reconvene's 45 on pass), wrong that it would be harmless.
+
 ## For the reconvene (observations, not actions — G-1c bars further variants)
 
 The mechanism points at the MEAN's finite-data memorization as the single upstream

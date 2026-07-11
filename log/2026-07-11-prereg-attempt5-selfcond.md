@@ -57,6 +57,18 @@ Reference end-to-end (4a run, oct 2): A 0.746±0.014, B 0.734±0.014.
 information-limit reading shift my weight to B4. Registered disagreement.)
 P-project-dispersion: mine 25% (reconvene 40%). P-kurt-oct2: 10% (reconvene 15%).
 
+## RESULT (2026-07-11, harvested same day): BRANCH B5 — LEVER FAILED — GENERATOR FROZEN
+
+Jobs completed (573/～570 s, hashes verified). Oct-2 end-to-end DROPPED to 0.482/0.410
+(p=0.5) and 0.467/0.444 (p=1.0) vs the 4a reference 0.746/0.734; oct-1 collapsed to
+0.24–0.39; bounded-OOD amplitude still within band. p=1.0 lost the real-coarse ceiling
+too (0.611/0.502); p=0.5 kept it (0.992/1.005). Discriminator: on the SAME drifted
+coarse (oct 2, arm A) — 4a model 0.742 (= its end-to-end 0.746), self-conditioned
+models 0.530/0.524 = the honest information-limited conditional. The compounding limit
+is INFORMATIONAL; over-trust extracts more of the drifted conditioning than honesty
+does; no conditioning-side fix exists. Per the pre-commitment: generator frozen, phase
+reshapes. Full record RESULTS-phase1c.md §attempt-5; figure results/readout_a5.png.
+
 ## Jobs (MIG h100_20gb, ≤1:30 each, absolute paths pinned)
 
 1. `scripts/arms_a5_p05.slurm`: --selfcond-p 0.5 → `results/arms_a5_p05.npz`,
