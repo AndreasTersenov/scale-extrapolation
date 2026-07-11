@@ -13,8 +13,24 @@ generation. GPU via SLURM only.
 - Rung (v) transfer P13 — **CONCLUDED**: not demonstrated (same cap; arm B transfers an
   amplitude fix). `RESULTS-toy.md` written.
 
-## IN FLIGHT
-**None.** All jobs harvested.
+## IN FLIGHT (phase 1c, step 1 — Gaussian-NLL detail head)
+Pre-registered `log/2026-07-11-prereg-1c-nllhead.md`. Submitted 2026-07-11 into a
+**maintenance drain** (68/72 b1 nodes draining) — they start when it lifts; do NOT
+resubmit/churn.
+- **15738957** `scripts/pnull_nll.slurm` (MIG) → `results/pnull_nll.npz`,
+  config_hash dc676a1f01. The GRF-null binding condition.
+- **15738958** `scripts/arms_nll.slurm` (full H100) → `results/arms_nll.npz` +
+  `data_cache/ckpt_nll/` (2k-granularity ckpts), config_hash 4866f6e236. The G-1c
+  dispersion/kurtosis run (gowerstreet arms A/B, FiLM, NLL head).
+
+**Harvest:** check the runtime config_hash in each log matches the pre-registered one;
+then (scaledrift env, `source env.sh`):
+```bash
+python scripts/measure_generated.py --npz results/pnull_nll.npz   # GRF null: j=1 both arms ~ real
+python scripts/measure_generated.py --npz results/arms_nll.npz    # G-1c: var_slope 1sigma @ oct 2,3,4 BOTH arms; kurtosis 2sigma
+```
+Adjudicate per the prereg's frozen bars; REPORT AND STOP at G-1c (student-t NLL is the
+single pre-named fallback ONLY if variance passes and kurtosis fails).
 
 ## VARIANCE-FAITHFUL PROGRAM (reconvene-approved; unblocks P6/P13)
 Ordered (a)→(b)→(c), each pre-registered. Success bar = trained-octave var_slope within 1σ

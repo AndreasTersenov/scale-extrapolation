@@ -82,6 +82,12 @@ env), bootstrap N=200 over 64 held-out fields — the frozen stage-0 instrument,
 - Trained-octave detail amplitude stays within a few % (no degradation): **85%**
   (mu² + e^{2g} matches the second moment by NLL optimality).
 
+## Submitted
+
+2026-07-11: job **15738957** (pnull_nll, MIG) and **15738958** (arms_nll, full H100).
+Both PENDING on ReqNodeNotAvail — the cluster is in a maintenance drain (68/72 b1 nodes
+draining); left queued per policy, no resubmission churn.
+
 ## Expected timings
 
 pnull ~6–10 min on MIG (8k steps, NLL adds a second forward ≈1.5×; sampling is ~160×
