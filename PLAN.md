@@ -1,111 +1,107 @@
-# PLAN — Toy phase: RG-consistent generation (break & repair)
+# PLAN — Phase 1c: variance-faithful generator, fair P6/P13, validation-architecture pilot
 
-**Phase 1.** Stage-0 passed (`PLAN-stage0.md`, `RESULTS.md`, 2026-07-10): N-body
-conditional-wavelet statistics drift 3–7σ across adjacent octaves (GRF null clean at
-|z|=0.15), the drift is **effectively 2-dimensional** (2 PCA components ≥85%), the
-running-coupling coordinates are extracted (var_slope, kurtosis, cross-octave ρ — smooth,
-monotonic), and the same drift shape appears in different sim physics (hf_pm_1024).
-This phase runs the pre-registered break-and-repair experiment: P4/P5/P6 (+ new P13).
-Context: `~/claude-notes/brainstorms/2026-07-09-dl-project-directions.md` (§D4, v1.1
-predictions, v2/v3). **Positioning per novelty sweep:** the contribution is NOT
-weight-tied wavelet FM (WFM arXiv:2605.16573 exists; 1D equivariance proof
-arXiv:2605.17582; ancestor WC-RG arXiv:2207.04941) — it is the measured **non-Gaussian
-break under extrapolation and its low-dimensional repair**.
-
-**Stack (binding, per CLAUDE.md):** JAX, jax_flows FM core; `scaledrift/` (this repo,
-gate-tested) is the measurement instrument — reuse, never reimplement; `wl_stats_torch`
-for wavelet-L1/peaks validation at the numpy boundary. GPU via SLURM only
-(rrg-lplevass GPU / def-lplevass CPU).
+**Status entering this phase** (re-anchor from disk, not compacted memory: RESULTS-toy.md,
+PLAN-phase1.md, log/2026-07-10-prereg-varfaithful-*.md, log/2026-07-11-reconvene-cprime2.md
+INCLUDING both addenda): P5 (the break) is confirmed and accepted. P6/P13 are
+blocked-pending-retest: L2 flow matching under-disperses conditional variance (twice-plus-
+once-confirmed: random-t penalty, late-t penalty, and churn all fail; dispersion peaks at
+~2k steps and collapses with training; the deterministic-ODE pushforward is the structural
+limit). Reconvene approved **option 2: an explicit-variance (Gaussian-NLL) detail head**,
+with binding conditions from the addenda. The foundations review (2026-07-11) also fixed
+the paper's validation architecture; this phase pilots it.
 
 ---
 
-## FROZEN CORE — do not modify (pre-registered 2026-07-10)
+## FROZEN CORE — do not modify (pre-registered 2026-07-11; Andreas + reconvene)
 
-### The system under test
+### Step 1 — the variance-faithful generator (option 2, as ruled)
 
-Wavelet-factorized conditional flow-matching generator: per-octave conditional model
-p(detail_j | coarse_j), **weights shared across octaves**. Two arms, identical except
-one input:
-- **Arm A (naive tying):** no scale information — the RG-fixed-point assumption taken
-  literally.
-- **Arm B (running couplings):** arm A + conditioning on the 2-D scale coordinate from
-  stage-0 (the measured running-coupling values at octave j; exact parameterization is
-  free periphery, the *dimensionality* ≤ 3 is frozen — that's the P9b bet being cashed).
+Gaussian-NLL detail head: the model predicts (velocity/mean, log-variance) per detail
+coefficient; the detail conditional is trained with a proper NLL and SAMPLED with its
+variance. Binding conditions (addendum 1):
+- **Arm symmetry:** BOTH arms A and B get the head — scale-conditioning stays the only
+  differing variable.
+- **Success bar (unchanged):** trained-octave var_slope within 1σ of real at octaves
+  2, 3, 4 SIMULTANEOUSLY, deterministic sampling of the mean-path plus explicit variance
+  (no churn), GRF null preserved (on GRF the head must learn Gaussian details and pass
+  the null).
+- **Kurtosis check (pre-registered):** conditional kurtosis at trained octaves within 2σ
+  of real. Hypothesis permitting the Gaussian head: conditioning on the coarse
+  environment Gaussianizes details. If the variance bar passes but kurtosis fails →
+  **pre-named fallback: student-t NLL head** (df learned or swept), same bars, one
+  escalation only.
+- Pre-register the sampling procedure before training. Do not train past the dispersion
+  peak without checkpoints (~2k-granularity early).
 
-Training: gowerstreet patches at ≤128² (octaves j ≤ j_train). Generation: recursive
-coarse-to-fine to 256² and 512² (2 and 4 extrapolated octaves). Controls: GRF_HF
-(null — both arms must extrapolate it perfectly), lognormal (analytic control).
-Transfer: hf_pm_1024, zero retraining.
+**Gate G-1c:** if option 2 INCLUDING the student-t fallback fails the dispersion bar,
+STOP — the under-dispersion result graduates to the standalone methods finding; report
+and reconvene. No further generator variants without a new ruling.
 
-### Evaluation (frozen)
+### Step 2 — fair P6/P13 re-adjudication (frozen bars, original definitions)
 
-Per-octave, on generated vs held-out real fields, with bootstrap CIs, measured by the
-gate-tested `scaledrift` instrument: (a) power-spectrum amplitude/slope; (b)
-conditional-W1 drift profile; (c) running-coupling scalars (var_slope, kurtosis,
-cross-octave ρ); (d) wavelet-L1 + peak counts (`wl_stats_torch`). "Wrong" = >3σ AND
->10% relative, per stage-0 conventions.
+With the passing generator: re-run arms A/B on gowerstreet exactly as PLAN-phase1
+specified. **P6 (55% original): arm B repairs ≥70% of arm A's extrapolated-octave
+non-Gaussian drift, measured couplings allowed (the original definition), trained
+octaves undegraded.** P13 (55%): the zero-retrain hf_pm transfer, original definition.
+- **NEW pre-registered variant P6x (60%):** same run, but arm B conditioned on couplings
+  EXTRAPOLATED from a smooth fit to the training octaves only (the production-honest
+  mode; closes the measured-vs-extrapolated gap from addendum 1). Bar: repair ≥50%.
+- **K-T2 (now live):** if P6 < 30% with a dispersion-faithful generator, the
+  low-dimensional-conditioning hypothesis has failed its fair test — STOP, reconvene.
 
-### Pre-registered predictions (updated confidences, logged 2026-07-10)
+### Step 3 — validation-architecture pilot (only if P6 passes)
 
-- **P4 (70%):** power-spectrum slope/amplitude extrapolate within a few % in the first
-  extrapolated octave, BOTH arms (spectra are cheap; weight-tying enforces them).
-- **P5 (85%, raised from 60% — stage-0 forces it):** arm A's non-Gaussian statistics
-  are wrong (>3σ, >10%) in the first extrapolated octave, worsening with octave depth.
-  A weight-tied net without scale input cannot represent conditionals that measurably
-  drift.
-- **P6 (55%):** arm B repairs ≥70% of arm A's non-Gaussian drift error in the first
-  two extrapolated octaves, without degrading trained octaves (≤1σ change there).
-  **This is the paper's load-bearing result.**
-- **P13 (new, 55%):** zero-retrain transfer — arm B with couplings *measured on
-  hf_pm_1024's coarse octaves* (measurement allowed; no training) repairs >40% of the
-  drift on hf_pm generation. Tests "field-general method" vs "gowerstreet fit".
-- **P-null (90%):** both arms extrapolate GRF_HF with all metrics consistent with real
-  GRF (the end-to-end null gate — if this fails, the pipeline is buggy, not the physics).
+The paper's second contribution, piloted at small scale (full protocol is phase 2):
+1. **Slide-the-edge:** repeat the train/extrapolate experiment at a SECOND edge position
+   (train octaves 3–5 → test into octave 2, alongside the existing 2–4 → 1). Report
+   one-octave extrapolation error (arm B, var_slope z and drift metrics) at both edges.
+   **P-edge (60%): the two errors agree within a factor 2** — the extrapolation
+   operator, not a particular map, is what's validated.
+2. **Self-consistency:** measure the running couplings ON generated fields at the test
+   octave; **P-selfcons (65%):** they land on the extrapolated coupling curve within its
+   fit uncertainty wherever P6 passes.
+3. **Held-out statistics:** score the test octave on statistics NEVER used in training
+   or repair design — wavelet-L1, peak counts, and the scattering covariance (the rival
+   school's instrument; use a standard ST library). **P-heldout (50%, genuinely
+   uncertain — the law-vs-summaries test):** arm B within 3σ on at least half of the
+   held-out statistics wherever tracked statistics pass.
+4. **Error-bar demo (stretch, non-gating):** propagate the coupling-curve fit
+   uncertainty (generate at fitted ±1σ couplings) into a band on ONE statistic at the
+   test octave — the certificate prototype.
 
-### Gate / kill / reframe criteria
+### Out of scope
 
-- **G-null:** P-null must pass before any real-field verdict is claimed (analog of
-  K-M1a).
-- **K-T1(D4) — reframe, not kill:** if P5 fails (arm A just works), the break-and-repair
-  paper doesn't exist; the fallback claim is "certified extrapolation via weight-tying"
-  — weaker vs WFM; STOP and reconvene on framing before more compute.
-- **K-T2(D4):** if P5 holds but P6 fails (<30% repair after honest tuning), the 2-D
-  conditioning hypothesis is wrong despite P9b — reconvene; next lever is conditioning
-  *mechanism* (e.g. per-octave FiLM vs input concat), not architecture scale.
-- **Budget: 15 H100-days cap.** Karpathy ladder, ordered and committed at each rung:
-  (i) single-octave conditional FM overfits one field; (ii) two-octave recursion on one
-  field; (iii) GRF end-to-end null (P-null); (iv) full arms A/B on gowerstreet;
-  (v) transfer (P13). No multi-hour job before the previous rung is green.
+GOLCONDA / microcanonical-ST head-to-head baselines, the LDT theory anchor
+(coordination with Vilasini/Starck), cosmology conditioning, D6b, full error-budget
+machinery, any paper writing — all phase 2. The under-dispersion novelty kill-test
+(literature sweep) is NOT this session's job — reconvene will assign it separately.
 
-### Out of scope (do NOT build)
+### Predictions summary (Claude, 2026-07-11)
 
-D6b single-realization mode (explicitly deferred until P4–P6 verdicts); >512²;
-non-cosmology demo fields (paper-stage decision); TRACE/typicality certificates;
-comparisons against arXiv:2507.01707 beyond citing (paper-stage); any per-field
-fine-tuning at eval time.
+P-NLL-var 65% · P-kurt 55% (student-t rescue → combined ~80%) · P6 70% (the 90%-repair
+prototype is the prior) · P6x 60% · P13 55% · P-edge 60% · P-selfcons 65% ·
+P-heldout 50%.
+
+### Budget & discipline
+
+Within the standing 15 H100-day phase cap (spend to date is small; MIG slices suffice
+for training, full H100 for the load-bearing generation runs, ≤2:59 per the cluster
+rules — nodes may be draining; queued jobs start when the drain lifts, do not churn
+resubmissions). Every job logged pre-submission. Report and STOP at G-1c, at the
+P6/K-T2 verdict, and at phase completion.
 
 ---
 
-## FREE PERIPHERY — implementer's choice
+## FREE PERIPHERY
 
-Conditional-FM parameterization, how the 2-D coupling coordinate enters (embedding,
-FiLM, concat), patch/boundary handling, recursion details (sampling per octave),
-optimizer/schedule/curriculum, exact train-octave split, how many fields per batch,
-Haar vs db4 for the *generator* (the instrument stays Haar per stage-0), checkpoint
-cadence, SLURM shapes (consult rorqual-jobs; MIG slices were sufficient for D1 studies).
+NLL-head parameterization details, variance floor/clamping, how log-variance enters
+sampling, checkpoint cadence, the smooth-fit family for coupling extrapolation
+(document the choice and its uncertainty estimate), ST library choice, plot styles.
+Reuse scaledrift untouched (any modification needs written justification).
 
-## Backpressure additions (existing gates stay)
+## Deliverable
 
-New required tests before training: (a) wavelet synthesis round-trip through the
-generator's transform at machine precision; (b) recursion determinism (fixed seed →
-identical field); (c) single-octave overfit gate as executable test; (d) `scaledrift`
-suite untouched and green (it is the instrument — any modification needs written
-justification in log/). Every SLURM job logged pre-submission with config hash +
-expected outcome.
-
-## Logging & deliverable
-
-Standard log discipline. Deliverable: `RESULTS-toy.md` — P4/P5/P6/P13/P-null verdicts
-with numbers, the per-octave drift profiles of both arms (the fan-out figure, generated
-version), the repair-fraction table, transfer results, honest limits. Written for the
-reconvene; assumes PLAN.md, not the code.
+`RESULTS-phase1c.md`: G-1c outcome with the dispersion/kurtosis tables; P6/P6x/P13
+verdicts with the frozen bars applied verbatim; the pilot's three validation panels
+(edge-slide, self-consistency, held-out stats) + the error-bar demo if reached;
+prediction verdicts; honest limits. Written for the reconvene; assumes this PLAN.
