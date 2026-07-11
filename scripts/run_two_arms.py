@@ -35,8 +35,11 @@ sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 import jax
 import jax.numpy as jnp
 
-from wfm.dataset import field_to_octaves, normalize_tiles
+from wfm import haar
+from wfm.cfm import sample_nll
+from wfm.dataset import d4_augment, field_to_octaves, normalize_tiles
 from wfm.generate import generate_recursive
+from wfm.model import ConditionalUNet
 from wfm.train import train_generator
 
 REPO = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -53,6 +56,42 @@ def extrapolate_std(std_by_j, target_j):
     js = np.array(sorted(std_by_j))
     a, b = np.polyfit(js, np.log([std_by_j[j] for j in js]), 1)
     return float(np.exp(a * target_j + b))
+
+
+def build_selfcond_pools(train_tiles, gen_from, src_dir, arm, coords, augment,
+                         field, chunk=512, seed=1234):
+    """Attempt 5: per-octave pools of GENERATED coarse aligned with the training tiles.
+
+    Uses the arm-matched frozen source checkpoint (the 4a model) to recurse from each
+    TRAINING tile's real octave-``gen_from`` coarse: pools[j] is the generated coarse a
+    production run would condition on at octave j (j = gen_from-1 .. 2). Built from
+    training tiles ONLY (call this before held-out data is touched); deterministic
+    given ``seed``. Tiles are D4-augmented first iff ``augment`` so the ordering
+    matches train_generator's internal augmentation exactly.
+    """
+    with open(os.path.join(src_dir, f"arm{arm}_{field}.pkl"), "rb") as fh:
+        ck = pickle.load(fh)
+    model = ConditionalUNet(out_channels=3, channels=tuple(ck["channels"]),
+                            bottleneck=ck["channels"][-1] * 2, cond_dim=ck["cond_dim"],
+                            cond_mode=ck["cond_mode"], variance_head=True)
+    tiles = d4_augment(train_tiles) if augment else np.asarray(train_tiles)
+    fields = normalize_tiles(tiles)
+    _, coarse = haar.octave_pair(fields, gen_from)
+    std = {int(k): v for k, v in ck["std_by_j"].items()}
+    key = jax.random.PRNGKey(seed)
+    pools = {}
+    for j in range(gen_from, 2, -1):           # generate detail at j -> coarse at j-1
+        outs = []
+        for a in range(0, coarse.shape[0], chunk):
+            cb = coarse[a:a + chunk]
+            cv = None if ck["cond_dim"] == 0 else jnp.broadcast_to(
+                jnp.asarray(coords[j], jnp.float32), (cb.shape[0], ck["cond_dim"]))
+            key, k = jax.random.split(key)
+            det = sample_nll(model.apply, ck["params"], k, cb, 3, cond_vec=cv) * std[j]
+            outs.append(haar.idwt2(cb, (det[..., 0:1], det[..., 1:2], det[..., 2:3])))
+        coarse = jnp.concatenate(outs, axis=0)
+        pools[j - 1] = coarse
+    return pools
 
 
 def main():
@@ -78,6 +117,12 @@ def main():
                     help="attempt 4b': corrupt the coarse conditioning during training "
                          "(relative level s~U(0,SMAX), s exposed to the model; s=0 at "
                          "generation)")
+    ap.add_argument("--selfcond-p", type=float, default=0.0,
+                    help="attempt 5: probability an example conditions on GENERATED "
+                         "coarse (aligned-pair self-conditioning; target stays real)")
+    ap.add_argument("--selfcond-src", default=os.path.join(REPO, "data_cache", "ckpt_aug"),
+                    help="checkpoint dir of the frozen source model that generates the "
+                         "self-conditioning pools")
     ap.add_argument("--steps", type=int, default=10000)
     ap.add_argument("--batch", type=int, default=32)
     ap.add_argument("--lr", type=float, default=1e-3)
@@ -106,6 +151,14 @@ def main():
     os.makedirs(args.ckpt_dir, exist_ok=True)
     results, t0 = {}, time.time()
     for arm in ("A", "B"):
+        alt_pools = None
+        if args.selfcond_p > 0:
+            t1 = time.time()
+            alt_pools = build_selfcond_pools(train, args.gen_from, args.selfcond_src,
+                                             arm, coords, args.augment, args.field)
+            print(f"[run_two_arms] arm {arm}: self-cond pools "
+                  f"{ {j: tuple(v.shape) for j, v in alt_pools.items()} } "
+                  f"in {time.time()-t1:.0f}s", flush=True)
         def save_ckpt(step_i, st, loss_i, _arm=arm):
             path = os.path.join(args.ckpt_dir, f"arm{_arm}_{args.field}_s{step_i}.pkl")
             with open(path, "wb") as fh:
@@ -120,6 +173,7 @@ def main():
             lr=args.lr, seed=args.seed, cond_mode=args.cond_mode,
             lambda_disp=args.lambda_disp, disp_t_lo=args.disp_t_lo, nll=args.nll_head,
             augment=args.augment, corrupt_smax=args.cond_corrupt,
+            alt_coarse_pools=alt_pools, alt_p=args.selfcond_p,
             ckpt_steps=tuple(args.ckpt_steps),
             on_checkpoint=(save_ckpt if args.ckpt_steps else None))
         std = dict(meta["std_by_j"])
@@ -149,7 +203,7 @@ def main():
                 "cond_mode": meta["cond_mode"], "lambda_disp": meta["lambda_disp"],
                 "disp_t_lo": meta["disp_t_lo"], "nll": meta["nll"],
                 "augment": meta["augment"], "corrupt_smax": meta["corrupt_smax"],
-                "std_by_j": std,
+                "alt_p": meta["alt_p"], "std_by_j": std,
                 "coord_norm": COORD_NORM.tolist(),
                 "train_octaves": list(args.train_octaves), "field": args.field}
         with open(os.path.join(args.ckpt_dir, f"arm{arm}_{args.field}.pkl"), "wb") as fh:

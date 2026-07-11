@@ -110,7 +110,8 @@ def overfit_field_recursive(field, j_max=2, channels=(48, 96), steps=2500, lr=2e
 def train_generator(tiles, train_octaves, arm="A", cond_by_octave=None,
                     channels=(32, 64, 128), steps=3000, batch=16, lr=1e-3, seed=0,
                     cond_mode="add", ckpt_steps=(), on_checkpoint=None, lambda_disp=0.0,
-                    disp_t_lo=0.0, nll=False, augment=False, corrupt_smax=0.0):
+                    disp_t_lo=0.0, nll=False, augment=False, corrupt_smax=0.0,
+                    alt_coarse_pools=None, alt_p=0.0):
     """Train the shared conditional generator on many tiles across ``train_octaves``.
 
     arm "A": no scale input (cond_dim=0). arm "B": conditions on the per-octave scale
@@ -151,6 +152,20 @@ def train_generator(tiles, train_octaves, arm="A", cond_by_octave=None,
         step_fn[j] = make_step(cv, lam=lambda_disp, t_lo=disp_t_lo, nll=nll,
                                corrupt_smax=corrupt_smax)
 
+    # attempt 5 (self-conditioning): pools of ALTERNATIVE coarse inputs (at production:
+    # generated coarse from the same tile's start), aligned with the tile ordering.
+    # With probability alt_p an example conditions on the alternative coarse while the
+    # TARGET stays the real detail -- the aligned-pair / scheduled-sampling recipe.
+    alt = {}
+    if alt_coarse_pools is not None and alt_p > 0:
+        for j in train_octaves:
+            if j in alt_coarse_pools:
+                a = jnp.asarray(alt_coarse_pools[j])
+                assert a.shape == pools[j][1].shape, (
+                    f"alt coarse pool at octave {j} misaligned: "
+                    f"{a.shape} vs {pools[j][1].shape}")
+                alt[j] = a
+
     rng = np.random.default_rng(seed)
     ckpt_set = set(ckpt_steps)
     loss0 = None
@@ -158,7 +173,11 @@ def train_generator(tiles, train_octaves, arm="A", cond_by_octave=None,
         j = train_octaves[i % len(train_octaves)]
         detail, coarse = pools[j]
         idx = rng.integers(0, detail.shape[0], batch)
-        state, loss = step_fn[j](state, detail[idx], coarse[idx])
+        coarse_b = coarse[idx]
+        if j in alt:
+            m = jnp.asarray(rng.random(batch) < alt_p)[:, None, None, None]
+            coarse_b = jnp.where(m, alt[j][idx], coarse_b)
+        state, loss = step_fn[j](state, detail[idx], coarse_b)
         if i == 0:
             loss0 = float(loss)
         if on_checkpoint is not None and (i + 1) in ckpt_set:
@@ -167,6 +186,7 @@ def train_generator(tiles, train_octaves, arm="A", cond_by_octave=None,
             "cond_by_octave": cond_by_octave, "cond_dim": cond_dim,
             "cond_mode": cond_mode, "lambda_disp": lambda_disp, "disp_t_lo": disp_t_lo,
             "nll": nll, "augment": augment, "corrupt_smax": corrupt_smax,
+            "alt_p": alt_p, "alt_octaves": sorted(alt),
             "loss0": loss0, "lossN": float(loss)}
     return state, meta
 
