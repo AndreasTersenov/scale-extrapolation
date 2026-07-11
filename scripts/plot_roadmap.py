@@ -18,7 +18,7 @@ steps = [
     (4.6, "P6 — the repair", "Arm B (given the 2-D scale coordinate) should fix it. BLOCKED: see diagnosis.", RED, "BLOCKED"),
     (3.2, "DIAGNOSIS (reconvene: K-T2 did NOT fire)", "The conditioning is fine (FiLM moves the right way). The blocker is the GENERATOR:\nL2 flow matching under-disperses conditional variance, WORSE with training.", AMBER, "cause found"),
     (1.6, "Variance-faithful program", "(a) SDE churn, (b) checkpoint sweep, (c)+(c') dispersion penalties — ALL fall short of\nthe fidelity bar. Twice-confirmed: a training penalty can't fix a deterministic-sampler problem.", RED, "a,b,c,c' fail"),
-    (0.1, "NOW — PHASE 1c: the Gaussian-NLL head (reconvene-approved)", "The model now PREDICTS the conditional spread and samples with it (mean-path +\nlearned noise, no churn). Built, unit gates green (results/nllhead_gate.png). GRF-null +\narms A/B jobs queued behind cluster maintenance -> G-1c verdict, then the fair P6 retest.", BLUE, "in flight"),
+    (0.1, "PHASE 1c step 1 — Gaussian-NLL head: G-1c FAILED", "The head worked on the known-truth toy but on real fields the MEAN memorized the\nfinite training set and starved the variance head (3rd confirmation of the collapse law,\nnow in an explicit-variance channel). STOP at the gate -> reconvene. Diagnosis:\nresults/g1c_verdict.png + nll_diagnosis.png. Root cause is now sharp: finite-data\nmean-memorization, not the sampler -- augmentation/early-stop/decoupled fit are the levers.", "#D55E00", "STOP->reconvene"),
 ]
 fig, ax = plt.subplots(figsize=(12, 11))
 ax.set_xlim(0, 10); ax.set_ylim(-0.6, 11.4); ax.axis("off")

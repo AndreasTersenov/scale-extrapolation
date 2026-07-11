@@ -88,6 +88,19 @@ env), bootstrap N=200 over 64 held-out fields — the frozen stage-0 instrument,
 Both PENDING on ReqNodeNotAvail — the cluster is in a maintenance drain (68/72 b1 nodes
 draining); left queued per policy, no resubmission churn.
 
+## RESULT (2026-07-11, harvested same day): G-1c FAILED — STOP
+
+Job 15738958 completed (293 s, hash 4866f6e236 verified). Dispersion bar FAILED
+(oct 2: 7–8σ low both arms; oct 3: 5–7σ) and kurtosis FAILED (≈5σ); student-t fallback
+not triggered (it presupposes variance passing). Full verdict, tables, and the
+mechanism decomposition in `RESULTS-phase1c.md` + `results/{g1c_verdict,nll_diagnosis,
+nll_sigma_maps}.png`. Headline diagnosis: the conditional MEAN memorized the finite
+training set and starved the variance head (e^{2g}→~0, flat); the implied var_slope
+decays with training exactly like the L2 dispersion-collapse curve — third independent
+confirmation of the law, now in an explicit-variance channel. Arm B's exp(g) is
+OOD-unstable at the extrapolated octave (+71% amplitude, negative modulation).
+GRF-null job 15738957 still queued (verdict-independent); harvest per JOBS.md.
+
 ## Expected timings
 
 pnull ~6–10 min on MIG (8k steps, NLL adds a second forward ≈1.5×; sampling is ~160×
