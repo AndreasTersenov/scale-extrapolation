@@ -99,7 +99,10 @@ training set and starved the variance head (e^{2g}→~0, flat); the implied var_
 decays with training exactly like the L2 dispersion-collapse curve — third independent
 confirmation of the law, now in an explicit-variance channel. Arm B's exp(g) is
 OOD-unstable at the extrapolated octave (+71% amplitude, negative modulation).
-GRF-null job 15738957 still queued (verdict-independent); harvest per JOBS.md.
+GRF-null job 15738957 harvested (hash dc676a1f01 verified): null NOT cleanly preserved —
+arm A z≈3.2 spurious var_slope at j=1; extrapolated-octave amplitude +14% (A) / +43% (B,
+whose placeholder coordinate is also OOD at j=1 — corroborates the exp-head instability
+on a second field). The 90% null-preserved prediction failed.
 
 ## Expected timings
 

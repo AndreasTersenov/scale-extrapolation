@@ -13,14 +13,14 @@ generation. GPU via SLURM only.
 - Rung (v) transfer P13 — **CONCLUDED**: not demonstrated (same cap; arm B transfers an
   amplitude fix). `RESULTS-toy.md` written.
 
-## IN FLIGHT (phase 1c, step 1 — Gaussian-NLL detail head)
+## IN FLIGHT
+**None.** All phase-1c step-1 jobs harvested.
+
+## HARVESTED (phase 1c, step 1 — Gaussian-NLL detail head)
 Pre-registered `log/2026-07-11-prereg-1c-nllhead.md`.
-- **15738957** `scripts/pnull_nll.slurm` (MIG) → `results/pnull_nll.npz`,
-  config_hash dc676a1f01. The GRF-null condition — **still QUEUED** (post-drain
-  backlog). Harvest (verdict-independent; G-1c already failed on dispersion): verify
-  the runtime hash in the job log, then `source env.sh;
-  python scripts/measure_generated.py --npz results/pnull_nll.npz` — both arms'
-  octave-1 var_slope should be consistent with real GRF (record in RESULTS-phase1c.md).
+- **15738957 HARVESTED**: GRF null **not cleanly preserved** — arm A z≈3.2 spurious
+  var_slope at j=1; extrapolated-octave amplitude +14%/+43% (the exp-head OOD
+  instability shows on GRF too). `results/pnull_nll_score.json`.
 - **15738958 HARVESTED**: **G-1c FAILED → STOP at the gate (reconvene).** Dispersion
   bar 5–8σ short at oct 2–3 both arms; kurtosis ≈5σ; student-t fallback not triggered.
   See `RESULTS-phase1c.md` (verdict + mechanism: the mean memorizes finite data and

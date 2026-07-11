@@ -15,8 +15,14 @@ Scored with the untouched scaledrift instrument, bootstrap over 64 held-out fiel
   6.7 / 3.9; generated 1.6–3.0 — far too tame).
 - **Student-t fallback: NOT triggered** — it is pre-named only for the
   variance-passes/kurtosis-fails branch; the variance bar itself failed.
-- **GRF null**: job 15738957 still queued at writing (drain backlog); does not affect
-  the verdict. Harvest per JOBS.md when it completes.
+- **GRF null** (job 15738957, hash dc676a1f01 verified): **also NOT cleanly
+  preserved.** Extrapolated-octave var_slope: arm A −0.012±0.004 vs real 0.001±0.002
+  (z≈3.2 — a small spurious modulation, ~1% of the real-field signal but outside the
+  pre-registered bootstrap-consistency criterion; arm B passes, z≈1.1). Detail
+  amplitude at the extrapolated octave is inflated on GRF too: arm A +14%, arm B
+  **+43%** — arm B's placeholder coordinate is likewise out-of-range at j=1, so this
+  independently corroborates the exp-head OOD instability (finding 3) on a different
+  field. (`results/pnull_nll_score.json`.)
 - Trained-octave detail amplitude: fine (≤6%, both arms) — the failure is purely in the
   conditional MODULATION, as before.
 
@@ -68,8 +74,10 @@ split at the final checkpoint:
 
 P-NLL-var 65% → **failed**. P-kurt 55% → **failed** (and the Gaussianization
 hypothesis remains UNTESTED: with σ collapsed, generated kurtosis measures the
-memorized μ, not the conditional). GRF-null 90% → pending. Amplitude-undegraded 85% →
-passed at trained octaves.
+memorized μ, not the conditional). GRF-null 90% → **failed** (arm A z≈3.2 spurious
+slope; extrapolated-octave amplitude inflated both arms — the head's miscalibration is
+not specific to non-Gaussian fields). Amplitude-undegraded 85% → passed at trained
+octaves.
 
 ## Honest limits
 
