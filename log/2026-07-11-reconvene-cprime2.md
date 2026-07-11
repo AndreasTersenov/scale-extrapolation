@@ -39,3 +39,30 @@ both under-disperse" is itself the paper's methods result — report and reconve
    miscalibration / mean-collapse literature for conditional diffusion/FM; find the
    exact edge of what is new in our law ("monotone worsening with training on
    scientific fields + the structural pushforward mechanism + the fix").
+
+## ADDENDUM 2 (2026-07-11, positioning review vs GOLCONDA + ST school) — phase-2 planning inputs
+
+Three-paradigm map (same wavelet backbone, different source of the law): GOLCONDA
+(arXiv:2507.01707, github.com/vilasinits/GOLCONDA) = constraint projection onto
+theory-predicted stats (LDT PS+l1+inter-scale; no sims; cosmology-dialable);
+ST/microcanonical/WC-RG = matched measured summaries (n=1 capable); D4 = learned
+conditional law (needs coarse-res sims; extrapolates the measured 2-D flow).
+
+D4's honest differentiators: (1) extrapolation beyond BOTH theory validity and sim
+resolution; (2) the joint law beyond enforced summaries (feeds CNN/field-level
+inference); (3) amortized generation (forward pass vs per-map optimization).
+Their strongholds (state in paper): GOLCONDA zero-sim + cosmology-parameterized today;
+ST n=1 + interpretable; both enforce exactly. "If you only need PS+l1 maps at sim
+resolution, use GOLCONDA" goes in the paper.
+
+Phase-2 frozen-core candidates from this review:
+- Baselines head-to-head: GOLCONDA (public code) + a microcanonical-ST model, identical
+  training information; scored on enforced stats, HELD-OUT stats (peaks, Minkowski,
+  scattering covariance — the rival school's instrument as judge), extrapolated-octave
+  truth, and cost-per-map.
+- **LDT anchor:** validate extrapolated-octave wavelet-l1 against the theoretical LDT
+  prediction (2406.10033) where valid — an INDEPENDENT reference in the no-truth
+  deployment regime (partial fix to the deepest validation gap). Coordinate with
+  Vilasini/Jean-Luc (alliance, not competition; candidate collaboration).
+- Cosmology-conditioning (Gower Street grid) noted as the answer to GOLCONDA's
+  parameterization advantage — phase-2+ scope decision.
