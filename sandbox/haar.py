@@ -24,6 +24,40 @@ def haar_level(f):
     return cA, (cH, cV, cD)
 
 
+def haar_synth_level(cA, bands):
+    """Inverse of haar_level (orthonormal synthesis; roundtrip tested)."""
+    cH, cV, cD = bands
+    H, W = cA.shape
+    f = np.empty((2 * H, 2 * W), dtype=np.float64)
+    f[0::2, 0::2] = (cA + cH + cV + cD) / 2.0
+    f[0::2, 1::2] = (cA + cH - cV - cD) / 2.0
+    f[1::2, 0::2] = (cA - cH + cV - cD) / 2.0
+    f[1::2, 1::2] = (cA - cH - cV + cD) / 2.0
+    return f
+
+
+def haar_atom(shape, j, kind, band, pos):
+    """Field-space atom of one level-j Haar coefficient (orthonormal basis vector).
+
+    kind: 'w' (detail; band in 0..2 for H,V,D) or 'c' (approximation; band ignored).
+    pos: (row, col) on the level-j grid. Used for analytic conditional-variance
+    truth: Cov(coef_a, coef_b) = <atom_a, Sigma atom_b> for any stationary Sigma.
+    """
+    Hj, Wj = shape[0] // 2 ** j, shape[1] // 2 ** j
+    cA = np.zeros((Hj, Wj))
+    bands = [np.zeros((Hj, Wj)) for _ in range(3)]
+    if kind == "c":
+        cA[pos] = 1.0
+    else:
+        bands[band][pos] = 1.0
+    f = haar_synth_level(cA, tuple(bands))
+    for _ in range(j - 1):
+        h = f.shape[0]
+        z = (np.zeros((h, h)), np.zeros((h, h)), np.zeros((h, h)))
+        f = haar_synth_level(f, z)
+    return f
+
+
 def octave_wc_pooled(f, j):
     """(w, c) at octave j for one field: orientation-pooled detail + tiled coarse.
 
