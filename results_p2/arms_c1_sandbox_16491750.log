@@ -1,0 +1,49 @@
+=== node rg12501 GPU check ===
+jax devices: [CudaDevice(id=0)]
+E0716 18:55:55.722662 3089498 ptx_compiler_helpers.cc:154] *** WARNING *** Invoking ptxas with version 12.6.77, which corresponds to a CUDA version <=12.6.2. CUDA versions 12.x.y up to and including 12.6.2 miscompile certain edge cases around clamping.
+Please upgrade to CUDA 12.6.3 or newer.
+[run_two_arms] config_hash=ab9c175f59 devices=[CudaDevice(id=0)]
+[run_two_arms] config={"field": "sandbox", "train_octaves": [2, 3, 4], "gen_from": 4, "channels": [32, 64, 128], "cond_mode": "film", "lambda_disp": 0.0, "disp_t_lo": 0.0, "nll_head": false, "ckpt_steps": [1000, 2000, 4000, 6000, 8000, 12000, 16000], "augment": true, "cond_corrupt": 0.0, "selfcond_p": 0.0, "selfcond_src": "/home/tersenov/software/scale-extrapolation/data_cache/ckpt_aug", "steps": 20000, "batch": 32, "lr": 0.001, "n_heldout": 64, "sample_steps": 80, "data": "/home/tersenov/software/scale-extrapolation/data_cache/tiles_sandbox.npz", "coords_file": "/home/tersenov/software/scale-extrapolation/data_cache/running_couplings_sandbox.json", "out": "/home/tersenov/software/scale-extrapolation/results_p2/arms_c1_sandbox.npz", "ckpt_dir": "/home/tersenov/software/scale-extrapolation/data_cache/ckpt_c1_sandbox", "seed": 0}
+[run_two_arms] sandbox: 322 train / 64 heldout; coords(norm) j1=[0.839, 0.603] j4=[0.539, 0.206]
+[run_two_arms] arm A ckpt @1000 loss=1.3810
+[run_two_arms] arm A ckpt @2000 loss=1.2613
+[run_two_arms] arm A ckpt @4000 loss=1.1798
+[run_two_arms] arm A ckpt @6000 loss=1.2961
+[run_two_arms] arm A ckpt @8000 loss=1.1988
+[run_two_arms] arm A ckpt @12000 loss=1.2164
+[run_two_arms] arm A ckpt @16000 loss=1.2059
+[run_two_arms] arm A: loss 2.381->1.1757 gen (64, 128, 128) std1=0.518 ckpt saved
+[run_two_arms] arm B ckpt @1000 loss=1.3968
+[run_two_arms] arm B ckpt @2000 loss=1.2636
+[run_two_arms] arm B ckpt @4000 loss=1.1808
+[run_two_arms] arm B ckpt @6000 loss=1.3033
+[run_two_arms] arm B ckpt @8000 loss=1.1992
+[run_two_arms] arm B ckpt @12000 loss=1.2088
+[run_two_arms] arm B ckpt @16000 loss=1.2014
+[run_two_arms] arm B: loss 2.812->1.1522 gen (64, 128, 128) std1=0.518 ckpt saved
+[run_two_arms] wrote /home/tersenov/software/scale-extrapolation/results_p2/arms_c1_sandbox.npz in 417s config_hash=ab9c175f59
+E0716 19:02:56.446260 3098966 ptx_compiler_helpers.cc:154] *** WARNING *** Invoking ptxas with version 12.6.77, which corresponds to a CUDA version <=12.6.2. CUDA versions 12.x.y up to and including 12.6.2 miscompile certain edge cases around clamping.
+Please upgrade to CUDA 12.6.3 or newer.
+[19:03:09] arm A @1000: oct2 conditional var_slope=0.838
+[19:03:13] arm A @2000: oct2 conditional var_slope=0.978
+[19:03:17] arm A @4000: oct2 conditional var_slope=1.022
+[19:03:21] arm A @6000: oct2 conditional var_slope=1.025
+[19:03:25] arm A @8000: oct2 conditional var_slope=1.022
+[19:03:29] arm A @12000: oct2 conditional var_slope=1.044
+[19:03:33] arm A @16000: oct2 conditional var_slope=1.024
+[19:03:42] arm A final oct2: var_slope=1.012 kurt=3.96
+[19:03:49] arm A final oct3: var_slope=0.862 kurt=2.99
+[19:03:57] arm A final oct4: var_slope=0.718 kurt=2.23
+[19:04:31] arm A final oct1: var_slope=1.116 kurt=5.10
+[19:04:37] arm B @1000: oct2 conditional var_slope=0.826
+[19:04:42] arm B @2000: oct2 conditional var_slope=0.957
+[19:04:46] arm B @4000: oct2 conditional var_slope=1.037
+[19:04:51] arm B @6000: oct2 conditional var_slope=1.053
+[19:04:55] arm B @8000: oct2 conditional var_slope=1.043
+[19:05:00] arm B @12000: oct2 conditional var_slope=1.067
+[19:05:05] arm B @16000: oct2 conditional var_slope=1.030
+[19:05:14] arm B final oct2: var_slope=1.018 kurt=4.01
+[19:05:18] arm B final oct3: var_slope=0.857 kurt=3.10
+[19:05:29] arm B final oct4: var_slope=0.710 kurt=1.98
+[19:05:59] arm B final oct1: var_slope=1.148 kurt=5.48
+[19:05:59] wrote /home/tersenov/software/scale-extrapolation/results_p2/c1_conditional_sandbox.json

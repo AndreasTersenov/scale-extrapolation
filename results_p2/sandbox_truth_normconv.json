@@ -1,0 +1,41 @@
+{
+ "truth": {
+  "1": {
+   "var_slope": 1.2287227518475388,
+   "var_slope_se": 0.008198153688860165,
+   "kurtosis": 7.018399637005869,
+   "kurtosis_se": 0.13108250808829072,
+   "detail_std": 0.5486081548047637,
+   "n_blocks": 16
+  },
+  "2": {
+   "var_slope": 1.0702730920602566,
+   "var_slope_se": 0.008931019687523512,
+   "kurtosis": 4.917102720007175,
+   "kurtosis_se": 0.10069588430351184,
+   "detail_std": 0.9816076020909965,
+   "n_blocks": 16
+  },
+  "3": {
+   "var_slope": 0.9193927720083114,
+   "var_slope_se": 0.010296935285629832,
+   "kurtosis": 3.4004267764351193,
+   "kurtosis_se": 0.08075445470213324,
+   "detail_std": 1.8316614920996075,
+   "n_blocks": 16
+  },
+  "4": {
+   "var_slope": 0.7544771558100323,
+   "var_slope_se": 0.011084491178551006,
+   "kurtosis": 2.1019055930139166,
+   "kurtosis_se": 0.06291750957025857,
+   "detail_std": 3.499563382192602,
+   "n_blocks": 16
+  }
+ },
+ "meta": {
+  "convention": "per-tile zero-mean unit-variance",
+  "n_fields": 16384,
+  "n_blocks": 16
+ }
+}

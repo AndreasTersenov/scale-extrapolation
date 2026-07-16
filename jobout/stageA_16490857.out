@@ -1,0 +1,15 @@
+[18:25:43] step 1: parent 32/256 (3s)
+[18:25:45] step 1: parent 64/256 (5s)
+[18:25:47] step 1: parent 96/256 (7s)
+[18:25:49] step 1: parent 128/256 (9s)
+[18:25:52] step 1: parent 160/256 (12s)
+[18:25:54] step 1: parent 192/256 (14s)
+[18:25:56] step 1: parent 224/256 (16s)
+[18:25:58] step 1: parent 256/256 (18s)
+[18:26:04] step 1 done in 24s
+[18:26:05] step 2: truth estimand on 16384 exact fields
+[18:27:32] step 2 done in 86s -> /home/tersenov/software/scale-extrapolation/results_p2/sandbox_truth.json
+[18:27:33] step 3: frozen instrument on 256 parent fields (PRIMARY)
+[18:30:52] step 3: primary done (198s); descriptive N=64 next
+[18:31:40] step 3 done in 246s -> /home/tersenov/software/scale-extrapolation/results_p2/gateA_instrument.json
+[18:31:40] all steps complete
