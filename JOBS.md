@@ -6,12 +6,17 @@ generation. GPU via SLURM only.
 
 ## PHASE-2 OVERNIGHT (2026-07-16, NIGHT-ORDERS)
 
-- **C1 sandbox leg** (GPU MIG h100_20gb, rrg-lplevass, 1:30,
-  `scripts_p2/arms_c1_sandbox.slurm`, prereg `log/2026-07-16-prereg-c1-sandbox.md`):
-  vanilla CFM + augmentation, NO NLL head (single variable vs frozen 4a), sandbox
-  386 tiles, 20k steps + ckpt curve + head-conditional sweep. Expected: branch
-  weights DEG 5 / COLL 35 / REC 20 / TAILS 25 / CAL 10 / other 5. Job ID + config
-  hash at submission below.
+- **C1 sandbox leg**: **job 16491750 COMPLETED, hash ab9c175f59 — branch
+  B-C1-TAILS both arms** (dispersion ALIVE both levels 4.5–8.7% vs 10% bars, NO
+  collapse — curve rises to plateau; kurtosis fails oct 2 at 18–21%; recursion
+  costs ≤1.4%). Readout log/2026-07-16-c1-sandbox-readout.md. Gowerstreet-leg
+  trigger PASSED.
+- **C1 gowerstreet leg** (triggered per prereg): **job 16491989** submitted
+  (`scripts_p2/arms_c1_gowerstreet.slurm`, identical recipe, descriptive readout —
+  morning reconvene adjudicates vs G-1c bars). Expected outcome (registered before
+  harvest): head-conditional dispersion near the 4a σ-channel level (~0.96–1.0 of
+  real at oct 2), end-to-end compounding REAPPEARS (deficit ≥15% at oct 2) — 65%;
+  compounding mild (<10%) — 20%; other — 15%.
 - **stage-B B1+B2** (CPU, def-lplevass, 4c/24G/1:30, `scripts_p2/run_stageB.py`,
   prereg `log/2026-07-16-stageB-prereg.md`): B1 curves (both channels, sandbox
   control + gowerstreet) + shape test (aligned-vs-misaligned) + B2 crops N_eff.

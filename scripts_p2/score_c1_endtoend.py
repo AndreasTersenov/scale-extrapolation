@@ -85,6 +85,21 @@ for arm, level, j, metric, r in rows:
           f"{r['truth']:8.3f} {r['rel_err']:6.1%} {r['bar']:6.1%} | "
           f"{'PASS' if r['pass'] else 'FAIL'}")
 
+# ---- DESCRIPTIVE: octave 1 (the extrapolated octave; no bar tonight) --------------
+print("\nDESCRIPTIVE octave 1 (extrapolated):")
+for arm in ("A", "B"):
+    hc = COND[arm]["final"].get("1")
+    t1 = TRUTH["1"]
+    e1 = e2e[arm][1]
+    out.setdefault("oct1_descriptive", {})[arm] = {
+        "head_conditional": hc, "end_to_end": {k: e1[k] for k in
+                                               ("var_slope", "var_slope_se",
+                                                "kurtosis", "kurtosis_se",
+                                                "detail_std")}}
+    print(f"  arm {arm}: head-cond vs={hc['var_slope']:.3f} kurt={hc['kurtosis']:.2f}"
+          f" | end-to-end vs={e1['var_slope']:.3f} kurt={e1['kurtosis']:.2f}"
+          f" | truth vs={t1['var_slope']:.3f} kurt={t1['kurtosis']:.2f}")
+
 # ---- checkpoint-curve collapse signature (running-peak rule) ----------------------
 print("\ncheckpoint curve (oct-2 head-conditional var_slope):")
 collapse = {}

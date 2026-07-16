@@ -1,0 +1,171 @@
+{
+ "meta": {
+  "field": "sandbox",
+  "data": "/home/tersenov/software/scale-extrapolation/data_cache/tiles_sandbox.npz",
+  "coords_file": "/home/tersenov/software/scale-extrapolation/data_cache/running_couplings_sandbox.json",
+  "ckpt_dir": "/home/tersenov/software/scale-extrapolation/data_cache/ckpt_c1_sandbox",
+  "ckpt_steps": [
+   1000,
+   2000,
+   4000,
+   6000,
+   8000,
+   12000,
+   16000
+  ],
+  "n_heldout": 64,
+  "sample_steps": 80,
+  "octaves_final": [
+   2,
+   3,
+   4,
+   1
+  ],
+  "out": "/home/tersenov/software/scale-extrapolation/results_p2/c1_conditional_sandbox.json",
+  "seed": 0
+ },
+ "A": {
+  "curve_oct2": {
+   "1000": {
+    "var_slope": 0.8380323485211313,
+    "var_slope_se": 0.008155494259903645,
+    "kurtosis": 2.697267764880678,
+    "kurtosis_se": 0.0973476276010551
+   },
+   "2000": {
+    "var_slope": 0.977579005544522,
+    "var_slope_se": 0.011057144555631454,
+    "kurtosis": 3.5366147450550827,
+    "kurtosis_se": 0.11144749398316396
+   },
+   "4000": {
+    "var_slope": 1.0221829068776782,
+    "var_slope_se": 0.01241021333331243,
+    "kurtosis": 3.8683661418369626,
+    "kurtosis_se": 0.1567477535057925
+   },
+   "6000": {
+    "var_slope": 1.0245228523827368,
+    "var_slope_se": 0.013075544204203865,
+    "kurtosis": 4.160445241418312,
+    "kurtosis_se": 0.14109187225910927
+   },
+   "8000": {
+    "var_slope": 1.021631476519832,
+    "var_slope_se": 0.013264880276983627,
+    "kurtosis": 4.002671935025522,
+    "kurtosis_se": 0.17592007963714668
+   },
+   "12000": {
+    "var_slope": 1.0435578587884577,
+    "var_slope_se": 0.013644275483050512,
+    "kurtosis": 4.292574807746839,
+    "kurtosis_se": 0.19260266162804004
+   },
+   "16000": {
+    "var_slope": 1.0239453280000266,
+    "var_slope_se": 0.012745295202719883,
+    "kurtosis": 3.9758423734188737,
+    "kurtosis_se": 0.13343264307259384
+   }
+  },
+  "final": {
+   "2": {
+    "var_slope": 1.01214405700574,
+    "var_slope_se": 0.013681940630413818,
+    "kurtosis": 3.959044604002494,
+    "kurtosis_se": 0.24366344207524765
+   },
+   "3": {
+    "var_slope": 0.8615030420785825,
+    "var_slope_se": 0.018027305229739346,
+    "kurtosis": 2.99155476820016,
+    "kurtosis_se": 0.21328830936621837
+   },
+   "4": {
+    "var_slope": 0.7177592670617539,
+    "var_slope_se": 0.02526860014435876,
+    "kurtosis": 2.234900112375554,
+    "kurtosis_se": 0.23484502887218422
+   },
+   "1": {
+    "var_slope": 1.1155202103564146,
+    "var_slope_se": 0.012160793491255224,
+    "kurtosis": 5.1028549689601,
+    "kurtosis_se": 0.19810995223373964
+   }
+  }
+ },
+ "B": {
+  "curve_oct2": {
+   "1000": {
+    "var_slope": 0.8263383294781768,
+    "var_slope_se": 0.008609604256293837,
+    "kurtosis": 2.785132652512357,
+    "kurtosis_se": 0.0912838253968418
+   },
+   "2000": {
+    "var_slope": 0.9568436464017984,
+    "var_slope_se": 0.009872593249645916,
+    "kurtosis": 3.323836551966253,
+    "kurtosis_se": 0.09809879341473923
+   },
+   "4000": {
+    "var_slope": 1.0374560480183275,
+    "var_slope_se": 0.01254269310543057,
+    "kurtosis": 3.89909675182309,
+    "kurtosis_se": 0.16564616055093698
+   },
+   "6000": {
+    "var_slope": 1.052989207360549,
+    "var_slope_se": 0.012700364593397042,
+    "kurtosis": 4.320159716930455,
+    "kurtosis_se": 0.13959593026662598
+   },
+   "8000": {
+    "var_slope": 1.0434901973451127,
+    "var_slope_se": 0.01341614236171598,
+    "kurtosis": 4.156764072372721,
+    "kurtosis_se": 0.16799355901916938
+   },
+   "12000": {
+    "var_slope": 1.0666680891541696,
+    "var_slope_se": 0.013475281863688413,
+    "kurtosis": 4.589882678294342,
+    "kurtosis_se": 0.18590884452673137
+   },
+   "16000": {
+    "var_slope": 1.0303415581086954,
+    "var_slope_se": 0.013490409661458395,
+    "kurtosis": 4.097551363554371,
+    "kurtosis_se": 0.14781858257835614
+   }
+  },
+  "final": {
+   "2": {
+    "var_slope": 1.0175160127795166,
+    "var_slope_se": 0.01403960220390623,
+    "kurtosis": 4.014156924835249,
+    "kurtosis_se": 0.2250540686530781
+   },
+   "3": {
+    "var_slope": 0.8566078011053516,
+    "var_slope_se": 0.019331979046735837,
+    "kurtosis": 3.103549959406486,
+    "kurtosis_se": 0.22175267555901934
+   },
+   "4": {
+    "var_slope": 0.7099500967371352,
+    "var_slope_se": 0.027333460849874567,
+    "kurtosis": 1.981477707040039,
+    "kurtosis_se": 0.1845532200372087
+   },
+   "1": {
+    "var_slope": 1.1481779837632957,
+    "var_slope_se": 0.011043011074503915,
+    "kurtosis": 5.479584860156779,
+    "kurtosis_se": 0.20192702018795713
+   }
+  }
+ }
+}
