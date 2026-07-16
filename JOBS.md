@@ -17,6 +17,13 @@ generation. GPU via SLURM only.
   harvest): head-conditional dispersion near the 4a σ-channel level (~0.96–1.0 of
   real at oct 2), end-to-end compounding REAPPEARS (deficit ≥15% at oct 2) — 65%;
   compounding mild (<10%) — 20%; other — 15%.
+- **DIAGNOSTIC (rider budget, runs 1–4 of 6): sandbox shape-baseline stability —
+  CLOSED: SYSTEMATIC.** Runs 1–2 (position seeds) were no-ops (all 32² positions
+  already in use — predictable, my miss); run 3 gate-OFF shrank the baseline
+  −0.155%→−0.072% (mechanism consistent: weaker selection, smaller effect); run 4
+  split-half gave −0.19%/−0.29% (z −2.1/−3.2) on independent parent halves →
+  the negative isotropic baseline is real. Amendment's difference-in-differences
+  reading stands. Zero GPU spent.
 - **stage-B B1+B2** (CPU, def-lplevass, 4c/24G/1:30, `scripts_p2/run_stageB.py`,
   prereg `log/2026-07-16-stageB-prereg.md`): B1 curves (both channels, sandbox
   control + gowerstreet) + shape test (aligned-vs-misaligned) + B2 crops N_eff.
