@@ -15,6 +15,17 @@ Octave-5 couplings already in `running_couplings.json` ([0.421, 1.440]).
 Job `scripts/arms_edge2.slurm`, **config_hash 577d20bb5e** → `results/arms_edge2.npz`.
 Scored at octaves 2–5 with extrapolated octave = 2.
 
+**AMENDMENT (2026-07-16, before any readout — job 16401043 FAILED at startup):** the
+frozen U-Net (3 pooling levels) cannot ingest octave-5 pairs (4×4 < 8×8 minimum; the
+original config's smallest input, octave 4 at 8×8, just fits — an architecture
+constraint I failed to check pre-submission). Second edge REDEFINED within the frozen
+architecture: **train octaves {3,4} → generate from real octave-4 coarse → first
+extrapolated octave = 2** (ground truth exists). Honest confound, stated: edge 2
+trains on TWO octaves where edge 1 trained on three — the weight-tying pool differs;
+P-edge therefore tests edge-position consistency up to that confound. All P-edge
+numbers/criteria unchanged (rel-err agreement within factor 2 of edge-1's 36.5%).
+Amended job: **config_hash f77178e6cf**, same outputs.
+
 - **P-edge (the protocol claim):** the one-octave extrapolation error is a property of
   the OPERATOR, not the particular edge: arm B's relative var_slope error at its first
   extrapolated octave agrees between edges within a factor of 2.
@@ -34,6 +45,19 @@ Deviation z = |vs_gen − vs_cond| / SE_gen.
   NOT flag (z < 3). **Confidence: 60%** (oct-4 var_slope 0.475 vs conditioned 0.44 —
   wait, conditioned values are the REAL couplings 0.532·norm; measured-on-gen 0.475
   ± 0.019 → z ≈ 2.4 vs the real value — borderline; honest uncertainty).
+
+### Pre-computation clarification (added before any component-2 number was computed)
+
+The component-2 text conflates two references. Defined now, both computed:
+- **SC-a (deployable):** z vs the CONDITIONING curve (`running_couplings.json`) — what
+  a production pipeline has when no truth exists. Calibration check pre-registered:
+  SC-a applied to the REAL held-out couplings themselves; if real fields flag, SC-a
+  needs curve-vs-population recalibration and THAT is reported as a protocol finding
+  (the stage-0 curve and the held-out population are known to differ, e.g. 1.305 vs
+  1.117±0.051 at oct 1).
+- **SC-b (truth-referenced):** z vs the held-out-real curve — this carries the
+  pre-registered detection (≥3 at extrapolated octaves, 90%) and specificity
+  (oct-4 < 3, 60%) criteria, matching the numbers quoted above.
 
 ## Component 3 — held-out statistics (never used in design; CPU)
 
