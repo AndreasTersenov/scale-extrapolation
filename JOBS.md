@@ -6,6 +6,12 @@ generation. GPU via SLURM only.
 
 ## PHASE-2 OVERNIGHT (2026-07-16, NIGHT-ORDERS)
 
+- **stage-B B1+B2** (CPU, def-lplevass, 4c/24G/1:30, `scripts_p2/run_stageB.py`,
+  prereg `log/2026-07-16-stageB-prereg.md`): B1 curves (both channels, sandbox
+  control + gowerstreet) + shape test (aligned-vs-misaligned) + B2 crops N_eff.
+  Expected: r* ≤ 6 at oct 1-2 on gowerstreet (P-B1a 85%), shape NULL more likely
+  than not (P-B1b 35%), sandbox shape NULL (90%). Job ID at submission below.
+
 - **stage-A ensembles+truth+instrument** (CPU, def-lplevass, 4c/24G/1h,
   `scripts_p2/gen_sandbox_ensembles.py`, prereg
   `log/2026-07-16-stageA-prereg.md`): expected — generation ~minutes, truth
