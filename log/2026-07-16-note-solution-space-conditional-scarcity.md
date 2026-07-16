@@ -91,3 +91,22 @@ outside oriented, filament-aligned regions); measure the conditional response
 change. If anisotropy confirmed → oriented/steerable kernels or structured
 conditioning masks; else plain receptive-field cap. Measurement-before-architecture,
 as with everything else here.
+
+## Addendum 2 — honest positioning of item 4 vs Remy/Lanusse/Starck (Andreas's question)
+
+Machinery advantage: ZERO — it is their machinery (2201.05561 + successors). The
+real advantages, each checkable: (a) different operator/question — they invert a
+NOISY observation at a resolution their sims fully cover (denoising); we invert the
+EXACT coarse projection into scales absent from training (extension); (b) the
+scale-conditioned, drift-dialed prior is the piece that exists nowhere — and the
+honest crux: at the extrapolated octave the prior must itself be extrapolated via
+the coupling dial, so (4) does not replace the original bet, it removes the training
+pathology (conditional starvation + cascade) so the bet is finally tested CLEANLY;
+(c) the conditional-calibration audit — their lineage validates summary stats, not
+conditional spread/tails; guidance bias makes the audit load-bearing, and it
+transfers to their setting. Strategic frame: DESCENT, not competition — "the
+Remy-Lanusse-Starck pattern extended across scale, with the drift dial, the exact
+projection, and the audit" — a collaboration-shaped paper given the supervision
+lineage. Taped-above-desk sentence: if the dial does not extrapolate, (4) collapses
+into stochastic sub-grid inpainting within the trained range (conditional-SR
+territory with a fancier sampler) — the dial remains the bet.
