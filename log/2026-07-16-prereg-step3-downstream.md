@@ -39,6 +39,21 @@ For each arm of the frozen 4a generator vs the 64 held-out real maps:
   memo says so — the usefulness argument would then rest on the scattering channel
   (step 2) alone.
 
+## RESULT (2026-07-16, computed after this prereg was committed)
+
+**Bias established, with a sign structure richer than predicted.** Peaks per map
+(real / A / B, z): ν=1: 590 / 777 (+14.1) / 726 (+10.2); ν=2: 265 / 297 (+5.6) /
+273 (+1.5); ν=3: 123 / 105 (−6.6) / 95 (−12.0). Criterion met (|z|≥3 at ν=2 and ν=3
+with P4 amplitude passing at ≤7%): a pipeline gating on power-level checks ships this
+generator; its peak FUNCTION is tilted — ~30% spurious excess of low peaks (the white
+per-pixel conditional noise creates grainy spurious maxima; the fingerprint of the
+spatially-uncorrelated fluctuation channel) and 14–23% missing extreme peaks (the
+kurtosis deficit, flagged in advance by the tracked tables). A shape distortion, not
+an offset — threshold-dependent bias is the worst case for peak-based parameter
+inference. Prediction verdicts: P-ν3-negative 75% HIT; P-ν2 60% HIT (direction at
+ν=2 positive — surprise, noted); P-null-ν1 55% **MISS** (strongly positive instead —
+the graininess channel was not in my prediction model; it is now measured).
+
 ## Deliverables
 
 `results/downstream_peaks.{json,png}` (peak-count curves real vs arms with error

@@ -234,6 +234,20 @@ Bottom line for the reshaped paper: **an audit-only pipeline would have rejected
 generator at every failure point we know about, with no access to extrapolated-octave
 truth beyond the coupling curve.**
 
+## Phase 1d, step 3 — the downstream-bias demo (2026-07-16): P(k) passes, peaks are tilted
+
+Prereg + result: `log/2026-07-16-prereg-step3-downstream.md`; figure
+`results/downstream_peaks.png`. On the frozen generator's fields (P4 amplitude ≤7%
+everywhere — power-level checks PASS), the peak-count function is distorted with a
+SIGN FLIP: +30%/+23% excess low peaks (ν=1, z=+14/+10 — spurious graininess from the
+spatially-white conditional noise) and −14%/−23% missing extreme peaks (ν=3,
+z=−6.6/−12 — the kurtosis deficit, flagged in advance by the tracked tables). A
+threshold-dependent shape distortion is the worst case for peak-based inference. This
+is the usefulness sentence of the reshaped paper: **power-spectrum-level validation
+ships a generator whose standard higher-order observable is wrong at 6–14σ, in both
+directions at once; our audit flagged both responsible mechanisms before a peak was
+counted.**
+
 ## For the reconvene (observations, not actions — G-1c bars further variants)
 
 The mechanism points at the MEAN's finite-data memorization as the single upstream
