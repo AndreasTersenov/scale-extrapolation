@@ -1,8 +1,17 @@
 # JOBS — in-flight SLURM jobs & harvest instructions
 
-Last updated 2026-07-10. Phase-1 toy (break & repair). Envs: `source env.sh` (scaledrift,
+Last updated 2026-07-16 (overnight phase-2 run). Envs: `source env.sh` (scaledrift,
 CPU, has pywt) for measurement; `~/wl-challenge-env/bin/python` (JAX) for training/
 generation. GPU via SLURM only.
+
+## PHASE-2 OVERNIGHT (2026-07-16, NIGHT-ORDERS)
+
+- **stage-A ensembles+truth+instrument** (CPU, def-lplevass, 4c/24G/1h,
+  `scripts_p2/gen_sandbox_ensembles.py`, prereg
+  `log/2026-07-16-stageA-prereg.md`): expected — generation ~minutes, truth
+  ~10-15 min, instrument ~10 min; outputs results_p2/{sandbox_truth,
+  gateA_instrument}.json + $SCRATCH arrays. Expected outcome: Gate A PASS (92%).
+  Job ID recorded below at submission.
 
 ## Ladder status — phase 1 COMPLETE (see RESULTS-toy.md)
 - Rung (i) single-octave overfit — **GREEN** (`7045cea`).
