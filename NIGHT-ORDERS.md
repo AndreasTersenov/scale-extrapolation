@@ -3,9 +3,11 @@
 Reconvene-authored. This file pre-delegates gate adjudication for ONE overnight run
 under branch-complete rules. Read PLAN-phase2.md FIRST (it governs; this file only
 instantiates its gates with numbers). Andreas has selected rescue-first; Gate-0 is
-CLEARED (log/2026-07-16-reconvene-gate0.md). One session, cheap model, sequential.
-**Ambiguity at any gate = STOP, commit, write the morning summary, end.** Morning
-harvest is a reconvene; nothing beyond these orders is authorized.
+CLEARED (log/2026-07-16-reconvene-gate0.md). One session, sequential; executor model
+= Fable — the RIDER at the end of this file governs your discretion; read it before
+starting work. **Ambiguity at any gate = STOP the gated pipeline, then diagnose per
+the rider, commit, write the morning summary, end.** Morning harvest is a reconvene;
+nothing beyond these orders + rider is authorized.
 
 ## Chore 0 (before any science) — the test-gate fix
 
