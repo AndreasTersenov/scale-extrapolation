@@ -78,6 +78,33 @@ detection.
   a pipeline using ONLY our audit protocol would have rejected this generator.
   **Confidence: 80%.**
 
+## RESULT (2026-07-16, harvested same day)
+
+Edge job 16401105, hash f77178e6cf verified. Full numbers `results/pilot_validation.json`.
+- **P-edge: PASS** (arm B rel err 36.5% → 59.1%, ratio 1.62; arm A 39.1% → 26.8%,
+  ratio 1.46 — both within factor 2; prediction 65% HIT). The extrapolation error is a
+  property of the operator, not the edge — up to the stated 2-vs-3-octave confound.
+- **Self-consistency SC-b: detection HIT** (extrapolated octave z=7.9, ≥3 as
+  predicted at 90%) and **specificity HIT** (oct 4 z=0.7 < 3; 60% prediction). It also
+  flags the trained-octave compounding shortfall (oct 2 z=7.1) — a sensitivity bonus.
+- **SC-a (deployable variant): calibration check FAILED as pre-flagged** — REAL fields
+  flag against the stage-0 curve at every octave (z 3.4–4.0). Protocol lesson, now
+  measured: a deployable self-consistency check must use population-calibrated
+  reference bands (curve-fit + population variance), not bootstrap SEs alone.
+- **Held-out battery: detection HIT, loudly** — scattering order-2: 98% (A) / 100% (B)
+  of channels flag, median |z| ≈ 9–11 (predicted ≥25% at 75%). Wavelet-L1: flags oct
+  1/2/4 for arm A (my "mostly passes" 60% prediction MISSED — L1's tight bootstrap
+  bars flag even few-% amplitude offsets that P4's 10% criterion calls PASS).
+  **Concordance headline (80%): HIT** — an audit-only pipeline (no ground truth at the
+  extrapolated octave beyond the curve, plus held-out stats) would have rejected this
+  generator.
+- **Bonus catch:** arm B's exp-head OOD amplitude blow-up RETURNS at edge 2 (oct-1
+  detail_std 2.198 vs real 0.743; oct-2 +37%) — the narrower trained coordinate range
+  {3,4} re-triggers what augmentation had bounded at edge 1; the amplitude column of
+  the battery catches it. Bounded-OOD is range-dependent, not solved once.
+(Scattering note: one NaN-channel warning in the log; summary stats computed on valid
+channels — nanmedian hardening deferred to the paper-grade version.)
+
 ## Deliverables
 
 `results/pilot_validation.{json,png}` (one eye-readable panel per component),

@@ -216,6 +216,24 @@ architecture. Prediction verdicts: reconvene P-lever 55% → miss; my B-distribu
 (B1 20 / B2 15 / B3 25 / B4 35 / B5 5) → B5 fired: directionally right about
 no-recovery (B4+B5=40 vs reconvene's 45 on pass), wrong that it would be harmless.
 
+## Phase 1d, step 2 — the INVERTED validation pilot (2026-07-16): the protocol catches everything we know is there
+
+Prereg + result: `log/2026-07-16-prereg-step2-pilot.md`; figure
+`results/pilot_validation.png`; numbers `results/pilot_validation.json`.
+**P-edge PASS** (extrapolation error edge-consistent within factor 2: 1.62 arm B, 1.46
+arm A). **Self-consistency (truth-referenced): detects the extrapolated-octave failure
+(z=7.9) and the trained-octave compounding (z=7.1), passes where the generator is good
+(oct 4, z=0.7).** The deployable curve-referenced variant FAILED its own calibration
+check on real fields (z≈3.5 everywhere) — measured protocol lesson: deployable checks
+need population-calibrated bands. **Held-out battery: scattering order-2 flags at 98–
+100% of channels (median |z|≈10)** — the rival school's instrument rejects the
+generator without having been designed against it; wavelet-L1 flags several octaves
+(its tight bars catch few-% amplitude offsets P4 tolerates). Bonus: the battery also
+catches arm B's OOD amplitude blow-up re-emerging at the narrower second edge.
+Bottom line for the reshaped paper: **an audit-only pipeline would have rejected this
+generator at every failure point we know about, with no access to extrapolated-octave
+truth beyond the coupling curve.**
+
 ## For the reconvene (observations, not actions — G-1c bars further variants)
 
 The mechanism points at the MEAN's finite-data memorization as the single upstream
