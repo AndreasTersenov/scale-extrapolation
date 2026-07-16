@@ -70,3 +70,12 @@ attempt-5 record verified at e96ce89 (2026-07-11 19:08).
 fold-in-2, or direct otherwise. On confirmation the executor gets the paper-skeleton
 paste (structure = memo §1–2 tables + the bounded law + the audit protocol as
 methods; Gate-0-dependent slots marked).
+
+## Addendum (same day) — suite verification closed
+
+The background re-run of tests_wfm/ completed: **32/32 green** under wl-challenge-env
+(exit 0), alongside tests/ 14/14 under env.sh — 46/46 independently verified. Root
+cause of the coverage gap confirmed: pyproject.toml `testpaths = ["tests"]` restricts
+every repo-root pytest (including the Stop hook) to the old tree; tests_wfm was only
+ever run by explicit invocation. The pre-writing fix stands: extend the gate to both
+trees under their respective envs.
