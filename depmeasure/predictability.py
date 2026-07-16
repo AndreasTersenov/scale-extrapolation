@@ -52,9 +52,12 @@ def _decompose(field, j):
     return cA, bands  # coarse at level j, details at level j
 
 
-def _gather(fields, j, offsets, periodic, rng, max_pos_per_field=2048):
+def _gather(fields, j, offsets, periodic, rng, max_pos_per_field=2048,
+            target="w"):
     """(X, Y) samples: context vectors and per-band detail targets, pooled by band.
 
+    target: 'w' (detail coefficient — mean-channel predictability) or 'w2' (squared
+    coefficient — variance-channel predictability, the var_slope-relevant one).
     Returns X (n, n_off), Y (n,), band index B (n,), field index F (n,).
     """
     Xs, Ys, Bs, Fs = [], [], [], []
@@ -81,9 +84,16 @@ def _gather(fields, j, offsets, periodic, rng, max_pos_per_field=2048):
             else:
                 cols.append(cA[ys + dy, xs + dx])
         X = np.stack(cols, axis=1) if cols else np.empty((ys.size, 0))
+        if target in ("w2", "absw") and X.shape[1]:
+            X = np.concatenate([X, X * X], axis=1)   # signed + amplitude channels
         for b, band in enumerate((cH, cV, cD)):
+            y = band[ys, xs]
+            if target == "w2":
+                y = y * y
+            elif target == "absw":
+                y = np.abs(y)
             Xs.append(X)
-            Ys.append(band[ys, xs])
+            Ys.append(y)
             Bs.append(np.full(ys.size, b))
             Fs.append(np.full(ys.size, fi))
     return (np.concatenate(Xs), np.concatenate(Ys),
@@ -175,13 +185,18 @@ def knn_vr(X, Y, B, F, offsets, k=KNN_K):
 
 
 def predictability_curve(fields, j, r_grid=R_GRID_DEFAULT, periodic=True, seed=0,
-                         max_pos_per_field=2048, estimators=("ridge", "knn")):
+                         max_pos_per_field=2048, estimators=("ridge", "knn"),
+                         target="w"):
     """V(r) for both estimators on a stack of fields. Returns dict r -> results."""
+    if target != "w":
+        estimators = tuple(e for e in estimators if e != "knn")  # knn features are
+        # defined on raw patches only; amplitude channels use ridge on [raw, sq]
     out = {}
     for r in r_grid:
         rng = np.random.default_rng(seed)  # same positions per r for comparability
         offsets = disk_offsets(r)
-        X, Y, B, F = _gather(fields, j, offsets, periodic, rng, max_pos_per_field)
+        X, Y, B, F = _gather(fields, j, offsets, periodic, rng, max_pos_per_field,
+                             target=target)
         n_fields = len(fields)
         row = {"n_samples": int(Y.size), "n_features": len(offsets)}
         if "ridge" in estimators:
