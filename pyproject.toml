@@ -14,4 +14,8 @@ packages = ["scaledrift"]
 
 [tool.pytest.ini_options]
 addopts = "-q"
-testpaths = ["tests"]
+# All three trees on purpose (2026-07-16 gate-coverage fix): a bare repo-root `pytest`
+# must never silently skip a tree. tests_wfm/tests_p2 need ~/wl-challenge-env (JAX);
+# under the env.sh stack they fail LOUDLY at collection, which is the honest default.
+# The Stop hook (.claude/hooks/test-gate.sh) runs each tree under its correct env.
+testpaths = ["tests", "tests_wfm", "tests_p2"]
