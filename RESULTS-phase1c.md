@@ -248,6 +248,18 @@ ships a generator whose standard higher-order observable is wrong at 6–14σ, i
 directions at once; our audit flagged both responsible mechanisms before a peak was
 counted.**
 
+## Phase 1d, step 4 — the self-similar control (2026-07-16): the negative claim's boundary
+
+Prereg + result: `log/2026-07-16-prereg-step4-selfsim.md`; figure
+`results/selfsim_control.png`. On a synthesized exactly scale-invariant in-class
+cascade, the same frozen architecture extrapolates to **2.5% residual** at the
+untrained octave (vs 39–65% on gowerstreet); trained octaves exact. The literal 1σ
+bar fails (z≈5; the control's SEs are ±0.002 — a logged bar-calibration miss), but
+the scope answer is decisive: **the compounding cap belongs to the field's drift and
+off-manifold texture, not to the architecture** (measured ideal-case floor ~2.5%).
+Bonus probe: lognormal fields drift like N-body (var_slope 1.54→0.53) — between-scale
+drift is generic to multiplicative fields.
+
 ## For the reconvene (observations, not actions — G-1c bars further variants)
 
 The mechanism points at the MEAN's finite-data memorization as the single upstream

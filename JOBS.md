@@ -14,9 +14,17 @@ generation. GPU via SLURM only.
   amplitude fix). `RESULTS-toy.md` written.
 
 ## IN FLIGHT
-**None.** All phase-1c jobs harvested (step 1, 4a, 4b′, attempt 5). 4b′-ii submitted
-no job (gate-stop). **THE GENERATOR IS FROZEN** (attempt-5 pre-commitment): no further
-generator variants without a new phase + Andreas's sign-off.
+**None.** All phase-1c and phase-1d jobs harvested. **THE GENERATOR IS FROZEN**; the
+phase-1d program (steps 1–4) is complete and `RESHAPE-MEMO.md` awaits Andreas's
+decision. Gate-0 kill-tests run in a parallel session and gate all paper claims.
+
+## HARVESTED (phase 1d, 2026-07-16)
+- **16401105** (edge-2, f77178e6cf): pilot component 1 — P-edge PASS. First submission
+  16401043 FAILED (frozen U-Net can't ingest 4×4 octave-5 pairs; amended to train {3,4}).
+- **16401485** (self-similar control, 3c03bded83): 2.5% residual at the extrapolated
+  octave — the cap is the field's drift, not the architecture.
+- Steps 2c/3 were CPU-only (pilot battery, peak demo). Records in RESULTS-phase1c.md
+  §phase-1d; figures pilot_validation/downstream_peaks/selfsim_control.png.
 
 ## HARVESTED (attempt 5 — self-conditioning, FINAL)
 - **15762584/15762585** (p=0.5/1.0, hashes ffdeac4d4b/ccc86ccf1b): **branch B5 —

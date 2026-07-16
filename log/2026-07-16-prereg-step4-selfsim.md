@@ -48,6 +48,24 @@ octaves 1–4 — flat as designed (vs gowerstreet's factor-2 drift); appended t
 - Kurtosis reported (conditional is exactly Gaussian ⇒ pooled kurtosis from
   σ-modulation only; the real synthesized stack is its own reference).
 
+## RESULT (2026-07-16, job 16401485, hash 3c03bded83 verified)
+
+Extrapolated octave: real 0.558±0.002, arm A 0.544±0.002, arm B 0.542±0.002 —
+**residual error 2.5%** (vs 39–65% on gowerstreet); trained octaves essentially exact
+(oct-2 arm A z≈0.3); amplitude 0.801/0.808 vs 0.804; kurtosis within a few %.
+**Bar adjudication, honest:** the literal pre-registered 1σ bar FAILS (z≈5) because
+the synthetic stack's bootstrap SEs are ±0.002 — the bar demanded 0.4% accuracy. A
+bar-calibration miss (mine; same genre as the 4a onset-rule lesson: calibrate bars to
+the reference's precision). **The scope question is answered decisively regardless of
+the bar's letter:** compounding shrinks by an order of magnitude-plus when the
+conditional law is scale-invariant and in-class ⇒ the measured cap is attributable to
+the DRIFT / off-manifold texture of realistic fields, not to the coarse-to-fine
+architecture — with a small measured floor (~2.5%, z≈5) of finite-sample compounding
+even in the ideal case. P-S-similar 60%: substantively the anticipated direction;
+formally MISS under the literal bar. Figure: `results/selfsim_control.png` — the
+campaign's clearest single image (drifting field: curves sag; invariant field: three
+curves coincide, including the extrapolated band).
+
 ## Predictions (confidences)
 
 - P-S-similar PASS: **60%.** For: no drift, no mismatch, pointwise linear σ (the toy
