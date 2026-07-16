@@ -97,3 +97,64 @@ RESULTS-phase2.md with sections A / B1 / B2 / C1 (tables + figure pointers), top
 by a MORNING SUMMARY block: gates passed/failed, prediction verdicts vs the
 pre-registered weights, the three numbers that matter most, and open questions for
 the reconvene. Commit, push, STOP. Do not design C2/C3/C4. Do not touch the paper.
+
+---
+
+## RIDER — strong-model executor (Fable): the discretion charter
+
+Andreas is running tonight's session on Fable. The orders above stand, with the
+following division: **adjudication stays mechanical; diagnosis and interpretation
+are yours.** Read the fuller context before starting: RESULTS-phase1c.md, METHOD.md,
+log/2026-07-16-reconvene-gate0.md, log/2026-07-16-reconvene-memo-ruling.md,
+log/2026-07-16-note-solution-space-conditional-scarcity.md — you have the capacity
+to hold the whole history; use it.
+
+### The goal, stated precisely (read twice)
+
+Tonight's goal is NOT to rescue the generator. Tonight's goal is that tomorrow's
+reconvene reads a **maximally informative, maximally trustworthy record**. A clean
+negative with a sharp diagnosis is a full success. A muddy positive is a failure.
+You are goal-oriented by disposition — point that disposition at epistemic yield,
+not at C1 passing.
+
+### Frozen — no discretion, no exceptions tonight
+
+Gate rules and bars AS WRITTEN (apply mechanically even if you believe a bar is
+miscalibrated — the objection channel is the morning summary, never a mid-run
+adaptation); prereg-with-weights committed before every run; one variable; no new
+arms or variants of C1; the gowerstreet-leg conditionality; no PLAN edits; budget
+caps; single-threaded execution (no subagent fan-outs or workflow orchestration —
+standing cost rule).
+
+### Granted — where your judgment is expected, not just permitted
+
+1. **Implementation quality:** the conditional sampler (Stage A) and the B1
+   estimator are genuinely judgment-heavy designs — make them excellent; validation
+   tests still come first.
+2. **Diagnosis on surprise:** on any failure, ambiguity, or anomaly, the gated
+   PIPELINE stops as ordered — but you then hold a discretionary budget of up to
+   **6 descriptive runs / 1 additional H100-hour** to characterize what happened.
+   Descriptive = measures existing artifacts or the failure itself; NEVER trains a
+   variant, never re-runs an adjudicated experiment, never feeds back into tonight's
+   verdicts. Each diagnostic run gets a one-line intent + expectation in JOBS.md
+   BEFORE launch. Park with a diagnosis, not with a shrug.
+3. **Opportunistic descriptive measurements** that are free on existing outputs
+   (extra statistics, curve renders) — labeled DESCRIPTIVE, kept out of verdict
+   tables.
+4. **Interpretation:** the morning summary gets a genuine analysis section —
+   belief updates with numbers, competing explanations ranked, and DRAFTED preregs
+   (not run) for whatever C2/C3/C4 adjustments or follow-ups the evidence suggests.
+   Keep VERDICTS (rule-applied) and INTERPRETATION (your reasoning) in separate,
+   labeled blocks.
+5. **Infrastructure adaptation** (flaky nodes, env breakage, queue stalls): full
+   discretion, documented — the phase-1 sessions set the standard here.
+
+### Named temptations (the failure modes of exactly your profile — refuse them)
+
+Pushing through a gate on a favorable reading. Softening a bar mid-run because it
+"seems wrong." Running variant N+1 because the fix is obvious (draft the prereg
+instead). Reading ambiguity as pass. A morning summary that oversells beyond the
+verdict tables (the campaign has a "preprint-ready" scar with a name on it).
+Spending the diagnostic budget on rescue attempts. If you notice yourself
+rationalizing any of these, that observation itself goes in the summary — it will
+be read as competence, not weakness.
