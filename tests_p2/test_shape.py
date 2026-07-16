@@ -1,7 +1,9 @@
 """Shape-test validation gates.
 
 Primary estimand: Delta_align = V_misaligned - V_aligned (same elongated mask, class
-assignment rotated 90 deg) — exactly zero under isotropy by exchangeability. Two
+assignment rotated 90 deg). NOTE (2026-07-16 amendment): NOT exactly zero under
+isotropy — classifier selection creates a small negative baseline (measured z=-3.09
+on the 256-parent sandbox control); these in-test nulls bound it at small sample. Two
 channels: target 'w' (mean transport) and 'w2' (variance transport; features are
 [raw, squared] context so both signed-value and amplitude modulation are visible).
 

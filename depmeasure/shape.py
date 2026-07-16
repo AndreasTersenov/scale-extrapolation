@@ -8,9 +8,12 @@ serve as an anisotropy null. The primary estimand is therefore
 
     Delta_align = V_misaligned - V_aligned
 
-(the SAME elongated mask, class assignment rotated 90 degrees), which is exactly zero
-in population under isotropy (exchangeability) and positive when the conditional law
-is transported along structures. V_iso (disk, matched area) is reported as a
+(the SAME elongated mask, class assignment rotated 90 degrees). CAUTION (measured on
+the isotropic sandbox control, 2026-07-16 amendment): this is NOT exactly zero under
+isotropy — 90-deg exchangeability only equates the two CLASSES; conditioning on the
+orientation classifier selects locally-anisotropic noise texture, giving a small
+(negative) baseline even with no transported structure. Real-field verdicts must be
+read as a DIFFERENCE against an isotropic control run with identical machinery. V_iso (disk, matched area) is reported as a
 descriptive secondary ("does orientation beat even the compact context").
 
 Per field and octave: local orientation class from the coarse structure tensor
