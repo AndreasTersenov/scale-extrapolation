@@ -37,3 +37,57 @@ locality dial → energy score → prior+posterior-sampling → constrained ense
 Credit: Andreas's brainstorm (multiple-fine-per-coarse; smart augmentations) —
 items 1 and 3 are his directly; 2 fell out of pressing on WHY generalization works
 at all.
+
+## Addendum (same day) — Andreas's rulings + reconvene web investigation (search-verified)
+
+Andreas: (1) lognormal needs no generative model per se → re-scoped as TEST-BED (see
+below); (2) locality must respect the physics (filament-shaped dependence?) →
+measurement-first adopted; overlap idea approved; (5) adversarial path REJECTED.
+
+Investigation results (search-verified today; deep verification still owed to Gate 0):
+
+**(3) Proper-scoring-rule training — VERIFIED, mature:**
+- AIFS-CRPS, ECMWF (arXiv:2412.15832; npj AI 2026): operational-class ensemble model
+  trained DIRECTLY on "almost fair" CRPS; stochastic, arbitrary ensemble size at
+  inference; beats the physics-based IFS ensemble on most variables/lead times.
+- Pacchiardi et al., JMLR 25(45) (arXiv:2112.08217): adversarial-free training of
+  generative networks by scoring-rule minimization (energy score, prequential);
+  follow-up introduces PATCHED energy scores (local patches + stride) — which also
+  echoes the locality theme of item 2.
+→ The objective-swap arm is de-risked: recipes exist in a field with exactly our
+one-observation-per-condition constraint.
+
+**(4) Unconditional prior + posterior-sampling conditioning — pattern EXISTS
+(including in Andreas's own lineage); the specific combination appears open:**
+- Remy, Lanusse, Jeffrey, Liu, STARCK et al. (arXiv:2201.05561, A&A): score-based
+  simulation prior + posterior sampling for the (linear) mass-mapping inverse
+  problem. Extensions: DES-Y3 diffusion-prior mass mapping (2511.14667), 3D
+  diffusion priors (2606.00803).
+- Cosmological SR by diffusion: Stochastic SR with DDMs (2310.06929, OJA;
+  "filter-boosted" loss) and 3D conditional diffusion SR emulator (2311.05217,
+  ML4PS): both are CONDITIONAL nets on paired low/high — trained-range
+  interpolation needing high-res data, same one-sample-per-condition exposure,
+  and (to verify in Gate 0) no conditional-calibration audit — i.e. PRIME EXTERNAL
+  AUDIT TARGETS for our protocol.
+- Exactness machinery: Twisted Diffusion Sampler (arXiv:2306.17775, NeurIPS 2023) —
+  asymptotically exact conditional sampling from an UNCONDITIONAL diffusion via
+  twisted SMC (particles ↔ accuracy dial). MCGDiff (linear-Gaussian case): from
+  memory, NOT yet verified — flag.
+→ The apparent gap (Gate-0 to confirm): unconditional fine-field prior + EXACT
+wavelet coarse-projection constraint + drift-aware extrapolation BEYOND the trained
+range + conditional-calibration audit. The components all exist; the combination
+and the audit do not appear to.
+
+**(1) re-scoped — the lognormal sandbox:** for lognormal fields, TRUE conditional
+ensembles are obtainable in closed form (Gaussianize → conditional GRF sampling
+given the coarse projection is exact linear algebra → exponentiate). A non-Gaussian
+field with EXACT p(fine|coarse) truth, for free — the calibration test-bed for any
+conditional-learning machinery and for the audit instruments themselves. (We already
+measured lognormal drift 1.54→0.53 — in-class, drifting, ideal.)
+
+**(2) refined — physics-shaped locality:** before touching architecture, MEASURE the
+conditional dependence range and shape: mask coarse context beyond radius r (and
+outside oriented, filament-aligned regions); measure the conditional response
+change. If anisotropy confirmed → oriented/steerable kernels or structured
+conditioning masks; else plain receptive-field cap. Measurement-before-architecture,
+as with everything else here.
