@@ -129,3 +129,30 @@ hierarchical conditional generation is statistically faithful where the between-
 law is scale-invariant (~2.5% floor), degrades with the measured drift (39–65% here),
 and the audit identifies the regime. Novelty claims are gated on the literature
 kill-tests (SPEC-novelty-collapse.md) until they return.
+
+## 8. The rival school's basis choices (Mallat/Allys), and the math behind them
+
+That school picks the wavelet by the OPERATION — the same pattern as our §5:
+- **Statistics (scattering transform, WPH):** oriented COMPLEX redundant filters
+  (Morlet / bump-steerable). Analyticity makes the modulus a smooth local envelope
+  (demodulation); orientation captures anisotropy; redundancy is free because
+  statistics never reconstruct. Phase harmonics (|z|e^{ikφ}) align phases so
+  cross-scale correlations — the non-Gaussianity carriers — do not vanish.
+- **Generation by statistic-matching (microcanonical models):** same filters; the
+  model is "fields whose scattering/WPH statistics match the observed one," sampled
+  by gradient descent — the n=1 school.
+- **Conditional factorization across scales (WC-RG — Marchand, Ozawa, Biroli,
+  Mallat):** ORTHOGONAL DECIMATED wavelets — the same structural choice we made, for
+  the same reason (exact p(detail|coarse) factorization with free coordinates).
+
+Theorem-grade pillars (name+year from memory — fetch-verify before any becomes
+load-bearing): Mallat 2012 group-invariant scattering (translation invariance +
+Lipschitz stability to diffeomorphisms — the rigorous "good texture statistic");
+Bruna–Mallat microcanonical concentration (when statistic-matching defines a sane
+ensemble); WC-RG's decoupling result — conditional wavelet distributions have
+short-range, well-conditioned interactions even at criticality, i.e. RG makes each
+rung an easy learning problem even when the global field is hard. That last theorem
+is the mathematical license for the entire per-octave conditional strategy, theirs
+and ours; the difference is that they model each rung with interpretable
+maximum-entropy potentials trained with data at all scales, while we LEARN the rung
+conditional (CFM) weight-tied and bet on extrapolating its measured drift.
