@@ -6,6 +6,12 @@ generation. GPU via SLURM only.
 
 ## PHASE-2 OVERNIGHT (2026-07-16, NIGHT-ORDERS)
 
+- **C1 sandbox leg** (GPU MIG h100_20gb, rrg-lplevass, 1:30,
+  `scripts_p2/arms_c1_sandbox.slurm`, prereg `log/2026-07-16-prereg-c1-sandbox.md`):
+  vanilla CFM + augmentation, NO NLL head (single variable vs frozen 4a), sandbox
+  386 tiles, 20k steps + ckpt curve + head-conditional sweep. Expected: branch
+  weights DEG 5 / COLL 35 / REC 20 / TAILS 25 / CAL 10 / other 5. Job ID + config
+  hash at submission below.
 - **stage-B B1+B2** (CPU, def-lplevass, 4c/24G/1:30, `scripts_p2/run_stageB.py`,
   prereg `log/2026-07-16-stageB-prereg.md`): B1 curves (both channels, sandbox
   control + gowerstreet) + shape test (aligned-vs-misaligned) + B2 crops N_eff.
