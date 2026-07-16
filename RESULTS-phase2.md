@@ -102,7 +102,31 @@ config_hash ab9c175f59.
 
 ## C1 — gowerstreet leg (descriptive; triggered by the sandbox dispersion pass)
 
-<!-- C1_GOW_PENDING -->
+Job 16491989, config_hash 6f9cdca680; readout
+log/2026-07-16-c1-gowerstreet-readout.md; tables
+results_p2/c1_descriptive_gowerstreet.json; maps results_p2/c1_maps.png; peaks
+results_p2/c1_peaks_gowerstreet_descriptive.json. Registered expectation: my modal
+"compounding reappears ≥15%" (65%) MISSED — the 20% "mild" branch fired.
+
+- **Oct-2 end-to-end compounding: −27% (phase-1 NLL-head 4a) → −9/−10% (plain
+  CFM), single variable = the sampling channel.** The attempt-5 "measured
+  compounding cap" is substantially CHANNEL-DEPENDENT: ~17 of the 27 points
+  belonged to the NLL head's sampling noise degrading the coarse manifold, only
+  ~10% remains for the informational component on gowerstreet (and ≤1.4% on the
+  in-class sandbox).
+- **Extrapolated octave no longer broken:** end-to-end var_slope ratios 0.88/0.84
+  (phase-1 P5: 0.55); head-conditional arm A at 0.98 of real. Arm A (scale-blind)
+  BEATS arm B (dial) at the extrapolated octave — the OOD FiLM coordinate hurts in
+  this channel; the Stage-D dial question changes shape.
+- **Tails are the binding deficit and they compound:** oct-2 kurtosis −12%
+  head-conditional → −26/−34% end-to-end.
+- **DESCRIPTIVE peaks:** biased UP at ALL thresholds (+5.4…+9.2σ, no sign flip;
+  vs the NLL-head generator's +14/−12 flip) — a near-dispersion-calibrated
+  generator still fails the higher-order audit; second independent exhibit for
+  the audit paper.
+- Arm B's ckpt curve technically fires the running-peak rule on a RECOVERING 4k→6k
+  transient (0.995→0.885→1.016) — the oscillation-vs-collapse rule weakness again;
+  descriptive, filed to the bar-design ledger.
 
 ## Tests & infrastructure
 

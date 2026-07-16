@@ -1,0 +1,171 @@
+{
+ "meta": {
+  "field": "gowerstreet",
+  "data": "/home/tersenov/software/scale-extrapolation/data_cache/tiles_pnull.npz",
+  "coords_file": "/home/tersenov/software/scale-extrapolation/data_cache/running_couplings.json",
+  "ckpt_dir": "/home/tersenov/software/scale-extrapolation/data_cache/ckpt_c1_gowerstreet",
+  "ckpt_steps": [
+   1000,
+   2000,
+   4000,
+   6000,
+   8000,
+   12000,
+   16000
+  ],
+  "n_heldout": 64,
+  "sample_steps": 80,
+  "octaves_final": [
+   2,
+   3,
+   4,
+   1
+  ],
+  "out": "/home/tersenov/software/scale-extrapolation/results_p2/c1_conditional_gowerstreet.json",
+  "seed": 0
+ },
+ "A": {
+  "curve_oct2": {
+   "1000": {
+    "var_slope": 0.6349704613436906,
+    "var_slope_se": 0.012765992321356024,
+    "kurtosis": 2.3688400443368023,
+    "kurtosis_se": 0.18267012200756166
+   },
+   "2000": {
+    "var_slope": 0.837605887620599,
+    "var_slope_se": 0.014158916715381692,
+    "kurtosis": 3.691378148492075,
+    "kurtosis_se": 0.3399938619693691
+   },
+   "4000": {
+    "var_slope": 0.8825885387466152,
+    "var_slope_se": 0.020776991387213836,
+    "kurtosis": 5.207044375062765,
+    "kurtosis_se": 0.49316414861472985
+   },
+   "6000": {
+    "var_slope": 0.8653895001271805,
+    "var_slope_se": 0.031124265831083516,
+    "kurtosis": 4.31019959697624,
+    "kurtosis_se": 0.48590495972100717
+   },
+   "8000": {
+    "var_slope": 0.9425404595827497,
+    "var_slope_se": 0.027894272196409223,
+    "kurtosis": 5.484069311847643,
+    "kurtosis_se": 0.554796953431443
+   },
+   "12000": {
+    "var_slope": 1.0273543560193736,
+    "var_slope_se": 0.03594476952908784,
+    "kurtosis": 6.423306946328429,
+    "kurtosis_se": 0.6427877237932782
+   },
+   "16000": {
+    "var_slope": 1.0193931544838466,
+    "var_slope_se": 0.035786032157652706,
+    "kurtosis": 6.331201182284083,
+    "kurtosis_se": 0.6392526831013638
+   }
+  },
+  "final": {
+   "2": {
+    "var_slope": 0.9990952087996969,
+    "var_slope_se": 0.038033928051487684,
+    "kurtosis": 5.86933109353296,
+    "kurtosis_se": 0.6455557821618955
+   },
+   "3": {
+    "var_slope": 0.7405815777204036,
+    "var_slope_se": 0.024677364762408158,
+    "kurtosis": 2.6886445037898765,
+    "kurtosis_se": 0.26100432300686555
+   },
+   "4": {
+    "var_slope": 0.49323710627942663,
+    "var_slope_se": 0.024536379485410743,
+    "kurtosis": 1.20841104828774,
+    "kurtosis_se": 0.13854636172384402
+   },
+   "1": {
+    "var_slope": 1.0967532820062895,
+    "var_slope_se": 0.050957931800169415,
+    "kurtosis": 9.384874197584077,
+    "kurtosis_se": 1.2441527302898017
+   }
+  }
+ },
+ "B": {
+  "curve_oct2": {
+   "1000": {
+    "var_slope": 0.6419335457623094,
+    "var_slope_se": 0.012803709379819237,
+    "kurtosis": 2.600227889426111,
+    "kurtosis_se": 0.24246312553755436
+   },
+   "2000": {
+    "var_slope": 0.8873815046064215,
+    "var_slope_se": 0.014863528941633557,
+    "kurtosis": 4.120501011326863,
+    "kurtosis_se": 0.3763110657784266
+   },
+   "4000": {
+    "var_slope": 0.9945919432703755,
+    "var_slope_se": 0.028935438922696954,
+    "kurtosis": 6.9110975281134515,
+    "kurtosis_se": 0.6530800890937443
+   },
+   "6000": {
+    "var_slope": 0.8850879753606022,
+    "var_slope_se": 0.03254606832054831,
+    "kurtosis": 4.63762643048715,
+    "kurtosis_se": 0.559147307101513
+   },
+   "8000": {
+    "var_slope": 0.9555934351926749,
+    "var_slope_se": 0.02785721644558023,
+    "kurtosis": 5.603382412549481,
+    "kurtosis_se": 0.5650868548076526
+   },
+   "12000": {
+    "var_slope": 1.0161413567960658,
+    "var_slope_se": 0.03991750345531774,
+    "kurtosis": 6.61064293538635,
+    "kurtosis_se": 0.7226533245851873
+   },
+   "16000": {
+    "var_slope": 1.0034612227723505,
+    "var_slope_se": 0.0353132181457232,
+    "kurtosis": 6.151996940235064,
+    "kurtosis_se": 0.640584411559458
+   }
+  },
+  "final": {
+   "2": {
+    "var_slope": 0.994210007544011,
+    "var_slope_se": 0.038226503374479304,
+    "kurtosis": 5.8787035122367985,
+    "kurtosis_se": 0.6110091722241083
+   },
+   "3": {
+    "var_slope": 0.7552262535946532,
+    "var_slope_se": 0.025994811863201885,
+    "kurtosis": 3.1761047079098965,
+    "kurtosis_se": 0.4180383380945417
+   },
+   "4": {
+    "var_slope": 0.5050253369441801,
+    "var_slope_se": 0.026844028932669066,
+    "kurtosis": 1.4444826256520225,
+    "kurtosis_se": 0.23625350320644323
+   },
+   "1": {
+    "var_slope": 1.0092776848726832,
+    "var_slope_se": 0.041016584993096086,
+    "kurtosis": 6.996584756638837,
+    "kurtosis_se": 0.8671256594491189
+   }
+  }
+ }
+}
