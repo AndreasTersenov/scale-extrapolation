@@ -8,7 +8,8 @@ dependency in this env).
 import numpy as np
 import pytest
 
-from pilotstats import scattering_logmeans, scattering_summary, wavelet_l1, z_stack
+from pilotstats import (peak_counts, scattering_logmeans, scattering_summary,
+                        wavelet_l1, z_stack)
 
 
 def powerlaw_grf(n, seed, size=128, alpha=1.5):
@@ -43,6 +44,24 @@ def test_grf_null(grf_pair):
     s = scattering_summary(z)
     assert s["frac_flagged"] <= 0.10, s
     assert s["median_absz"] < 2.0, s
+
+
+def test_peak_counts_gates(grf_pair):
+    a, b = grf_pair
+    # identical stack -> exact zero
+    assert z_stack(peak_counts(a, 2.0), peak_counts(a, 2.0)) == 0.0
+    # GRF-vs-GRF null
+    for nu in (1.0, 2.0):
+        assert abs(z_stack(peak_counts(a, nu), peak_counts(b, nu))) < 3.0
+    # analytic sanity: higher threshold -> strictly fewer peaks, and some exist
+    n1, n2 = peak_counts(a, 1.0).mean(), peak_counts(a, 2.0).mean()
+    assert n1 > n2 > 0
+    # gross difference: smoothing suppresses high peaks
+    from scipy.signal import convolve2d
+    k = np.ones((3, 3)) / 9.0
+    sm = np.stack([convolve2d(x, k, mode="same", boundary="wrap") for x in b])
+    sm = (sm - sm.mean(axis=(1, 2), keepdims=True)) / sm.std(axis=(1, 2), keepdims=True)
+    assert z_stack(peak_counts(sm, 2.0), peak_counts(a, 2.0)) < -3.0
 
 
 def test_gross_difference_detected(grf_pair):

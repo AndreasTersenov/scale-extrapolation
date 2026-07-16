@@ -46,6 +46,22 @@ def scattering_logmeans(fields, J=4, L=4, order2_only=True):
     return lm
 
 
+def peak_counts(fields, nu):
+    """Per-field count of local maxima above nu (fields are unit-variance maps, so nu
+    is in sigma units). Local maximum = strictly greater than all 8 neighbours
+    (interior pixels only)."""
+    f = np.asarray(fields, np.float32)
+    c = f[:, 1:-1, 1:-1]
+    is_max = np.ones(c.shape, bool)
+    for dy in (-1, 0, 1):
+        for dx in (-1, 0, 1):
+            if dy == dx == 0:
+                continue
+            is_max &= c > f[:, 1 + dy:f.shape[1] - 1 + dy,
+                            1 + dx:f.shape[2] - 1 + dx]
+    return (is_max & (c > nu)).sum(axis=(1, 2)).astype(float)
+
+
 def z_stack(gen_vals, real_vals, n_boot=200, seed=0):
     """z of the mean difference between two per-field stacks (1-D or (N,C)),
     bootstrap-over-fields SEs. Returns scalar (1-D input) or per-channel array."""
