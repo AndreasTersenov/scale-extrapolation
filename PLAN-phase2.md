@@ -152,3 +152,40 @@ Estimator implementations for B1 (k-NN vs regression), sandbox conditioning
 implementation (closed-form vs mode-redraw fallback), SMC particle counts and
 schedulers for C4, energy-score patching geometry for C3, checkpoint/data layout,
 plot styles. Document choices in preregs; the cores above are frozen.
+
+## §6. Implementation & orchestration (how this actually runs)
+
+**Topology: one repo, ONE active executor session at a time, arms sequential.**
+Rationale from the phase-1 record: all race conditions came from parallel actors in
+one repo; arms cost minutes of compute, so parallelism buys wall-clock nobody needs
+and spends attribution everybody needs. The serialization point is judgment
+(prereg + ruling), not GPUs.
+
+- **Session per stage, not per arm.** A fresh executor session (compacted sessions
+  re-anchor from disk) picks up at a stage boundary with the standing briefing pack:
+  CLAUDE.md + this PLAN + the newest reconvene rulings (pull-before-preregister).
+  Within a stage, the same session runs its experiments sequentially: one
+  prereg → submit → readout → STOP cycle per experiment/arm.
+- **Reconvene gates only at the named gates** (A, B, each C-arm readout, D) — not
+  continuously. One paste-block per gate, as always.
+- **Model tiering:** executor sessions = cheap/mid model (the arms are
+  well-specified by this plan + their preregs); reconvene = strong model. The
+  kill-test session (Gate 0) is its own separate cheap session and may run anytime —
+  it only writes its own log file, so it cannot conflict.
+- **Paper vs phase-2 in the same repo:** strictly one active session at a time.
+  Realistic interleaving: paper skeleton + gallery + estimator hardening first (the
+  current D4 session's context is valuable there); Stages A+B opportunistically
+  after, same one-at-a-time rule; Stage C+ = a fresh dedicated session per stage,
+  UVA-era.
+- **Sanctioned parallelism (optional, Stage C only, if wall-clock ever matters):**
+  git worktrees, one per arm, with the constraint that instruments/scorer are frozen
+  on main and arms only ADD files (scripts/prereg/results under arm-named paths);
+  merge after each harvest, reconvene rules on the merged state. Not recommended
+  before UVA; never for Stage D (one experiment, one substrate, one run).
+- **New code layout:** sandbox machinery under `sandbox/`, B1 estimators under
+  `depmeasure/`, arms under `arms_p2/<arm>/` — additive, so the frozen phase-1
+  record (scaledrift/, wfm/, results/) stays byte-stable and auditable.
+- **Test gate:** the Stop-hook coverage fix (both test trees, correct envs — the
+  pre-writing condition from the memo ruling) lands BEFORE any phase-2 code is
+  written; new phase-2 estimators get tests-first as always, in a `tests_p2/` tree
+  registered in the gate from day one.
