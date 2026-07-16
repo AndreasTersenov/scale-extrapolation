@@ -156,3 +156,12 @@ is the mathematical license for the entire per-octave conditional strategy, thei
 and ours; the difference is that they model each rung with interpretable
 maximum-entropy potentials trained with data at all scales, while we LEARN the rung
 conditional (CFM) weight-tied and bet on extrapolating its measured drift.
+
+**Gate-0 note (2026-07-16):** the novelty kill-test cleared both core findings in
+NARROWED form — binding claim boundaries in log/2026-07-16-novelty-collapse.md
+(adjudicated: log/2026-07-16-reconvene-gate0.md). "Collapse law" is a paper-internal
+name for a synthesized instance of a pre-known phenomenon; our additions are the
+channel-invariance, the exact decomposition, and the causal augmentation test. The
+structured-not-additive conditioning drift is the sharpest surviving novelty.
+Conditional-calibration validation has prior art (Schanz et al. 2310.06929, width-only)
+that we systematize, not invent.
