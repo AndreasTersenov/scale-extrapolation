@@ -197,7 +197,10 @@ coarse at oct 2, the 4a model responds 0.742 — equal to its end-to-end 0.746 w
 self-conditioned models respond 0.530/0.524: they learned the HONEST,
 information-limited conditional given drifted coarse, and honesty is LOWER than the
 4a model's over-trusting extrapolation. Conclusion, closing the anti-compounding
-program: **the compounding limit is informational.** The generated coarse carries only
+program (wording per the 2026-07-16 reconciliation ruling): **a measured compounding
+cap consistent with an informational limit; train-side rescue excluded by a tested
+negative (this attempt); scope to be bounded by the self-similar control.** The
+generated coarse carries only
 ~half the modulation; naive over-trust already extracts ~0.74 of it; no
 conditioning-side or head-side training can exceed that without making the generated
 coarse itself more faithful — and octaves 3–4 are already at their own ceilings on
