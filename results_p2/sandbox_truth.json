@@ -1,0 +1,60 @@
+{
+ "truth": {
+  "1": {
+   "var_slope": 1.2586585281031097,
+   "var_slope_se": 0.009824133088750575,
+   "kurtosis": 7.832931714392993,
+   "kurtosis_se": 0.19576308978712803,
+   "detail_std": 0.3587018801866112,
+   "n_blocks": 16
+  },
+  "2": {
+   "var_slope": 1.1050627337179422,
+   "var_slope_se": 0.010821479652542884,
+   "kurtosis": 5.585305627699242,
+   "kurtosis_se": 0.1555220170586835,
+   "detail_std": 0.6422121420767524,
+   "n_blocks": 16
+  },
+  "3": {
+   "var_slope": 0.9612463498396299,
+   "var_slope_se": 0.012410814169219743,
+   "kurtosis": 4.000953256742782,
+   "kurtosis_se": 0.12276492547114944,
+   "detail_std": 1.2004538761584922,
+   "n_blocks": 16
+  },
+  "4": {
+   "var_slope": 0.8085429860152559,
+   "var_slope_se": 0.014073424325189085,
+   "kurtosis": 2.6774988806815436,
+   "kurtosis_se": 0.1104835400895602,
+   "detail_std": 2.3039943957351823,
+   "n_blocks": 16
+  }
+ },
+ "meta": {
+  "recipe": {
+   "SHAPE": [
+    128,
+    128
+   ],
+   "ALPHA": 2.0,
+   "SIGMA_G": 0.6,
+   "COND_LEVEL": 4,
+   "N_PARENTS": 256,
+   "N_REDRAWS": 64,
+   "SEED_PARENTS": 20260716,
+   "SEED_REDRAWS": 20260717,
+   "SEED_TRAIN": 20260718
+  },
+  "n_fields": 16384,
+  "n_blocks": 16,
+  "octaves": [
+   1,
+   2,
+   3,
+   4
+  ]
+ }
+}

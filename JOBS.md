@@ -11,7 +11,10 @@ generation. GPU via SLURM only.
   `log/2026-07-16-stageA-prereg.md`): expected — generation ~minutes, truth
   ~10-15 min, instrument ~10 min; outputs results_p2/{sandbox_truth,
   gateA_instrument}.json + $SCRATCH arrays. Expected outcome: Gate A PASS (92%).
-  Job ID recorded below at submission.
+  **Job 16490857** COMPLETED — **GATE A PASS** (all octaves, both metrics; readout
+  log/2026-07-16-stageA-readout.md). First submission 16490749 FAILED at t=0:
+  `sbatch --wrap` runs POSIX-mode sh, where `source env.sh` without a slash searches
+  only $PATH — fixed with absolute-path `. $REPO/env.sh` (infra note, rider grant 5).
 
 ## Ladder status — phase 1 COMPLETE (see RESULTS-toy.md)
 - Rung (i) single-octave overfit — **GREEN** (`7045cea`).
