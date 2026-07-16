@@ -1,6 +1,128 @@
 # RESULTS — Phase 2 overnight run (2026-07-16, NIGHT-ORDERS)
 
-<!-- MORNING SUMMARY inserted at top on completion -->
+# MORNING SUMMARY
+
+## VERDICTS (rule-applied; mechanical)
+
+| gate / prediction | rule outcome | standing weight | executor weight |
+|---|---|---|---|
+| **Gate A** (instrument calibration) | **PASS** — all octaves, both metrics (≤0.6% var_slope, ≤5.0% kurtosis) | P-A 90 hit | 92 hit |
+| **P-B1a** (locality: r* ≤ 6 at oct 1+2) | **FIRES** — r*=0 by the rule, r*≈1 by eye (one 9% drop then flat to r=12) | 70 hit | 85 hit |
+| **P-B1b** (anisotropy, amended diff-in-diff rule) | **does NOT fire** — z=0.91 (needs 3) | 50: NULL side | 35: leaned right |
+| sandbox shape control "NULL" (executor 90) | **MISS as worded** — z=−3.09, systematic (split-half confirmed); design error caught by the control, verdict rule amended PRE-reading | — | 90 missed |
+| **C1 sandbox branch** | **B-C1-TAILS both arms** (dispersion alive both levels 4.5–8.7%; kurtosis fails oct 2 at 18–21%; no collapse) | — | modal COLL 35 wrong; TAILS 25 fired |
+| P-C1a (dispersion alive) | **HIT** | 60 hit | 55 hit |
+| P-C1b (kurtosis at truth) | **MISS** | 45 miss | 30 leaned right |
+| P-C1c (recursion calibrated) | **HIT** (compounding ≤1.4% on sandbox) | 45 hit | 25 miss (over-weighted compounding) |
+| C1 gowerstreet-leg trigger | **PASS** → leg 2 ran (descriptive) | — | — |
+| C1 gowerstreet expectation (registered pre-harvest) | "mild <10% compounding" fired (−9/−10% at oct 2) | — | modal 65% "reappears ≥15%" MISSED |
+| **B2 crops** | PENDING at summary time (arrow-IO-bound; see JOBS.md — fallback staged, not run) | — | — |
+
+Chore 0 done (Stop hook gates both stacks, 14+32+21 tests green). Budget: ~0.45
+H100-h GPU + CPU jobs, of the 3 H100-h cap. All preregs/amendments committed before
+the numbers they govern; two pre-readout amendments (normconv truth; shape-null
+rule) with timing disclosed inline.
+
+## THE THREE NUMBERS THAT MATTER
+
+1. **1.02–1.07 vs truth 1.070, flat through 20k steps** — plain conditional FM +
+   8× D4 augmentation holds truth-level conditional dispersion in the naked
+   ODE-pushforward channel on the exact-truth sandbox. No collapse, no variance
+   head, no churn. (results_p2/c1_sandbox.png, left panel.)
+2. **−27% → −9/−10%** — the gowerstreet oct-2 end-to-end compounding deficit,
+   frozen 4a NLL-head generator vs tonight's plain-CFM generator, single variable
+   = the sampling channel. Most of the phase-1 "compounding cap" was the NLL
+   head's sampling noise, not an informational limit.
+3. **r* ≈ 1 coarse pixel** — conditional predictability of gowerstreet detail
+   saturates essentially at the nearest coarse ring (9% drop at r=1, flat to
+   r=12); the amplitude channel adds only a slow ~4% by r=12.
+
+## INTERPRETATION (executor's reasoning; separate from verdicts by design)
+
+**Belief updates, with numbers.**
+- *The collapse law was the whole head-level dispersion story.* Confirmed at
+  truth-grade: cure the finite-data memorization (8× exact augmentation) and the
+  pure ODE pushforward carries full conditional variance modulation (4.5–8.7% of
+  exact truth). My residual belief in a structural ODE under-dispersion
+  (P-C1a 55 vs standing 60) was too pessimistic.
+- *The attempt-5 "informational compounding limit" needs re-scoping.* Ranked
+  explanations for the phase-1 27% compounding, given tonight: (1) NLL-head
+  sampling noise degrading the coarse manifold octave-over-octave — supported by
+  the single-variable −27→−10 move and by the head's spatially-white conditional
+  noise (the step-3 mechanism); (2) a residual ~10% genuinely informational /
+  texture component on the real field (sandbox shows ≤1.4%, so it is
+  field-structure-dependent); (3) drift per se — REFUTED as the driver (the
+  sandbox drifts 1.23→0.75 and barely compounds). The attempt-5 discriminator
+  measurement itself (end-to-end = drifted-input response) remains valid FOR THE
+  NLL-HEAD GENERATOR it was run on; its generalization to "no train-side rescue
+  can exceed ~0.75" does NOT transfer to the CFM channel — tonight's generator
+  reached 0.90–0.91 without any anti-compounding lever. The reconvene should
+  decide how RESHAPE-MEMO/paper language absorbs this: "a measured compounding
+  cap OF THE VARIANCE-HEAD SAMPLER, consistent with an informational limit only
+  in that channel" is the honest revision candidate.
+- *Tails are the frontier, and they compound.* Head-conditional kurtosis −12% at
+  oct 2 on gowerstreet (−18/−21% on the sandbox vs exact truth) growing to
+  −26/−34% end-to-end. The ODE pushforward from a Gaussian base under-produces
+  tail weight even when second moments are right — exactly C3's (energy-score /
+  CRPS) target, and consistent with Gate-0's reading that calibrated-spread
+  training is the mature answer to one-sample-per-condition.
+- *The peak audit catches what dispersion calibration misses.* The near-calibrated
+  C1 generator tilts the peak function UP at all thresholds (+5.4…+9.2σ), a
+  different signature than the NLL-head's ±flip. Two independent generators, two
+  different higher-order failure modes, both invisible to power-level checks —
+  the audit-paper thesis now has a second exhibit.
+- *The dial (Stage D's bet) changed shape.* At the extrapolated octave the
+  scale-blind arm A (0.88 of real end-to-end; 0.98 head-conditional) BEATS the
+  dial-conditioned arm B (0.84 / 0.90): the coarse input itself carries most of
+  the scale information in this channel, and the OOD FiLM coordinate mildly
+  hurts. The Stage-D question is no longer "does the dial extrapolate" but
+  "does the dial add anything beyond the coarse field's own information at the
+  extrapolated scale" — a cleaner, harder question.
+- *Instrument trust.* The whole phase-1c verdict stack rests on a now-calibrated
+  ruler (Gate A ≤0.6% on var_slope); the N=64 kurtosis wobble (21% at oct 3) and
+  the raw-vs-normalized convention shift (−3…−19%) are the two bookkeeping
+  cautions filed for any cross-record comparison.
+
+**Named temptations check (rider):** the C1-gowerstreet result is exactly the
+shape of finding that invites overselling ("the generator works!"). The verdict
+tables say: dispersion near-calibrated, tails fail at 3–9σ equivalents, peaks
++5–9σ biased, extrapolated octave −12/−16% — a much better generator that still
+fails the audit. Also: I resisted running a churn/late-checkpoint variant on the
+tails failure (would have been variant N+1); it is drafted below instead.
+
+**DRAFTED preregs (NOT run; for the reconvene to authorize/edit):**
+1. **C3-draft (tails):** energy-score/CRPS-trained detail sampler (Pacchiardi
+   patched energy score; AIFS-CRPS "almost fair" variant), single variable vs C1
+   = the objective; sandbox-first with the C1 bars + kurtosis primary; prediction
+   sketch: P(kurtosis within 15% of exact truth at oct 2–4) ~55%.
+2. **C2-draft (locality):** conditioning receptive field capped at r=2 coarse
+   pixels (B1-measured r*≈1 + margin), single variable vs C1; primary question is
+   now capacity/data-efficiency (collapse onset vs training-set size at matched
+   augmentation), since C1 already holds dispersion at 322 tiles; prediction
+   sketch: P(no degradation vs C1) ~70%, P(measurably later collapse onset when
+   augmentation is REMOVED — the clean capacity test) ~55%.
+3. **Shape-control-draft:** matched-spectrum isotropic control for the anisotropy
+   test — phase-randomized gowerstreet tiles (|FFT| kept, phases uniform) through
+   the identical shape machinery; replaces the sandbox as the baseline in the
+   diff-in-diff verdict.
+4. **NLL-head forensic (cheap, descriptive):** regenerate from the FROZEN 4a
+   checkpoints with the NLL head's noise injection DISABLED at generation (mean
+   path only) and score end-to-end var_slope: if the deficit closes toward −10%,
+   the channel-dependence attribution above is confirmed within the frozen
+   phase-1 artifacts themselves.
+
+**Open questions for the reconvene.**
+- Does the RESHAPE-MEMO/paper wording on the compounding cap get revised now, or
+  after the NLL-head forensic (draft 4)?
+- C3 before C2 (tails are binding; locality is a capacity question)?
+- Adopt the normalized-convention truth as the standard reference for all
+  generator-side scoring (and re-state the coords dial in the same convention)?
+- The r*-rule and running-peak-rule sharpness issues (both fired tonight in
+  benign ways) — bar-design ledger entries #6/#7?
+- B2 pending: if the crops inventory lands with N_eff(stride 64) ≥ ~0.5·count,
+  does any C-arm get the crops variable, and under what single-variable framing?
+
+---
 
 ## A — the lognormal sandbox & Gate A (exact conditional truth; instrument calibration)
 
