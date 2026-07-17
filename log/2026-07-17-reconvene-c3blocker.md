@@ -72,3 +72,53 @@ C3 unused (prereg unexecuted — weights stand for any future β=1 claim, correc
 not scored). Reconvene: the unpriced-gate-branch process gap fired a SECOND time
 (noted at R8 for forensics, not yet extended to arms when C3's gate fired) — now
 closed by the rule above; logged as a repeat process miss with the usual prominence.
+
+## Addendum — adversarial implementation sweep (Andreas's question: "anything suspicious?")
+
+Sweep of every surprising result against bug-shaped alternative explanations, from
+raw artifacts. One scope limitation found, two robustness nuances, rest clean.
+
+**S1 — B1's r*≈1 is a LINEAR-predictability measurement, and its validation could
+not have caught that limitation.** From stageB1_curves.json: the workhorse estimator
+is ridge (linear in context; [raw, squared] features for the variance channel); kNN
+on annulus summaries never even matches ridge's r=1 gain (flat at the r=0 level
+everywhere — the kNN featurization is weak, not evidence of absent information);
+held-out ridge error creeps UP at large r (regularization/variance penalty). And the
+sandbox validation was performed on a GAUSSIAN layer — where conditional structure
+is exactly linear — so it validates the machinery precisely in the regime where its
+linearity is correct, and is structurally blind to nonlinear long-range dependence
+on the real field. RULING: r*≈1 stands as "linear predictability saturates at the
+nearest coarse ring" — a valid, useful measurement — but every strong interpretive
+use (the coarse-field-carries-scale-info reading, C3's 8×8-patch license, any
+receptive-field-cap design) inherits the caveat "as measured linearly." **C2 is
+hereby re-purposed as the discriminating experiment:** capping the NETWORK's
+(nonlinear) receptive field at r≈2 and observing no degradation would confirm
+locality beyond linear scope; degradation would mean B1 under-measured long-range
+structure. C2's priority rises accordingly.
+
+**S2 — F-OVERSHOOT's magnitude is estimand-colored; its conclusion is not.** The
+1.54/1.68 var_slope figures partly reflect the concentration-rewarding standardized
+estimand at 1/3 amplitude and should not be quoted as "the μ-cascade modulates 1.5×
+real" without that caveat. The mixture-attribution CONCLUSION rides on two
+normalization-robust legs: kurtosis (dimensionless; 32–268 vs 6.7 — unambiguous
+conditional structure in the μ channel) and the amplitude arithmetic (detail_std
+ratios = √(1−σ-share) as pre-declared). R8 stands; quote discipline noted.
+
+**S3 — the β=1 mechanism attribution gets its architecture control for free from
+the bake-off; interpretation pre-registered now.** The exp-toy recovery (kurt 5.76
+through the same sampler) shows the architecture can produce heavy tails via
+asymmetric transforms; symmetric tails need even-in-z transforms — representable
+(trivially in the 1-D MLP isolation) but conceivably optimizer-hostile independent
+of the objective. Discriminator: if twCRPS or the t-base recovers t(5) through the
+SAME machinery, the objective attribution is sealed; **if NO candidate qualifies,
+the suspect becomes the sampler/optimizer pathway, not the objective family** — a
+no-qualifier outcome must be read that way, not as "all objectives fail."
+
+**Clean on inspection:** C1's gowerstreet improvement cannot be leakage (frozen
+scorer, same 322 real tiles as phase 1, single variable = head removal); Gate A's
+conditional sampler is validated against dense linear algebra; all kurtosis claims
+are normalization-invariant; the sandbox truth chain is tests-first. **Honest
+residual risks (not bugs):** C1 behavior beyond 20k steps unmeasured (collapse-law
+monotonicity says watch it if training ever lengthens); joint tail localization
+(peaks where the environment demands them) untested by any current bar — it is
+exactly what the C3/C1-t readout and the peak audit will measure.
