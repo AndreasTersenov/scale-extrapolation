@@ -4,6 +4,14 @@ Last updated 2026-07-16 (overnight phase-2 run). Envs: `source env.sh` (scaledri
 CPU, has pywt) for measurement; `~/wl-challenge-env/bin/python` (JAX) for training/
 generation. GPU via SLURM only.
 
+## FORENSIC (2026-07-17, ruling R5)
+
+- **NLL-noise forensic** (CPU, def-lplevass, 4c/16G/0:30,
+  `scripts_p2/forensic_nllnoise.py` + `score_forensic.py`, prereg
+  `log/2026-07-17-prereg-forensic-nllnoise.md`): mean-path regeneration from the
+  FROZEN 4a ckpts, frozen-scorer readout. Branch weights: F-CLOSE 30 / F-MID 20 /
+  F-COLLAPSE 40 / F-OVERSHOOT 5 / other 5. Job ID at submission below.
+
 ## PHASE-2 OVERNIGHT (2026-07-16, NIGHT-ORDERS)
 
 - **C1 sandbox leg**: **job 16491750 COMPLETED, hash ab9c175f59 — branch
