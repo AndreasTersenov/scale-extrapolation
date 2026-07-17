@@ -314,6 +314,16 @@ CRPS/ES > β<1-as-cheap-test > t-base flow (new prereg) > transform-space scorin
 run-anyway-as-negative. Any objective variant can be gated by the SAME t(5) field
 toy in ~15 min CPU before a prereg amendment.
 
+UPDATE (2026-07-17, R13 bake-off — log/2026-07-17-c3-bakeoff.md, figure
+results_p2/c3_bakeoff.png): all three authorized candidates FAILED the
+pre-registered selector (final held-out kurt ≥ 4.0 on both gates) — twcrps
+3.01/3.57 (plus spurious skew ~+0.51 on a symmetric target), beta05 0.51/1.05,
+tbase 3.56/2.98. twCRPS and t-base both CROSS the bar mid-training (5.14/4.80 and
+4.11/5.13) then converge away under continued training — the measured lesson is
+that reaching the right tail mass transiently is easy and HOLDING it is the hard
+problem. Both panels' P(≥1 qualifies)=85 missed. STOP per R13; back to the
+reconvene (t-base literature + quantile-regression-flavored options queued there).
+
 ## Tests & infrastructure
 
 - Chore 0 (154c30b): Stop-hook gate now covers BOTH stacks (tests/ under env.sh;

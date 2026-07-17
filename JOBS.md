@@ -4,16 +4,23 @@ Last updated 2026-07-17 (C3 gate investigation). Envs: `source env.sh` (scaledri
 CPU, has pywt) for measurement; `~/wl-challenge-env/bin/python` (JAX) for training/
 generation. GPU via SLURM only.
 
-## R13 OBJECTIVE BAKE-OFF (2026-07-17) — 6 CPU toy jobs, spec ab4f2d0
+## R13 OBJECTIVE BAKE-OFF (2026-07-17) — CLOSED: NO QUALIFIER → STOP
 
-- Submitted (def-lplevass, 16c/24G/1:30 each, `scripts_p2/bakeoff_c3.py`):
-  **16609141** twcrps/t5flat, **16609142** twcrps/composite, **16609144**
-  beta05/t5flat, **16609145** beta05/composite, **16609146** tbase/t5flat,
-  **16609147** tbase/composite. Selector (R13): t(5) kurt ≥ 4.0 AND composite
-  ≥ 4.0; priority twcrps > beta05 > tbase. Verdict table fills in
-  log/2026-07-17-c3-bakeoff.md by verbatim copy from results_p2/bakeoff_*.json
-  (R12). Qualifier → prereg amendment (or C1-t prereg) BEFORE the GPU leg;
-  no qualifier → STOP.
+- First submission 16609141–47 all FAILED at t=0 (3 s): the runner imports
+  arms_p2.c1t before any wfm module, so wfm/__init__'s jax_flows sys.path shim
+  was absent — shim duplicated into c1t/flow.py (1fbabaa; infra note:
+  import-order-dependent path shims bite exactly like this).
+- Resubmitted (def-lplevass, 16c/24G/1:30, `scripts_p2/bakeoff_c3.py`): all six
+  COMPLETED 6–21 min — **16609897** twcrps/t5flat, **16609898**
+  twcrps/composite, **16609899** beta05/t5flat, **16609900** beta05/composite,
+  **16609901** tbase/t5flat, **16609902** tbase/composite.
+- **Verdict (selector: final kurt ≥ 4.0 on BOTH gates): twcrps 3.01/3.57 FAIL
+  (+ spurious skew ~+0.51 on the symmetric target, both toys); beta05 0.51/1.05
+  FAIL; tbase 3.56/2.98 FAIL (Gaussianizes its base tails late).** twcrps and
+  tbase cross the bar mid-training then converge away — the reconvene owns any
+  checkpoint-rule discussion. Table + trajectories:
+  log/2026-07-17-c3-bakeoff.md; figure results_p2/c3_bakeoff.png. No GPU leg;
+  no prereg amendment; C3 objective family remains blocked.
 
 ## C3 PRE-TRAINING GATES (2026-07-17, R10 conditions) — arm BLOCKED, no GPU spent
 
