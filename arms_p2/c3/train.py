@@ -22,11 +22,14 @@ from wfm.model import ConditionalUNet
 from .energy import M_SAMPLES, PATCH, STRIDE, patched_energy_score
 
 
-def make_es_step(cond_vec=None, m=M_SAMPLES, patch=PATCH, stride=STRIDE):
+def make_es_step(cond_vec=None, m=M_SAMPLES, patch=PATCH, stride=STRIDE, beta=1.0,
+                 chain=None):
     """Jitted ES training step: m model samples per conditioning, fair estimator.
 
     The m forwards are vmapped over a fresh (m, B, H, W, C) noise block; gradients
     flow through every sample (both ES terms are functions of the model).
+    ``beta``/``chain`` select the R13 bake-off objective variants; the defaults are
+    the frozen C3-prereg objective.
     """
     @jax.jit
     def step(state, detail, coarse):
@@ -38,7 +41,8 @@ def make_es_step(cond_vec=None, m=M_SAMPLES, patch=PATCH, stride=STRIDE):
             z = jax.random.normal(key, (m,) + detail.shape)
             samples = jax.vmap(
                 lambda zi: state.apply_fn({"params": p}, zi, t0, coarse, cond_vec))(z)
-            return patched_energy_score(samples, detail, patch=patch, stride=stride)
+            return patched_energy_score(samples, detail, patch=patch, stride=stride,
+                                        beta=beta, chain=chain)
 
         loss, grads = jax.value_and_grad(loss_fn)(state.params)
         state = state.apply_gradients(grads=grads).replace(key=new_key)

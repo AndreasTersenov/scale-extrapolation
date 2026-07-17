@@ -104,39 +104,10 @@ def test_es_propriety_direction():
         assert d.mean() > 5 * se, ((mu, sigma), d.mean(), se)
 
 
-# ------------------------------------------------- toy data (phase-1c suite, adapted)
+# ---------------- toy data (phase-1c suite, adapted; shared impl in arms_p2.toys)
 
-def _smooth_coarse(key, n, hw=16):
-    x = jax.random.normal(key, (n, hw, hw, 1))
-    k = jnp.ones((5, 5, 1, 1)) / 25.0
-    for _ in range(3):
-        x = jax.lax.conv_general_dilated(x, k, (1, 1), "SAME",
-                                         dimension_numbers=("NHWC", "HWIO", "NHWC"))
-    return 1.5 * x / jnp.std(x)
-
-
-def _true_mean(c):
-    return 0.5 * jnp.tanh(c)
-
-
-def _true_sigma(c, flat=False):
-    if flat:
-        return 0.85 * jnp.ones_like(c)
-    return jnp.maximum(0.85 + 0.12 * c, 0.2)
-
-
-def _make_data(key, noise="gauss", flat_sigma=True, n=192, hw=16):
-    kc, kz = jax.random.split(key)
-    coarse = _smooth_coarse(kc, n, hw)
-    shape = (n, hw, hw, 3)
-    if noise == "gauss":
-        eps = jax.random.normal(kz, shape)
-    elif noise == "exp":         # standardized exponential: mean 0, var 1, skewness 2
-        eps = jax.random.exponential(kz, shape) - 1.0
-    elif noise == "t5":          # unit-variance Student-t(5): excess kurtosis 6
-        eps = jax.random.t(kz, 5.0, shape) / np.sqrt(5.0 / 3.0)
-    detail = _true_mean(coarse) + _true_sigma(coarse, flat_sigma) * eps
-    return detail, coarse
+from arms_p2.toys import make_data as _make_data
+from arms_p2.toys import true_mean as _true_mean
 
 
 def _train_direct(detail, coarse, steps=1200, seed=0, lr=3e-3, m=8):
