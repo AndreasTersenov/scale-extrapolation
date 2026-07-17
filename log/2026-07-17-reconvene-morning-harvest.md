@@ -101,3 +101,11 @@ failing the strict bars — is now failing at the TAILS frontier only, with a cl
 Gate-0-verified next lever (C3). The paper decision should wait for the forensic
 (R5) and ideally C3's sandbox leg: the story is visibly migrating from "audit paper
 with a dead generator" toward "audit paper with a constructive arc — or better."
+
+## Addendum — independent gate run confirmed
+
+The reconvene's own execution of the rewritten two-stack Stop-hook gate completed
+green (exit 0): tests/ under the env.sh stack + tests_wfm/ + tests_p2/ under
+wl-challenge-env — 14 + 32 + 21. The chore-0 fix is verified end-to-end by a party
+other than its author. Audit fully closed; all rulings above stand on verified
+ground.
