@@ -4,6 +4,17 @@ Last updated 2026-07-17 (C3 gate investigation). Envs: `source env.sh` (scaledri
 CPU, has pywt) for measurement; `~/wl-challenge-env/bin/python` (JAX) for training/
 generation. GPU via SLURM only.
 
+## R13 OBJECTIVE BAKE-OFF (2026-07-17) — 6 CPU toy jobs, spec ab4f2d0
+
+- Submitted (def-lplevass, 16c/24G/1:30 each, `scripts_p2/bakeoff_c3.py`):
+  **16609141** twcrps/t5flat, **16609142** twcrps/composite, **16609144**
+  beta05/t5flat, **16609145** beta05/composite, **16609146** tbase/t5flat,
+  **16609147** tbase/composite. Selector (R13): t(5) kurt ≥ 4.0 AND composite
+  ≥ 4.0; priority twcrps > beta05 > tbase. Verdict table fills in
+  log/2026-07-17-c3-bakeoff.md by verbatim copy from results_p2/bakeoff_*.json
+  (R12). Qualifier → prereg amendment (or C1-t prereg) BEFORE the GPU leg;
+  no qualifier → STOP.
+
 ## C3 PRE-TRAINING GATES (2026-07-17, R10 conditions) — arm BLOCKED, no GPU spent
 
 - **Shape-capacity diagnostic, exp noise** (CPU, def-lplevass, 16c/24G/1h): **job
