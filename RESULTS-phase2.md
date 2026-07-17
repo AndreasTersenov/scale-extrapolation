@@ -319,10 +319,15 @@ results_p2/c3_bakeoff.png): all three authorized candidates FAILED the
 pre-registered selector (final held-out kurt ≥ 4.0 on both gates) — twcrps
 3.01/3.57 (plus spurious skew ~+0.51 on a symmetric target), beta05 0.51/1.05,
 tbase 3.56/2.98. twCRPS and t-base both CROSS the bar mid-training (5.14/4.80 and
-4.11/5.13) then converge away under continued training — the measured lesson is
-that reaching the right tail mass transiently is easy and HOLDING it is the hard
-problem. Both panels' P(≥1 qualifies)=85 missed. STOP per R13; back to the
-reconvene (t-base literature + quantile-regression-flavored options queued there).
+4.11/5.13) then converge away under continued training — reaching the right tail
+mass transiently is easy; HOLDING it is the hard problem. Both panels'
+P(≥1 qualifies)=85 missed. ATTRIBUTION per the PRE-REGISTERED no-qualifier reading
+(adversarial-sweep addendum, 9a43bb6, committed before the verdict): the suspect
+is the SAMPLER/OPTIMIZER pathway, not the objective family — three structurally
+different objectives (including plain L2-CFM, which actively removes the heavy
+tails its t(5) base supplies) fail the same statistic the same way; reconciliation
+section in the bake-off log. STOP per R13; next-step menu is
+architecture/optimization-flavored and belongs to the reconvene.
 
 ## Tests & infrastructure
 
