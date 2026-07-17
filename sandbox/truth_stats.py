@@ -58,6 +58,16 @@ def estimand_scalars(w, c, n_bins=N_BINS):
     return {"var_slope": var_slope, "kurtosis": kurtosis, "detail_std": wsd}
 
 
+def tail_q999(w):
+    """99.9th percentile of |standardized w| — the R10 condition-1 extreme-tail
+    instrument (descriptive, never adjudicating). Standardization is by the POOLED
+    mean/std, the estimand's convention, so the value is scale-invariant and reads
+    directly as 'tail extent beyond the second moment' (N(0,1): 3.29; t(5): 5.32)."""
+    w = np.asarray(w)
+    ws = (w - np.mean(w, dtype=np.float64)) / np.std(w, dtype=np.float64)
+    return float(np.quantile(np.abs(ws), 0.999))
+
+
 def _pool(fields, j, dtype=np.float32):
     ws, cs = [], []
     for f in fields:
