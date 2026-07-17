@@ -1,0 +1,5 @@
+[19:58:01] B2 fallback: 12 parents (first 3 shards only)
+[19:58:02] stride 128: n=132 n_eff_min=13.7
+[19:58:02] stride 64: n=252 n_eff_min=13.7
+[19:58:03] stride 32: n=984 n_eff_min=13.8
+[19:58:03] wrote /home/tersenov/software/scale-extrapolation/results_p2/stageB2_crops.json

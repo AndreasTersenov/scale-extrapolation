@@ -25,10 +25,15 @@ generation. GPU via SLURM only.
   the negative isotropic baseline is real. Amendment's difference-in-differences
   reading stands. Zero GPU spent.
 - **stage-B B1+B2** (CPU, def-lplevass, 4c/24G/1:30, `scripts_p2/run_stageB.py`,
-  prereg `log/2026-07-16-stageB-prereg.md`): B1 curves (both channels, sandbox
-  control + gowerstreet) + shape test (aligned-vs-misaligned) + B2 crops N_eff.
-  Expected: r* ≤ 6 at oct 1-2 on gowerstreet (P-B1a 85%), shape NULL more likely
-  than not (P-B1b 35%), sandbox shape NULL (90%). Job ID at submission below.
+  prereg `log/2026-07-16-stageB-prereg.md`): **job 16491648 — B1 curves + shape
+  COMPLETED (readouts in RESULTS-phase2.md §B1); B2 leg CANCELLED by executor at
+  1:05 elapsed** — diagnosis: `iter_parent_maps` with max_shards=None round-robins
+  ALL 256 gowerstreet shards (~500 MB each ≈ 128 GB IO) before yielding 30
+  parents; could not finish in budget (infra note, rider grant 5).
+- **B2 fallback** (CPU, def-lplevass, 4c/24G/0:45, `scripts_p2/run_b2_fallback.py`):
+  **job 16492950** — 12 parents from the first 3 shards (bounded ~1.5 GB IO;
+  physical-diversity caveat to be stated in the readout). Expected: stride-64
+  N_eff/count ≥ 0.5 (60%, as pre-registered).
 
 - **stage-A ensembles+truth+instrument** (CPU, def-lplevass, 4c/24G/1h,
   `scripts_p2/gen_sandbox_ensembles.py`, prereg

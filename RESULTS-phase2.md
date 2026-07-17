@@ -16,7 +16,7 @@
 | P-C1c (recursion calibrated) | **HIT** (compounding ≤1.4% on sandbox) | 45 hit | 25 miss (over-weighted compounding) |
 | C1 gowerstreet-leg trigger | **PASS** → leg 2 ran (descriptive) | — | — |
 | C1 gowerstreet expectation (registered pre-harvest) | "mild <10% compounding" fired (−9/−10% at oct 2) | — | modal 65% "reappears ≥15%" MISSED |
-| **B2 crops** | PENDING at summary time (arrow-IO-bound; see JOBS.md — fallback staged, not run) | — | — |
+| **B2 crops** | landed via bounded fallback: **N_eff ≈ 13.7 ≈ parent count at EVERY stride** — crops buy ~nothing; the currency is parents | expectation "stride-64 useful ≥0.5" | 60 **MISSED** (measured 0.054) |
 
 Chore 0 done (Stop hook gates both stacks, 14+32+21 tests green). Budget: ~0.45
 H100-h GPU + CPU jobs, of the 3 H100-h cap. All preregs/amendments committed before
@@ -119,8 +119,11 @@ tails failure (would have been variant N+1); it is drafted below instead.
   generator-side scoring (and re-state the coords dial in the same convention)?
 - The r*-rule and running-peak-rule sharpness issues (both fired tonight in
   benign ways) — bar-design ledger entries #6/#7?
-- B2 pending: if the crops inventory lands with N_eff(stride 64) ≥ ~0.5·count,
-  does any C-arm get the crops variable, and under what single-variable framing?
+- B2 answered: crops are dead as a data lever (N_eff ≈ parent count at every
+  stride, incl. DISJOINT tiles) — but the finding cuts deeper: the training set's
+  law-level diversity is ~parents (~30), not ~tiles (322). Does this reprice the
+  collapse-law "finite data" language, and does it promote constrained-realization
+  ensembles / more parents over any within-parent augmentation for future arms?
 
 ---
 
@@ -188,7 +191,33 @@ closed-form truth at every radius).
 
 ## B2 — crops inventory
 
-<!-- B2_PENDING -->
+Jobs: 16491648's B2 leg CANCELLED at 1:05 elapsed (executor call, rider grant 5 —
+`iter_parent_maps` with max_shards=None reads ALL 256 gowerstreet shards ≈128 GB
+before yielding; could not finish in budget); fallback job 16492950 (12 parents,
+first 3 shards — bounded IO, physical-diversity caveat) COMPLETED. Data:
+results_p2/stageB2_crops.json.
+
+| stride | n_crops | N_eff (var_slope) | N_eff (detail_std) | N_eff_min / n |
+|---|---|---|---|---|
+| 128 (disjoint) | 132 | 15.4 | 13.7 | 0.10 |
+| 64 | 252 | 15.4 | 13.7 | 0.054 |
+| 32 | 984 | 15.2 | 13.8 | 0.014 |
+
+- **The inventory answer: crops buy ~nothing, and the real currency is PARENTS.**
+  N_eff_min ≈ 13.7 at EVERY stride — approximately the parent count (12) — i.e.
+  even DISJOINT 128² tiles within one parent map are nearly redundant at the
+  law-summary level, and stride-shifted crops add nothing beyond that. The
+  pre-registered expectation (stride-64 N_eff/count ≥ 0.5, 60%) **missed
+  decisively** (0.054).
+- Scope: N_eff is defined on per-crop SUMMARY statistics (octave-2 var_slope,
+  detail_std) — it measures between-tile statistical redundancy (law-level
+  diversity), not pixel-level conditional-pair counts; and the fallback used 12
+  parents from 3 shards (caveat). Both stated per prereg/fallback notes.
+- Consequences: (a) C1's no-crops choice is validated post hoc; (b) the phase-1
+  "322-tile" training set carries roughly PARENT-count (~30) effective diversity
+  in law-level statistics — the collapse law's "finite data" is finiter than the
+  tile count suggests, which sharpens the C2 capacity question and the
+  constrained-realization (item-1) motivation for any future phase.
 
 ## C1 — vanilla CFM + augmentation (the un-run arm), sandbox leg
 

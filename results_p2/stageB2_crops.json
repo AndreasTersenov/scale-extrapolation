@@ -1,0 +1,21 @@
+{
+ "fallback": "12 parents / 3 shards (bounded IO); diversity caveat applies",
+ "128": {
+  "n_crops": 132,
+  "n_eff_var_slope": 15.4,
+  "n_eff_detail_std": 13.7,
+  "n_eff_min": 13.7
+ },
+ "64": {
+  "n_crops": 252,
+  "n_eff_var_slope": 15.4,
+  "n_eff_detail_std": 13.7,
+  "n_eff_min": 13.7
+ },
+ "32": {
+  "n_crops": 984,
+  "n_eff_var_slope": 15.2,
+  "n_eff_detail_std": 13.8,
+  "n_eff_min": 13.8
+ }
+}

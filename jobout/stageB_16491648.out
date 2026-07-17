@@ -22,3 +22,4 @@
 [18:55:50] shape sandbox oct2 absw: z=-3.09 (2s)
 [18:55:51] shape sandbox oct2 w: z=-1.13 (1s)
 [18:55:51] wrote /home/tersenov/software/scale-extrapolation/results_p2/stageB1_shape.json
+[2026-07-16T23:57:55.823] error: *** JOB 16491648 ON rc32329 CANCELLED AT 2026-07-16T23:57:55 DUE to SIGNAL Terminated ***
