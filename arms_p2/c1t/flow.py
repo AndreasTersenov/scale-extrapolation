@@ -17,12 +17,24 @@ a C1-t prereg must pin nu for the sandbox from stated reasoning, before results.
 """
 from __future__ import annotations
 
+import os
+import sys
+
 import numpy as np
 
 import jax
 import jax.numpy as jnp
 
-from jax_flows.flow_matching import ot_interpolate
+# Same shim as wfm/__init__.py (jax_flows is not pip-installed on this cluster —
+# its pyproject pins a diffrax broken here; we need only the pure-JAX core). Kept
+# HERE too so this module is import-order independent: the 6-job bake-off
+# submission (16609141-47) failed at t=0 because the runner imported c1t before
+# any wfm module had installed the path.
+_JF = os.path.expanduser("~/software/jax_flows")
+if _JF not in sys.path:
+    sys.path.append(_JF)
+
+from jax_flows.flow_matching import ot_interpolate  # noqa: E402
 
 NU = 5.0
 
