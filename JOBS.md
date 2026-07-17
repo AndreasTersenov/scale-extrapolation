@@ -4,6 +4,17 @@ Last updated 2026-07-17 (C3 gate investigation). Envs: `source env.sh` (scaledri
 CPU, has pywt) for measurement; `~/wl-challenge-env/bin/python` (JAX) for training/
 generation. GPU via SLURM only.
 
+## R15 TAIL-DYNAMICS DIAGNOSIS (2026-07-17) — 8 CPU jobs, prereg 69f9a99
+
+- Submitted (def-lplevass, 16c/24G/1:30, `scripts_p2/tail_dynamics.py`, 12k steps,
+  eval/500): **16613873** tbase/composite/n768, **16613874** tbase/composite/n6144,
+  **16613875** tbase/t5flat/n768, **16613876** tbase/t5flat/n6144, **16613877**
+  twcrps/composite/n768, **16613878** twcrps/composite/n6144, **16613879**
+  twcrps/t5flat/n768, **16613880** twcrps/t5flat/n6144. P1 onset rule + P2 joint
+  bars + P3 decomposition pinned in log/2026-07-17-prereg-tail-dynamics.md.
+  Readout → log/2026-07-17-taildyn-readout.md, then STOP (next-arm decision is
+  the reconvene's).
+
 ## R13 OBJECTIVE BAKE-OFF (2026-07-17) — CLOSED: NO QUALIFIER → STOP
 
 - First submission 16609141–47 all FAILED at t=0 (3 s): the runner imports
