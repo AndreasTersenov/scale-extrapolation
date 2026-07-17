@@ -1,0 +1,18 @@
+ERROR:2026-07-17 06:34:52,412:jax._src.xla_bridge:475: Jax plugin configuration error: Exception when calling jax_plugins.xla_cuda12.initialize()
+Traceback (most recent call last):
+  File "/home/tersenov/wl-challenge-env/lib/python3.11/site-packages/jax/_src/xla_bridge.py", line 473, in discover_pjrt_plugins
+    plugin_module.initialize()
+  File "/home/tersenov/wl-challenge-env/lib/python3.11/site-packages/jax_plugins/xla_cuda12/__init__.py", line 329, in initialize
+    _check_cuda_versions(raise_on_first_error=True)
+  File "/home/tersenov/wl-challenge-env/lib/python3.11/site-packages/jax_plugins/xla_cuda12/__init__.py", line 286, in _check_cuda_versions
+    local_device_count = cuda_versions.cuda_device_count()
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: jaxlib/cuda/versions_helpers.cc:113: operation cuInit(0) failed: Unknown CUDA error 303; cuGetErrorName failed. This probably means that JAX was unable to load the CUDA libraries.
+[patch8-prodnet] step   500 loss 8.3821 HELDOUT skew 0.533 kurt 1.81 [117s]
+[patch8-prodnet] step  1000 loss 8.1924 HELDOUT skew 0.252 kurt 0.95 [226s]
+[patch8-prodnet] step  1500 loss 7.3416 HELDOUT skew 0.750 kurt 1.76 [336s]
+[patch8-prodnet] step  2000 loss 6.2142 HELDOUT skew 1.599 kurt 4.57 [446s]
+[patch8-prodnet] step  2500 loss 4.8730 HELDOUT skew 1.775 kurt 4.94 [556s]
+[patch8-prodnet] step  3000 loss 4.0418 HELDOUT skew 1.924 kurt 5.42 [667s]
+[patch8-prodnet] step  3500 loss 3.6279 HELDOUT skew 1.998 kurt 5.69 [776s]
+[patch8-prodnet] step  4000 loss 3.6143 HELDOUT skew 2.014 kurt 5.76 [891s]

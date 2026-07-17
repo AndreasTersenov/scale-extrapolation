@@ -1,6 +1,10 @@
 # 2026-07-17 — PREREG: Arm C3, sandbox leg (energy-score-trained detail sampler)
-# STATUS: awaiting reconvene review (R6) — NOT submitted; no code written yet
-# (tests-first at implementation, after approval)
+# STATUS: approved with conditions (R10) -> BLOCKED at the pre-training gate, NOT
+# submitted. The R10 condition-2 investigation measured that the beta=1 patched ES
+# does not learn SYMMETRIC heavy tails (production-config t(5) toy: kurt 0.49 vs
+# 6.0) — the arm's PRIMARY object. Evidence: log/2026-07-17-c3-gate-design.md;
+# blocker + options: log/2026-07-17-c3-blocker-symmetric-tails.md. Body below
+# unchanged (frozen as approved); branch weights stand unused.
 
 Authorized track: ruling R6 (log/2026-07-17-reconvene-morning-harvest.md).
 SINGLE VARIABLE vs the C1 control = **the training objective** (and the sampler it

@@ -279,6 +279,41 @@ results_p2/c1_peaks_gowerstreet_descriptive.json. Registered expectation: my mod
   transient (0.995→0.885→1.016) — the oscillation-vs-collapse rule weakness again;
   descriptive, filed to the bar-design ledger.
 
+## C3 — patched-energy-score direct sampler (2026-07-17, R10): BLOCKED at the
+## pre-training gate; GPU leg not run
+
+STATUS: the prereg (b42edd9, approved R10 with conditions) was NOT executed. The
+R10 condition-2 gate investigation measured a mechanism-level property of the
+objective before any training spend: **the β=1 patched energy score learns
+asymmetric tail weight and does not learn symmetric tail weight** — and Haar
+detail marginals are exactly symmetric by construction (D4-augmented law: w ~ −w),
+with kurtosis as the arm's PRIMARY bar.
+
+Evidence (all held-out eval, production net + production patch config, 768-field
+toys; figure results_p2/c3_gates.png; chain log/2026-07-17-c3-gate-design.md;
+blocker + options log/2026-07-17-c3-blocker-symmetric-tails.md):
+
+| toy | truth | recovered | job |
+|---|---|---|---|
+| exp skewness | 2.0 | 2.014 | 16605903 |
+| exp excess kurtosis | 6.0 | 5.76 | 16605903 |
+| t(5) excess kurtosis | 6.0 | **0.49 (flat 2.5k→4k)** | 16606069 |
+| modulated-σ × t(5) pooled kurtosis | 5.96 | **1.10 (flat 2.5k→4k)** | 16606223 |
+
+What survives: the full C3 implementation (arms_p2/c3/, runner/sweep/scorer/SLURM)
+is committed, smoke-tested, gate-validated, runnable in minutes if the reconvene
+amends the objective; the R10 condition-1 instrument (tail_q999) is validated with
+its normconv truth (results_p2/sandbox_truth_q999.json: oct 1–4
+5.974/5.532/5.103/4.591, SE ≤0.03); the two-moment + skewness gate itself PASSES
+(the failure is specific to symmetric tails). Gate-design lessons logged
+(capacity is part of a toy's validity regime; train-eval one-obs-per-conditioning
+toys are memorization traps for proper-score training).
+
+Reconvene options (executor's ordering in the blocker log): threshold-weighted
+CRPS/ES > β<1-as-cheap-test > t-base flow (new prereg) > transform-space scoring >
+run-anyway-as-negative. Any objective variant can be gated by the SAME t(5) field
+toy in ~15 min CPU before a prereg amendment.
+
 ## Tests & infrastructure
 
 - Chore 0 (154c30b): Stop-hook gate now covers BOTH stacks (tests/ under env.sh;

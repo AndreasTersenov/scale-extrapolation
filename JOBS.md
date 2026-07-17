@@ -1,8 +1,33 @@
 # JOBS — in-flight SLURM jobs & harvest instructions
 
-Last updated 2026-07-16 (overnight phase-2 run). Envs: `source env.sh` (scaledrift,
+Last updated 2026-07-17 (C3 gate investigation). Envs: `source env.sh` (scaledrift,
 CPU, has pywt) for measurement; `~/wl-challenge-env/bin/python` (JAX) for training/
 generation. GPU via SLURM only.
+
+## C3 PRE-TRAINING GATES (2026-07-17, R10 conditions) — arm BLOCKED, no GPU spent
+
+- **Shape-capacity diagnostic, exp noise** (CPU, def-lplevass, 16c/24G/1h): **job
+  16605903 COMPLETED (15:10)** — production net + patch config recovers held-out
+  skew 2.014/2.0, kurt 5.76/6.0 (capacity confound of the tiny-net toy resolved).
+  First submission 16605902 cancelled at t=0 — script lived on login-node /tmp,
+  which compute nodes don't share (infra note: stage diagnostics via
+  ~/links/scratch).
+- **Shape diagnostic, symmetric t(5)** (same recipe): **job 16606069 COMPLETED
+  (13:51) — BLOCKER**: held-out excess kurt plateaus at 0.49 vs truth 6.0 (flat
+  2.5k→4k) under the identical config that recovers exp. β=1 patched ES does not
+  learn symmetric heavy tails → C3 NOT submitted per the pre-registered rule.
+  Evidence log/2026-07-17-c3-gate-design.md; blocker + reconvene options
+  log/2026-07-17-c3-blocker-symmetric-tails.md.
+- **Composite modulated-σ × t(5)** (same recipe): **job 16606223** — quantifies the
+  delivered fraction of a pooled mixture+shape kurtosis (truth reference measured
+  in-job: 5.86 train / 5.96 heldout). Result appended to the blocker log.
+- **tail_q999 truth** (CPU, def-lplevass, 8c/64G/2h, `scripts_p2/truth_q999.py`):
+  **job 16606155 COMPLETED (0:42)** — normconv q999 truth oct 1–4:
+  5.974/5.532/5.103/4.591 (SE ≤0.03) → results_p2/sandbox_truth_q999.json
+  (R10 condition-1 instrument reference).
+- **C3 sandbox GPU leg** (`scripts_p2/arms_c3_sandbox.slurm`): NOT SUBMITTED
+  (blocked at the gate). Implementation + scorers committed and smoke-tested;
+  runnable within minutes of a reconvene decision on the objective.
 
 ## FORENSIC (2026-07-17, ruling R5)
 

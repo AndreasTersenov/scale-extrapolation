@@ -66,11 +66,18 @@ unless stated.
   production config is exactly what the arm measures at full scale (kurtosis
   PRIMARY), with the t(5) field run as the pre-training calibration point.
 
-## APPENDED (pre-submission): production-config t(5) field result
+## APPENDED (pre-submission): production-config t(5) field result — BLOCKER FIRES
 
-Job 16606069 (production net + patch config, 768 fields, held-out eval; truth
-skew 0, excess kurt 6.0): PENDING at the time of this entry — the result will be
-appended below from the job log before any submission decision. If the t(5) field
-run plateaus at the 1-D limit (~1.1) instead of recovering toward 6, that is a
-BLOCKER (the sandbox detail marginals are near-symmetric heavy-tailed — the arm's
-PRIMARY object), to be taken to the reconvene rather than argued around.
+Job 16606069 COMPLETED (13:51 elapsed). Held-out trajectory (truth skew 0, excess
+kurt 6.0): kurt 1.39 @500 → 1.04 @1k → 0.70 @1.5k → 0.55 @2k → 0.48 @2.5k →
+0.48 @3k → 0.49 @3.5k → **0.49 @4k**; skew → 0.04 (correctly symmetric). A hard
+plateau, flat for the final 1,500 annealed steps, BELOW even the 1-D limit (1.1) —
+while the identical config on exp noise reached kurt 5.76/6.0 in the same budget.
+
+The pre-registered rule above fires: this is a BLOCKER. The production
+configuration recovers asymmetric (one-sided) tails and does NOT recover symmetric
+heavy tails; Haar detail marginals are exactly symmetric (the D4-augmented
+training law enforces w ~ −w) and heavy-tailed — the arm's PRIMARY object
+(kurtosis) is precisely the statistic the toy shows the objective cannot deliver.
+NO SUBMISSION. Full evidence and options for the reconvene:
+log/2026-07-17-c3-blocker-symmetric-tails.md.
