@@ -128,3 +128,16 @@ def test_tcfm_step_and_sampler():
                       coarse[:2], 3, n_steps=8)
     assert jnp.array_equal(g1, g2) and not jnp.array_equal(g1, g3)
     assert g1.shape == (2, 16, 16, 3) and bool(jnp.all(jnp.isfinite(g1)))
+
+
+def test_binned_sigma_maxrel():
+    """Dispersion estimator (R15 probe 2): near-zero on an independent same-law
+    realization; detects a 2x under-dispersion at the right magnitude."""
+    from arms_p2.toys import binned_sigma_maxrel, make_data, true_mean
+    d1, c1 = make_data(jax.random.PRNGKey(0), "gauss", flat_sigma=False, n=256)
+    d2, c2 = make_data(jax.random.PRNGKey(1), "gauss", flat_sigma=False, n=256)
+    same = binned_sigma_maxrel(d1, c1, d2, c2)
+    assert same < 0.05, same
+    under = true_mean(c1) + 0.5 * (d1 - true_mean(c1))
+    det = binned_sigma_maxrel(under, c1, d2, c2)
+    assert 0.4 < det < 0.6, det

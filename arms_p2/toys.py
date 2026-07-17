@@ -61,3 +61,21 @@ def resid_stats(gen, coarse_bc):
     return {"skew": float(np.mean(r ** 3)),
             "kurt": float(np.mean(r ** 4) - 3.0),
             "q999": float(np.quantile(np.abs(r), 0.999))}
+
+
+SIGMA_EDGES = np.linspace(-1.2, 1.2, 7)
+
+
+def binned_sigma_maxrel(gen, c_gen, ref, c_ref, edges=SIGMA_EDGES):
+    """Dispersion-recovery statistic: max over coarse bins of the relative error of
+    the generated residual std against the reference (data) residual std — the
+    per-bin sigma convention of the C3 gate suite. Out-of-range pixels masked."""
+    def binned_std(x, c):
+        r = np.asarray(x - true_mean(c)).ravel().astype(np.float64)
+        cv = np.asarray(jnp.broadcast_to(c, x.shape)).ravel()
+        idx = np.digitize(cv, edges) - 1
+        idx[(cv < edges[0]) | (cv >= edges[-1])] = -1
+        return np.array([r[idx == b].std() for b in range(len(edges) - 1)])
+    sg = binned_std(gen, c_gen)
+    sr = binned_std(ref, c_ref)
+    return float(np.max(np.abs(sg / sr - 1.0)))
