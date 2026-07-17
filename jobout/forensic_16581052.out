@@ -1,0 +1,38 @@
+ERROR:2026-07-17 04:37:49,212:jax._src.xla_bridge:475: Jax plugin configuration error: Exception when calling jax_plugins.xla_cuda12.initialize()
+Traceback (most recent call last):
+  File "/home/tersenov/wl-challenge-env/lib/python3.11/site-packages/jax/_src/xla_bridge.py", line 473, in discover_pjrt_plugins
+    plugin_module.initialize()
+  File "/home/tersenov/wl-challenge-env/lib/python3.11/site-packages/jax_plugins/xla_cuda12/__init__.py", line 329, in initialize
+    _check_cuda_versions(raise_on_first_error=True)
+  File "/home/tersenov/wl-challenge-env/lib/python3.11/site-packages/jax_plugins/xla_cuda12/__init__.py", line 286, in _check_cuda_versions
+    local_device_count = cuda_versions.cuda_device_count()
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: jaxlib/cuda/versions_helpers.cc:113: operation cuInit(0) failed: Unknown CUDA error 303; cuGetErrorName failed. This probably means that JAX was unable to load the CUDA libraries.
+[04:37:55] arm A octave 4: assembled (64, 16, 16, 1)
+[04:37:57] arm A octave 3: assembled (64, 32, 32, 1)
+[04:37:59] arm A octave 2: assembled (64, 64, 64, 1)
+[04:38:01] arm A octave 1: assembled (64, 128, 128, 1)
+[04:38:01] arm B octave 4: assembled (64, 16, 16, 1)
+[04:38:02] arm B octave 3: assembled (64, 32, 32, 1)
+[04:38:02] arm B octave 2: assembled (64, 64, 64, 1)
+[04:38:02] arm B octave 1: assembled (64, 128, 128, 1)
+[04:38:02] wrote /home/tersenov/software/scale-extrapolation/results_p2/forensic_nllnoise.npz
+=== NLL-HEAD NOISE FORENSIC (mean-path generation, frozen 4a ckpts) ===
+
+ arm  oct |      vs    (SE) |   kurt |   dstd dstd/real
+   A    1 |   1.665   0.031 |  54.02 |  0.209      0.28
+   A    2 |   1.536   0.025 |  32.50 |  0.441      0.38
+   A    3 |   1.033   0.023 |   9.02 |  1.131      0.63
+   A    4 |   0.547   0.022 |   2.10 |  2.600      0.97
+
+   B    1 |   2.131   0.039 | 268.36 |  0.281      0.38
+   B    2 |   1.676   0.044 |  78.29 |  0.450      0.39
+   B    3 |   1.104   0.041 |  15.58 |  0.917      0.51
+   B    4 |   0.652   0.027 |   3.00 |  2.300      0.86
+
+reference points: real oct-2 1.02; 4a WITH noise 0.746/0.734; C1 0.921/0.927
+
+oct-2 mean-path var_slope: arm A 1.536 -> F-OVERSHOOT; arm B 1.676 -> F-OVERSHOOT
+BRANCH: F-OVERSHOOT
+
+wrote results_p2/forensic_nllnoise.json

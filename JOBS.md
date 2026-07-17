@@ -10,7 +10,13 @@ generation. GPU via SLURM only.
   `scripts_p2/forensic_nllnoise.py` + `score_forensic.py`, prereg
   `log/2026-07-17-prereg-forensic-nllnoise.md`): mean-path regeneration from the
   FROZEN 4a ckpts, frozen-scorer readout. Branch weights: F-CLOSE 30 / F-MID 20 /
-  F-COLLAPSE 40 / F-OVERSHOOT 5 / other 5. Job ID at submission below.
+  F-COLLAPSE 40 / F-OVERSHOOT 5 / other 5. **Job 16581052 COMPLETED — branch
+  F-OVERSHOOT both arms** (oct-2 mean-path var_slope 1.536/1.676 vs real 1.020;
+  kurt 32–268; dstd ratio 0.28–0.39 = the pre-declared confound, quantitatively
+  confirmed). Readout log/2026-07-17-forensic-readout.md: the 4a response is a
+  mixture of an OVER-modulated μ-cascade and an UNDER-modulated σ-noise bath —
+  information-exhaustion cannot produce this; R4 re-scoping confirmed in
+  mechanism. Executor modal F-COLLAPSE missed.
 
 ## PHASE-2 OVERNIGHT (2026-07-16, NIGHT-ORDERS)
 
