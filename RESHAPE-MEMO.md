@@ -135,3 +135,29 @@ control to bound the negative claim. Do not salvage: "train small sample any sca
 P6 spin, generality beyond one field. Bias disclosure: the executor ran all five
 attempts and has an incentive to call the wreckage valuable; the defense is that
 every claim rides on pre-registered, adversarially-gated measurements.
+
+---
+
+## REVISION — 2026-07-17 (reconvene; evidence: C1 overnight run + NLL-noise forensic)
+
+The §1–2 rows on the compounding cap and attempt 5 are re-scoped as follows
+(original text preserved above for the record):
+
+- **The "measured compounding cap" was a property of the variance-head SAMPLER, not
+  of the information in the conditioning.** Forensic (log/2026-07-17-forensic-
+  readout.md): the frozen 4a mean path alone OVER-modulates (1.54–1.68 vs real 1.02)
+  with kurtosis 32–268; the production response (0.746) was that cascade diluted by
+  its own ~2/3-variance white Gaussian bath. Plain CFM + augmentation (C1) reaches
+  −9.7% compounding and 0.88 of real at the extrapolated octave with no
+  anti-compounding lever at all.
+- **The attempt-5 tested-negative is scoped to the NLL-head substrate.** Its
+  measurements stand; its generalization is revoked.
+- **The failure taxonomy now counts three measured mechanisms:** (1) finite-parent
+  mean-memorization collapse — causally cured by exact-symmetry augmentation;
+  (2) variance-head mixture dilution — the false "informational cap," exposed by the
+  forensic; (3) Gaussian-base ODE tail deficit — the open frontier (C3 targets it).
+  Plus two distinct downstream peak signatures (NLL-head sign-flip; C1 up-tilt),
+  both invisible to power-level checks — the audit thesis, now with three exhibits.
+- **Option-1's content is upgraded, not weakened:** the audit protocol caught and
+  mechanistically resolved its own strongest negative. The pivot decision (paper
+  branch) remains with Andreas, now waiting on C3's sandbox leg.

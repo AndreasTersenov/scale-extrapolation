@@ -165,3 +165,12 @@ channel-invariance, the exact decomposition, and the causal augmentation test. T
 structured-not-additive conditioning drift is the sharpest surviving novelty.
 Conditional-calibration validation has prior art (Schanz et al. 2310.06929, width-only)
 that we systematize, not invent.
+
+**Phase-2 update (2026-07-17):** the Gaussian-NLL variance head is RETIRED. With the
+8× augmentation cure, plain conditional FM holds truth-level conditional dispersion
+in its native ODE-pushforward channel (exact-truth sandbox, C1), and the phase-1
+"compounding cap" was forensically traced to the variance head's mixture arithmetic
+(an over-modulated heavy-tailed mean cascade diluted by its white noise bath) — not
+to missing conditioning information. Open frontier: marginal/joint tail weight of
+the Gaussian-base ODE sampler (arm C3, patched energy score). §3's "forced
+amendment" paragraph is historical record.
