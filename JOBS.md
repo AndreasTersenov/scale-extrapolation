@@ -4,16 +4,28 @@ Last updated 2026-07-17 (C3 gate investigation). Envs: `source env.sh` (scaledri
 CPU, has pywt) for measurement; `~/wl-challenge-env/bin/python` (JAX) for training/
 generation. GPU via SLURM only.
 
-## R15 TAIL-DYNAMICS DIAGNOSIS (2026-07-17) — 8 CPU jobs, prereg 69f9a99
+## R15 TAIL-DYNAMICS DIAGNOSIS (2026-07-17) — CLOSED: data-limited, mechanism in hand
 
+- Jobs 16613873–880 (matrix as below) all COMPLETED 30–82 min, no resubmissions,
+  no degenerates. **P1 mechanical: TD-PARTIAL** (tbase composite ratio 6.00 SHIFT;
+  twcrps composite 1.80 NOSHIFT; secondaries split) — but the final-state pattern
+  answers the R15 question outright: every 1× run terminally collapses
+  (last-3-eval kurt 1.66/1.08/1.66/1.07) while every 8× run ends at/near truth
+  (6.11/5.96, 4.32/4.15, 4.78/5.96, 4.57/4.15) and HOLDS for thousands of steps —
+  the rung-4 decay is DATA-LIMITED (rung-2's cure reproduced one moment up).
+  **P2: YES** — joint (disp ≤10% AND kurt ≥4.0) checkpoints exist at 1× (steps
+  1000–3500 composite); at 8× the whole trajectory qualifies. **P3**: at 1× the
+  trained flow ERASES its base (t-out and N-out converge to the same ~1.6); at 8×
+  the base's tails survive (6.05 vs 0.42 at 12k). Side-finding: twcrps' spurious
+  skew GROWS with data (+0.8…+1.1 at 8×) — disfavored. Readout
+  log/2026-07-17-taildyn-readout.md; figure results_p2/taildyn.png. STOP; next-arm
+  decision at reconvene.
 - Submitted (def-lplevass, 16c/24G/1:30, `scripts_p2/tail_dynamics.py`, 12k steps,
   eval/500): **16613873** tbase/composite/n768, **16613874** tbase/composite/n6144,
   **16613875** tbase/t5flat/n768, **16613876** tbase/t5flat/n6144, **16613877**
   twcrps/composite/n768, **16613878** twcrps/composite/n6144, **16613879**
   twcrps/t5flat/n768, **16613880** twcrps/t5flat/n6144. P1 onset rule + P2 joint
   bars + P3 decomposition pinned in log/2026-07-17-prereg-tail-dynamics.md.
-  Readout → log/2026-07-17-taildyn-readout.md, then STOP (next-arm decision is
-  the reconvene's).
 
 ## R13 OBJECTIVE BAKE-OFF (2026-07-17) — CLOSED: NO QUALIFIER → STOP
 

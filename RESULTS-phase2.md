@@ -329,6 +329,22 @@ tails its t(5) base supplies) fail the same statistic the same way; reconciliati
 section in the bake-off log. STOP per R13; next-step menu is
 architecture/optimization-flavored and belongs to the reconvene.
 
+UPDATE 2 (2026-07-17, R15 tail-dynamics diagnosis — log/2026-07-17-taildyn-
+readout.md, figure results_p2/taildyn.png): **the rung-4 tail decay is
+DATA-LIMITED.** At 1× toy data every run terminally collapses (final kurt
+1.07–1.66 vs truths 4.15/5.96); at 8× every run ends at or near truth and HOLDS
+(tbase composite 6.11/5.96 stable over steps 6k–12k; t5flat 4.32/4.15; twcrps
+4.78 and 4.57) — rung 2's data-size cure reproduced at rung 4, the moment-ladder
+hypothesis's causal signature (mechanical P1: TD-PARTIAL via the pinned onset
+rule, whose dip-sensitivity under-reports the final-state pattern; rule lesson
+logged). Joint near-truth checkpoints (dispersion ≤10% AND kurt ≥4.0) EXIST even
+at 1× (P2 yes, both panels' weights hit). P3: the 1×-trained flow progressively
+ERASES its heavy-tailed base (t-base and Gaussian-base outputs converge to the
+same collapsed tails — base-independence as a memorization symptom); at 8× the
+base's contribution survives to 12k. twcrps develops spurious skew that GROWS
+with data (+0.8…+1.1) — disfavored as a lever. Next-arm decision at reconvene
+with this in hand.
+
 ## Tests & infrastructure
 
 - Chore 0 (154c30b): Stop-hook gate now covers BOTH stacks (tests/ under env.sh;
