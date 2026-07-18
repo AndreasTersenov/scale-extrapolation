@@ -397,6 +397,33 @@ caged at octave 3.
   constructive under-confidence, now against an explicit R20 warning; the
   PLAN's original P-D 40 was the best-calibrated number in the room.
 
+## Starlet-ℓ1 held-out characterization (2026-07-18, SPEC-starlet-l1):
+## SL1-PASS all three legs; the tier question FIRES
+
+Andreas's wl_stats_torch (starlet ≠ Haar; ℓ1 never in any design/selection
+loop), verified + gated (5 tests_p2 gates; two instrument findings flagged:
+unused gen2-reconstruct mismatch; zero-pad noise-plane border artifact →
+plateau-normalization convention, rot90-exact). Prereg with executor lines
+committed pre-scoring (fa56ff4); details log/2026-07-18-starlet-l1-readout.md;
+figure results_p2/starlet_l1.png.
+
+- **Arm A passes the 1σ-w-10%-floor at every scored scale on all three legs**
+  (sandbox ≤2.0%; gowerstreet trained ≤1.5%; Stage-D edge headline +4.0% at
+  the held-out octave). Arm B passes all scored scales too, but its off-binding
+  pathologies show at descriptive octave 1: sandbox −11.4%, edge +23.9%.
+- **P-SL1-blind FIRED** (rec 70 / exec 75): ℓ1 passes where the peak audit
+  fails (+13/+15%) — even the field's most constraining summary sits below the
+  placement tier; position-blind statistics cannot see where the extremes land.
+  Descriptive: the edge 4px tail share tilts +5.9% rel, a sub-bar hint of the
+  same excess. What remains is placement, not amplitude.
+- Taxonomy panel: one statistic separates the generations — 4a graininess
+  = +14.2% at 2px with tail share collapsed (energy without extremes); mu-only
+  skeleton −84% at 2px; C1/C1-t both clean in totals, ranked only by tail
+  share (~1.7σ). Robust under the survey-noise secondary (all ≤3.5%).
+- Scorecard: first clean sweep — all five pre-registered lines on the right
+  side, executor tighter on every line (first application of the R20
+  recalibration; it held).
+
 ## Tests & infrastructure
 
 - Chore 0 (154c30b): Stop-hook gate now covers BOTH stacks (tests/ under env.sh;
