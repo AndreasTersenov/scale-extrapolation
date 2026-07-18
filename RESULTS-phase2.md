@@ -345,6 +345,31 @@ base's contribution survives to 12k. twcrps develops spurious skew that GROWS
 with data (+0.8…+1.1) — disfavored as a lever. Next-arm decision at reconvene
 with this in hand.
 
+## C1-t — t(5)-base CFM + validation-selected early stop (2026-07-18, R17):
+## SANDBOX C1T-CAL BOTH ARMS; gowerstreet binding-octave deficit closes
+
+The first full pass of the campaign's arm series. Single variable vs C1 = base
+distribution + pre-registered selection rule (Goodhart cage: val-32 selection /
+test-32 adjudication, one pick). Readout log/2026-07-18-c1t-readout.md; figure
+results_p2/c1t.png; prereg 6822ced (pre-submission).
+
+- SANDBOX (adjudicated): **all 24 bars pass, both arms** (kurtosis primary +
+  dispersion, octaves 2–4, both levels). Selected A@7500/B@2500; hc oct-2 kurt
+  5.37/5.38 vs truth 4.917; q999 0.94–1.06. Texture: 32-field SEs widen kurtosis
+  bars (22–38%); two octave-4 entries would miss the bare 15% floor; validation
+  curves are noisy and both picks rode favorable spikes — held at TEST.
+- ATTRIBUTION (zero cost): C1's Gaussian-base ceiling on the same protocol is
+  kurt 4.29/4.59 at ANY checkpoint (truth 4.92) — the t base raises the
+  reachable ceiling; selection places the pick; neither alone suffices.
+- GOWERSTREET (descriptive): cage picks LATE (A@16000/B@18500 — no early decay
+  to dodge on the heavier-tailed real field). e2e oct-2 kurtosis deficit
+  −33.7→−4.0% (A) and −26.1→−8.0% (B) — **the standing halving prediction fired
+  both arms** (reconvene 50/executor 45); dispersion at real (+1.9/+1.4% vs C1's
+  −9.7/−9.2%). Remaining structure: extrapolated octave (−29/−40%) and octave 4
+  (mixed; B worse than C1) — the Stage-D frontier.
+- Scorecard: executor modal C1T-CAL 35 fired; all four registered lines on the
+  winning side both panels; no gate branches fired.
+
 ## Tests & infrastructure
 
 - Chore 0 (154c30b): Stop-hook gate now covers BOTH stacks (tests/ under env.sh;

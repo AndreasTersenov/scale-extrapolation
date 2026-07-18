@@ -4,15 +4,22 @@ Last updated 2026-07-17 (C3 gate investigation). Envs: `source env.sh` (scaledri
 CPU, has pywt) for measurement; `~/wl-challenge-env/bin/python` (JAX) for training/
 generation. GPU via SLURM only.
 
-## ARM C1-t (2026-07-18, R17) — sandbox leg IN FLIGHT, prereg 6822ced
+## ARM C1-t (2026-07-18, R17) — CLOSED: sandbox C1T-CAL both arms; gowerstreet
+## binding-octave deficit closes. Readout log/2026-07-18-c1t-readout.md
 
-- **16666378** GPU (MIG h100_20gb, 2:00, `scripts_p2/arms_c1t_sandbox.slurm`):
-  train both arms 20k steps with dense ckpts (every 500), caged validation
-  selection (val-32 only), TEST-32 adjudication numbers + e2e recursion npz from
-  the selected checkpoint. **16666379** CPU (def-lplevass, 16c/1h,
-  `scripts_p2/score_c1_tails.py`): zero-cost C1-checkpoint tail attribution on
-  the same validation fields. Verdict → score_c1t_endtoend.py (env.sh);
-  gowerstreet leg only on the pre-registered trigger. STOP at the readout.
+- **16666378** GPU sandbox COMPLETED (20:37): selected A@7500 B@2500; verdict
+  **C1T-CAL both arms — all 24 bars pass** (hc oct-2 kurt 5.37/5.38 vs truth
+  4.917; dispersion 0.2–8.5%; q999 0.94–1.06); trigger PASS. Texture: 32-field
+  SEs widen kurtosis bars to 22–38% (two oct-4 entries above the bare 15% floor);
+  noisy validation curves — picks on favorable spikes, held at TEST.
+- **16666379** CPU attribution COMPLETED (16:17): C1 Gaussian-base ceiling
+  4.29/4.59 at ANY ckpt vs truth 4.92 → the t base raises the ceiling, selection
+  picks the window; both components necessary.
+- **16666634** GPU gowerstreet COMPLETED (20:52, hash 27cc4a8f17): selected LATE
+  (A@16000 B@18500 — the cage adapts). e2e oct-2 kurtosis deficit −33.7→−4.0%
+  (A), −26.1→−8.0% (B) — **the halving prediction FIRED both arms**; var_slope at
+  real (+1.9/+1.4%). Extrapolated octave keeps −29/−40%; oct 4 mixed (B worse).
+  Descriptive; reconvene adjudicates. STOP at readout.
 
 ## R15 TAIL-DYNAMICS DIAGNOSIS (2026-07-17) — CLOSED: data-limited, mechanism in hand
 
