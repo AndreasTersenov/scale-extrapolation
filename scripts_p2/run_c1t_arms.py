@@ -98,6 +98,9 @@ def main():
                     help="split: first half VALIDATION (selection), last half TEST")
     ap.add_argument("--sample-steps", type=int, default=80)
     ap.add_argument("--sel-K", type=int, default=4)
+    ap.add_argument("--sel-octave", type=int, default=2,
+                    help="octave the selection rule scores on validation (Stage D "
+                         "slides the edge: selection must use a TRAINED octave)")
     ap.add_argument("--data", default=os.path.join(REPO, "data_cache",
                                                    "tiles_sandbox.npz"))
     ap.add_argument("--coords-file", default=os.path.join(
@@ -125,9 +128,10 @@ def main():
     val_n, test_n = normalize_tiles(val), normalize_tiles(test)
     coords_raw = json.load(open(args.coords_file))[args.field]
     coords = {int(j): (np.asarray(v) / COORD_NORM) for j, v in coords_raw.items()}
-    truth2 = json.load(open(args.truth))["truth"]["2"]
+    truth2 = json.load(open(args.truth))["truth"][str(args.sel_octave)]
     log(f"{args.field}: {train.shape[0]} train / {nv} val / {len(test)} test; "
-        f"truth oct2 vs={truth2['var_slope']:.3f} kurt={truth2['kurtosis']:.3f}")
+        f"selection reference oct{args.sel_octave} vs={truth2['var_slope']:.3f} "
+        f"kurt={truth2['kurtosis']:.3f}")
 
     os.makedirs(args.ckpt_dir, exist_ok=True)
     ckpt_steps = list(range(args.ckpt_every, args.steps + 1, args.ckpt_every))
@@ -180,7 +184,7 @@ def main():
                                    f"arm{arm}_{args.field}_s{si}.pkl"), "rb") as fh:
                 cks = pickle.load(fh)
             key, k = jax.random.split(key)
-            pf = sample_oct(cks["params"], 2, val_n, k, K=args.sel_K)
+            pf = sample_oct(cks["params"], args.sel_octave, val_n, k, K=args.sel_K)
             w = np.concatenate([p[0] for p in pf])
             c = np.concatenate([p[1] for p in pf])
             s = estimand_scalars(w, c)

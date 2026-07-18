@@ -1,0 +1,11 @@
+{
+ "truth": {
+  "3": {
+   "var_slope": 0.8450129130350587,
+   "kurtosis": 4.215255814276193
+  }
+ },
+ "meta": {
+  "source": "REAL gowerstreet validation fields (32), oct-3 pooled estimand (Stage D: selection must use a TRAINED octave); SELECTION reference only"
+ }
+}
