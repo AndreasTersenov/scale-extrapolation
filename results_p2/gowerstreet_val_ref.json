@@ -1,0 +1,11 @@
+{
+ "truth": {
+  "2": {
+   "var_slope": 1.0671612574109495,
+   "kurtosis": 7.273751323570728
+  }
+ },
+ "meta": {
+  "source": "REAL gowerstreet validation fields (32), oct-2 pooled estimand, per-tile normalized; SELECTION reference only"
+ }
+}

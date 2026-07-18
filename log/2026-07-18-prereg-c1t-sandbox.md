@@ -84,3 +84,13 @@ c1t_verdict_sandbox.json + c1_tails_val.json (attribution); readout log +
 figure (selection curves with the pick marked, bars visual, attribution
 overlay); JOBS.md entries with config hash. Gowerstreet leg only on trigger,
 descriptive. STOP at the readout.
+
+## APPENDED (pre-gowerstreet-submission): the triggered leg's selection reference
+
+The sandbox verdict fired the trigger (C1T-CAL both arms; verdict json committed).
+For the gowerstreet leg (real field — no exact truth exists), the selection rule's
+reference values are the REAL VALIDATION fields' own oct-2 estimand
+(results_p2/gowerstreet_val_ref.json, computed from val-32 before the job), used
+for SELECTION ONLY; all readout numbers are descriptive vs the real TEST fields
+and the reconvene adjudicates (the pre-registered C3-frame treatment of real
+legs). Same cage: val-32 / test-32, one pick, ties→earlier.
