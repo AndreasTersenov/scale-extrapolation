@@ -4,6 +4,17 @@ Last updated 2026-07-17 (C3 gate investigation). Envs: `source env.sh` (scaledri
 CPU, has pywt) for measurement; `~/wl-challenge-env/bin/python` (JAX) for training/
 generation. GPU via SLURM only.
 
+## STAGE D + R18 REPLICATION (2026-07-18) — IN FLIGHT, prereg a0b6e4c
+
+- **16669982** GPU (MIG, 2:00, `scripts_p2/arms_stageD.slurm`): STAGE D
+  slide-the-edge on gowerstreet — train {3,4}, edge oct 2 held out, arm-B dial =
+  curve-extrapolated couplings (vs LINEAR 1.1836 / kurt LOG-LINEAR 10.5199 at the
+  edge), selection caged at oct 3. Score → score_stageD.py; P-D rides arm B;
+  AMBIGUOUS=FAIL.
+- **16669983** CPU (def-lplevass, 16c/2h, `scripts_p2/c1t_replication.py`): R18
+  64-fresh-field replication of the sandbox C1T-CAL at frozen ckpts (seed
+  20260720). STOP at the combined readout.
+
 ## ARM C1-t (2026-07-18, R17) — CLOSED: sandbox C1T-CAL both arms; gowerstreet
 ## binding-octave deficit closes. Readout log/2026-07-18-c1t-readout.md
 
