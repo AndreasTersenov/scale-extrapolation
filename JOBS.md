@@ -4,7 +4,21 @@ Last updated 2026-07-17 (C3 gate investigation). Envs: `source env.sh` (scaledri
 CPU, has pywt) for measurement; `~/wl-challenge-env/bin/python` (JAX) for training/
 generation. GPU via SLURM only.
 
-## STAGE D + R18 REPLICATION (2026-07-18) — IN FLIGHT, prereg a0b6e4c
+## STAGE D + R18 REPLICATION (2026-07-18) — CLOSED: **D-PASS-BOTH; P-D PASSES;
+## 24/24 REPLICATED.** Readout log/2026-07-18-stageD-readout.md
+
+- **16669982** COMPLETED (21:54): edge (oct 2) all 8 checks pass BOTH readings
+  (formal bars AND bare floors; A-hc-kurt 14.9% by 0.1%); e2e kurt A 3.2% /
+  B 4.4%; dial-beats-scale-blind FALSE (both panels missed) — extrapolation
+  works SCALE-BLIND; dial flips the peak-audit sign at high ν; oct-1 two-octave
+  extrapolation degrades (−44/−54%).
+- **16669983** FAILED t=0 (env split: frozen scorer's pywt + JAX cannot share a
+  process — runner split into sample/score phases); **16671189** COMPLETED
+  (4:35) + local score: **24/24 bars pass on 64 fresh fields** (arm A clean
+  0.0–12.4%; arm B tail-hot: hc-oct4 41% on a 56% bar, e2e-oct2 13.3% vs 15%).
+- Scorecards: executor modal D-FAIL-BOTH 55 large MISS (4th consecutive
+  constructive under-confidence, against R20's warning); PLAN's P-D 40 beat
+  executor 27; repl modal full-pass 45 HIT. STOP; paper decision to Andreas.
 
 - **16669982** GPU (MIG, 2:00, `scripts_p2/arms_stageD.slurm`): STAGE D
   slide-the-edge on gowerstreet — train {3,4}, edge oct 2 held out, arm-B dial =

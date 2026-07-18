@@ -79,10 +79,10 @@ a_, b_ = np.polyfit(js, np.log([std_by_j[j] for j in js]), 1)
 std = dict(std_by_j)
 std[1] = float(np.exp(a_ * 1 + b_))
 
-out = {"levels": {}, "meta": {"n_fields": 64, "seed_tiles": 20260720,
+gen_stacks = {}
+out = {"meta": {"n_fields": 64, "seed_tiles": 20260720,
                               "selected": {a: SEL[a]["selected_step"]
                                            for a in ("A", "B")}}}
-rows = []
 for arm in ("A", "B"):
     sel_step = SEL[arm]["selected_step"]
     with open(os.path.join(REPO, "data_cache", "ckpt_c1t_sandbox",
@@ -115,33 +115,15 @@ for arm in ("A", "B"):
     gen = generate_recursive_tbase(model.apply, params, coarse4, 4,
                                    jax.random.PRNGKey(501), std,
                                    cond_fn=cond_fn, n_steps=80)
-    fields = [np.asarray(gen[i, :, :, 0], dtype=np.float64) for i in range(B)]
-    sys.path.insert(0, os.path.join(REPO, "scripts"))
-    from measure_generated import couplings
-    e2e = couplings(fields, [1, 2, 3, 4], n_boot=200, seed=0)
-    for level, src in (("head-conditional", hc), ("end-to-end", e2e)):
-        for j in TRAINED:
-            s = src[str(j)] if isinstance(src, dict) and str(j) in src else src[j]
-            for metric in ("var_slope", "kurtosis"):
-                r = check(metric, s[metric], s[metric + "_se"], j)
-                rows.append((arm, level, j, metric, r))
-                out["levels"].setdefault(arm, {}).setdefault(level, {}).setdefault(
-                    str(j), {})[metric] = r
+    gen_stacks[arm] = np.asarray(gen[..., 0])
     out.setdefault("hc_full", {})[arm] = hc
-    out.setdefault("e2e_oct1", {})[arm] = {k_: e2e[1][k_] for k_ in
-                                           ("var_slope", "kurtosis")}
 
-print("\n=== R18 REPLICATION VERDICT (64 fresh fields, frozen ckpts) ===")
-n_pass = 0
-for arm, level, j, metric, r in rows:
-    n_pass += r["pass"]
-    print(f"{arm:>3} {level:>16} {j:>3} {metric:>9} | {r['value']:8.3f} "
-          f"{r['truth']:8.3f} {r['rel_err']:6.1%} {r['bar']:6.1%} | "
-          f"{'PASS' if r['pass'] else 'FAIL'}")
-out["n_pass"] = n_pass
-out["all_pass"] = bool(n_pass == len(rows))
-print(f"\n{n_pass}/{len(rows)} bars pass -> "
-      f"{'REPLICATED (C1T-CAL confirmed)' if out['all_pass'] else 'PARTIAL'}")
-with open(os.path.join(REPO, "results_p2", "c1t_repl64.json"), "w") as f:
+# SAMPLE phase output (wl-challenge-env, JAX): the SCORE phase (env.sh stack,
+# pywt for the frozen production scorer) adjudicates — the two stacks cannot
+# share a process (job 16669983 failed exactly there).
+np.savez(os.path.join(REPO, "results_p2", "c1t_repl64_gen.npz"),
+         gen_A=gen_stacks["A"], gen_B=gen_stacks["B"])
+with open(os.path.join(REPO, "results_p2", "c1t_repl64_hc.json"), "w") as f:
     json.dump(out, f, indent=1)
-print("wrote results_p2/c1t_repl64.json")
+log("SAMPLE phase done -> c1t_repl64_gen.npz + c1t_repl64_hc.json; "
+    "run c1t_replication_score.py under env.sh to adjudicate")

@@ -370,6 +370,33 @@ results_p2/c1t.png; prereg 6822ced (pre-submission).
 - Scorecard: executor modal C1T-CAL 35 fired; all four registered lines on the
   winning side both panels; no gate branches fired.
 
+## STAGE D — the bet, answered (2026-07-18): **D-PASS-BOTH — single-octave scale
+## extrapolation WORKS, and works SCALE-BLIND.** R18 replication: 24/24.
+
+The plan's final experiment (prereg a0b6e4c; readout
+log/2026-07-18-stageD-readout.md; figure results_p2/stageD.png). Slide-the-edge
+on gowerstreet, C1-t substrate, octave 2 held out, arm-B dial from the
+deployment coupling curve (edge input error vs +2.9% / kurt +18%), selection
+caged at octave 3.
+
+- ALL 8 edge checks pass — under the formal bars AND the bare 10%/15% floors
+  (A-hc-kurt 14.9% by 0.1%; every e2e number ≤7.9%). **P-D (PLAN standing 40%)
+  PASSES.** Formal kurtosis bars inflated to ~57% by the noisy 32-field real
+  reference — stated with the pass; the floors carry the verdict.
+- **The dial adds nothing marginal**: pinned dial-beats metric FALSE (B 4.4% vs
+  A 3.2% e2e kurt); the scale-blind arm extrapolates the edge from the coarse
+  field alone — B1's r*≈1 confirmed at deployment level. The dial DOES change
+  joint structure: peak-audit excess flips sign under B (−9/−17% at ν≥2.5) vs
+  A's up-tilt (+13/+15%) — neither closes the audit.
+- Two-octave extrapolation (oct 1) degrades (−44/−54% kurt): each unseen octave
+  costs; the single-octave claim is the supported one.
+- R18 replication (64 fresh fields, seed 20260720, frozen picks): **24/24 —
+  C1T-CAL replicated**; arm A clean (0.0–12.4%), arm B tail-hot at oct 4
+  (41% on a 56% SE-widened bar — the one bar-carried entry).
+- Scorecard: executor modal D-FAIL-BOTH 55 large MISS — the fourth consecutive
+  constructive under-confidence, now against an explicit R20 warning; the
+  PLAN's original P-D 40 was the best-calibrated number in the room.
+
 ## Tests & infrastructure
 
 - Chore 0 (154c30b): Stop-hook gate now covers BOTH stacks (tests/ under env.sh;
