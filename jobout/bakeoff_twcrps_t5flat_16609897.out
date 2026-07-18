@@ -1,0 +1,20 @@
+ERROR:2026-07-17 08:56:29,111:jax._src.xla_bridge:475: Jax plugin configuration error: Exception when calling jax_plugins.xla_cuda12.initialize()
+Traceback (most recent call last):
+  File "/home/tersenov/wl-challenge-env/lib/python3.11/site-packages/jax/_src/xla_bridge.py", line 473, in discover_pjrt_plugins
+    plugin_module.initialize()
+  File "/home/tersenov/wl-challenge-env/lib/python3.11/site-packages/jax_plugins/xla_cuda12/__init__.py", line 329, in initialize
+    _check_cuda_versions(raise_on_first_error=True)
+  File "/home/tersenov/wl-challenge-env/lib/python3.11/site-packages/jax_plugins/xla_cuda12/__init__.py", line 286, in _check_cuda_versions
+    local_device_count = cuda_versions.cuda_device_count()
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: jaxlib/cuda/versions_helpers.cc:113: operation cuInit(0) failed: Unknown CUDA error 303; cuGetErrorName failed. This probably means that JAX was unable to load the CUDA libraries.
+[bakeoff twcrps/t5flat] DATA heldout truth reference: skew -0.044 kurt 4.15 q999 5.32
+[bakeoff twcrps/t5flat] step   500 loss 13.1464 HELDOUT skew 0.583 kurt 2.69 q999 4.94 [77s]
+[bakeoff twcrps/t5flat] step  1000 loss 13.6953 HELDOUT skew 0.542 kurt 3.35 q999 5.22 [172s]
+[bakeoff twcrps/t5flat] step  1500 loss 13.6326 HELDOUT skew 0.448 kurt 2.51 q999 4.92 [269s]
+[bakeoff twcrps/t5flat] step  2000 loss 12.0377 HELDOUT skew 0.942 kurt 5.14 q999 5.93 [367s]
+[bakeoff twcrps/t5flat] step  2500 loss 9.7117 HELDOUT skew 0.770 kurt 4.09 q999 5.53 [437s]
+[bakeoff twcrps/t5flat] step  3000 loss 8.4706 HELDOUT skew 0.586 kurt 3.15 q999 5.18 [543s]
+[bakeoff twcrps/t5flat] step  3500 loss 7.9617 HELDOUT skew 0.515 kurt 2.99 q999 5.07 [621s]
+[bakeoff twcrps/t5flat] step  4000 loss 7.8054 HELDOUT skew 0.512 kurt 3.01 q999 5.08 [698s]
+[bakeoff twcrps/t5flat] wrote /home/tersenov/software/scale-extrapolation/results_p2/bakeoff_twcrps_t5flat.json

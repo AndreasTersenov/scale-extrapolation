@@ -1,0 +1,36 @@
+ERROR:2026-07-17 10:03:40,648:jax._src.xla_bridge:475: Jax plugin configuration error: Exception when calling jax_plugins.xla_cuda12.initialize()
+Traceback (most recent call last):
+  File "/home/tersenov/wl-challenge-env/lib/python3.11/site-packages/jax/_src/xla_bridge.py", line 473, in discover_pjrt_plugins
+    plugin_module.initialize()
+  File "/home/tersenov/wl-challenge-env/lib/python3.11/site-packages/jax_plugins/xla_cuda12/__init__.py", line 329, in initialize
+    _check_cuda_versions(raise_on_first_error=True)
+  File "/home/tersenov/wl-challenge-env/lib/python3.11/site-packages/jax_plugins/xla_cuda12/__init__.py", line 286, in _check_cuda_versions
+    local_device_count = cuda_versions.cuda_device_count()
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: jaxlib/cuda/versions_helpers.cc:113: operation cuInit(0) failed: Unknown CUDA error 303; cuGetErrorName failed. This probably means that JAX was unable to load the CUDA libraries.
+[taildyn tbase/composite/n6144] DATA heldout truth reference: skew -0.083 kurt 5.96 q999 5.54
+[taildyn tbase/composite/n6144] step    500 loss 1.4536 skew +0.080 kurt 5.41 q999 5.40 disp 0.079 Nbase-kurt 0.26 [95s]
+[taildyn tbase/composite/n6144] step   1000 loss 1.5436 skew +0.056 kurt 4.69 q999 5.32 disp 0.046 Nbase-kurt 0.37 [187s]
+[taildyn tbase/composite/n6144] step   1500 loss 1.4365 skew +0.017 kurt 5.22 q999 5.36 disp 0.012 Nbase-kurt 0.37 [280s]
+[taildyn tbase/composite/n6144] step   2000 loss 1.2431 skew -0.011 kurt 5.09 q999 5.37 disp 0.039 Nbase-kurt 0.36 [372s]
+[taildyn tbase/composite/n6144] step   2500 loss 1.3351 skew +0.064 kurt 6.17 q999 5.51 disp 0.060 Nbase-kurt 0.40 [464s]
+[taildyn tbase/composite/n6144] step   3000 loss 1.2908 skew +0.077 kurt 6.25 q999 5.52 disp 0.060 Nbase-kurt 0.48 [557s]
+[taildyn tbase/composite/n6144] step   3500 loss 1.4058 skew +0.077 kurt 5.89 q999 5.49 disp 0.037 Nbase-kurt 0.48 [649s]
+[taildyn tbase/composite/n6144] step   4000 loss 1.2349 skew -0.019 kurt 5.45 q999 5.47 disp 0.015 Nbase-kurt 0.40 [741s]
+[taildyn tbase/composite/n6144] step   4500 loss 1.3260 skew +0.005 kurt 5.44 q999 5.46 disp 0.071 Nbase-kurt 0.38 [835s]
+[taildyn tbase/composite/n6144] step   5000 loss 1.2698 skew -0.019 kurt 4.68 q999 5.36 disp 0.017 Nbase-kurt 0.36 [926s]
+[taildyn tbase/composite/n6144] step   5500 loss 1.3684 skew +0.042 kurt 5.20 q999 5.43 disp 0.037 Nbase-kurt 0.26 [1018s]
+[taildyn tbase/composite/n6144] step   6000 loss 1.2236 skew -0.038 kurt 6.26 q999 5.58 disp 0.029 Nbase-kurt 0.41 [1109s]
+[taildyn tbase/composite/n6144] step   6500 loss 1.3160 skew +0.006 kurt 6.34 q999 5.62 disp 0.043 Nbase-kurt 0.48 [1202s]
+[taildyn tbase/composite/n6144] step   7000 loss 1.1466 skew +0.042 kurt 6.15 q999 5.65 disp 0.042 Nbase-kurt 0.51 [1294s]
+[taildyn tbase/composite/n6144] step   7500 loss 1.1777 skew +0.071 kurt 5.55 q999 5.51 disp 0.021 Nbase-kurt 0.43 [1386s]
+[taildyn tbase/composite/n6144] step   8000 loss 1.2489 skew +0.046 kurt 5.84 q999 5.57 disp 0.016 Nbase-kurt 0.45 [1478s]
+[taildyn tbase/composite/n6144] step   8500 loss 1.1774 skew +0.043 kurt 5.37 q999 5.51 disp 0.035 Nbase-kurt 0.44 [1569s]
+[taildyn tbase/composite/n6144] step   9000 loss 1.3174 skew -0.006 kurt 5.86 q999 5.61 disp 0.023 Nbase-kurt 0.44 [1662s]
+[taildyn tbase/composite/n6144] step   9500 loss 1.1652 skew -0.005 kurt 5.72 q999 5.55 disp 0.013 Nbase-kurt 0.40 [1754s]
+[taildyn tbase/composite/n6144] step  10000 loss 1.2486 skew +0.007 kurt 6.28 q999 5.61 disp 0.015 Nbase-kurt 0.45 [1846s]
+[taildyn tbase/composite/n6144] step  10500 loss 1.2900 skew +0.023 kurt 5.79 q999 5.54 disp 0.024 Nbase-kurt 0.43 [1938s]
+[taildyn tbase/composite/n6144] step  11000 loss 1.3136 skew +0.024 kurt 6.21 q999 5.57 disp 0.017 Nbase-kurt 0.45 [2031s]
+[taildyn tbase/composite/n6144] step  11500 loss 1.3282 skew +0.021 kurt 6.05 q999 5.56 disp 0.016 Nbase-kurt 0.42 [2123s]
+[taildyn tbase/composite/n6144] step  12000 loss 1.2913 skew +0.014 kurt 6.05 q999 5.57 disp 0.013 Nbase-kurt 0.42 [2217s]
+[taildyn tbase/composite/n6144] wrote /home/tersenov/software/scale-extrapolation/results_p2/taildyn_tbase_composite_n6144.json

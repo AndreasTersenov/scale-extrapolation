@@ -1,0 +1,6 @@
+[06:59:28] normconv q999 truth on 16384 fields
+[06:59:40] oct 1: q999=5.974 +- 0.0236
+[06:59:45] oct 2: q999=5.532 +- 0.0258
+[06:59:50] oct 3: q999=5.103 +- 0.0302
+[06:59:54] oct 4: q999=4.591 +- 0.0292
+[06:59:54] done in 26s -> /home/tersenov/software/scale-extrapolation/results_p2/sandbox_truth_q999.json

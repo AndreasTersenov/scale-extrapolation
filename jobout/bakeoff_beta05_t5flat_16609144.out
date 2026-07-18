@@ -1,0 +1,8 @@
+Traceback (most recent call last):
+  File "/home/tersenov/software/scale-extrapolation/scripts_p2/bakeoff_c3.py", line 35, in <module>
+    from arms_p2.c1t.flow import make_tcfm_step, sample_tbase
+  File "/home/tersenov/software/scale-extrapolation/arms_p2/c1t/__init__.py", line 1, in <module>
+    from .flow import make_tcfm_step, sample_tbase, t_base
+  File "/home/tersenov/software/scale-extrapolation/arms_p2/c1t/flow.py", line 25, in <module>
+    from jax_flows.flow_matching import ot_interpolate
+ModuleNotFoundError: No module named 'jax_flows'

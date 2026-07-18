@@ -1,0 +1,36 @@
+ERROR:2026-07-17 10:03:37,661:jax._src.xla_bridge:475: Jax plugin configuration error: Exception when calling jax_plugins.xla_cuda12.initialize()
+Traceback (most recent call last):
+  File "/home/tersenov/wl-challenge-env/lib/python3.11/site-packages/jax/_src/xla_bridge.py", line 473, in discover_pjrt_plugins
+    plugin_module.initialize()
+  File "/home/tersenov/wl-challenge-env/lib/python3.11/site-packages/jax_plugins/xla_cuda12/__init__.py", line 329, in initialize
+    _check_cuda_versions(raise_on_first_error=True)
+  File "/home/tersenov/wl-challenge-env/lib/python3.11/site-packages/jax_plugins/xla_cuda12/__init__.py", line 286, in _check_cuda_versions
+    local_device_count = cuda_versions.cuda_device_count()
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: jaxlib/cuda/versions_helpers.cc:113: operation cuInit(0) failed: Unknown CUDA error 303; cuGetErrorName failed. This probably means that JAX was unable to load the CUDA libraries.
+[taildyn twcrps/composite/n768] DATA heldout truth reference: skew -0.083 kurt 5.96 q999 5.54
+[taildyn twcrps/composite/n768] step    500 loss 14.1064 skew +0.720 kurt 3.18 q999 5.06 disp 0.036 [85s]
+[taildyn twcrps/composite/n768] step   1000 loss 13.4397 skew +0.941 kurt 4.13 q999 5.51 disp 0.078 [164s]
+[taildyn twcrps/composite/n768] step   1500 loss 13.3569 skew +0.765 kurt 3.47 q999 5.26 disp 0.062 [243s]
+[taildyn twcrps/composite/n768] step   2000 loss 13.2116 skew +0.955 kurt 3.91 q999 5.42 disp 0.035 [321s]
+[taildyn twcrps/composite/n768] step   2500 loss 11.1291 skew +0.712 kurt 4.42 q999 5.56 disp 0.070 [400s]
+[taildyn twcrps/composite/n768] step   3000 loss 9.9493 skew +0.530 kurt 3.37 q999 5.24 disp 0.075 [479s]
+[taildyn twcrps/composite/n768] step   3500 loss 8.7649 skew +0.425 kurt 2.90 q999 5.02 disp 0.081 [558s]
+[taildyn twcrps/composite/n768] step   4000 loss 9.0862 skew +0.313 kurt 2.71 q999 4.89 disp 0.110 [638s]
+[taildyn twcrps/composite/n768] step   4500 loss 7.9821 skew +0.179 kurt 2.15 q999 4.57 disp 0.086 [717s]
+[taildyn twcrps/composite/n768] step   5000 loss 7.5245 skew +0.203 kurt 2.18 q999 4.59 disp 0.100 [796s]
+[taildyn twcrps/composite/n768] step   5500 loss 6.7283 skew +0.181 kurt 2.14 q999 4.53 disp 0.117 [875s]
+[taildyn twcrps/composite/n768] step   6000 loss 6.2932 skew +0.119 kurt 1.83 q999 4.36 disp 0.109 [952s]
+[taildyn twcrps/composite/n768] step   6500 loss 6.2525 skew +0.045 kurt 1.76 q999 4.30 disp 0.103 [1027s]
+[taildyn twcrps/composite/n768] step   7000 loss 5.9483 skew +0.063 kurt 1.68 q999 4.28 disp 0.099 [1103s]
+[taildyn twcrps/composite/n768] step   7500 loss 5.5761 skew +0.053 kurt 1.66 q999 4.26 disp 0.115 [1179s]
+[taildyn twcrps/composite/n768] step   8000 loss 5.1047 skew +0.035 kurt 1.60 q999 4.22 disp 0.099 [1254s]
+[taildyn twcrps/composite/n768] step   8500 loss 5.2087 skew +0.037 kurt 1.62 q999 4.22 disp 0.097 [1330s]
+[taildyn twcrps/composite/n768] step   9000 loss 4.9054 skew +0.040 kurt 1.62 q999 4.24 disp 0.098 [1404s]
+[taildyn twcrps/composite/n768] step   9500 loss 4.4602 skew +0.046 kurt 1.61 q999 4.23 disp 0.091 [1481s]
+[taildyn twcrps/composite/n768] step  10000 loss 4.4406 skew +0.051 kurt 1.62 q999 4.25 disp 0.083 [1556s]
+[taildyn twcrps/composite/n768] step  10500 loss 4.2312 skew +0.052 kurt 1.65 q999 4.27 disp 0.081 [1631s]
+[taildyn twcrps/composite/n768] step  11000 loss 4.2746 skew +0.051 kurt 1.66 q999 4.26 disp 0.079 [1704s]
+[taildyn twcrps/composite/n768] step  11500 loss 4.3401 skew +0.051 kurt 1.66 q999 4.26 disp 0.077 [1778s]
+[taildyn twcrps/composite/n768] step  12000 loss 4.2611 skew +0.051 kurt 1.66 q999 4.26 disp 0.078 [1851s]
+[taildyn twcrps/composite/n768] wrote /home/tersenov/software/scale-extrapolation/results_p2/taildyn_twcrps_composite_n768.json

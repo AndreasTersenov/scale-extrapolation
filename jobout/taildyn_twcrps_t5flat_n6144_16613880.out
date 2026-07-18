@@ -1,0 +1,36 @@
+ERROR:2026-07-17 10:03:40,547:jax._src.xla_bridge:475: Jax plugin configuration error: Exception when calling jax_plugins.xla_cuda12.initialize()
+Traceback (most recent call last):
+  File "/home/tersenov/wl-challenge-env/lib/python3.11/site-packages/jax/_src/xla_bridge.py", line 473, in discover_pjrt_plugins
+    plugin_module.initialize()
+  File "/home/tersenov/wl-challenge-env/lib/python3.11/site-packages/jax_plugins/xla_cuda12/__init__.py", line 329, in initialize
+    _check_cuda_versions(raise_on_first_error=True)
+  File "/home/tersenov/wl-challenge-env/lib/python3.11/site-packages/jax_plugins/xla_cuda12/__init__.py", line 286, in _check_cuda_versions
+    local_device_count = cuda_versions.cuda_device_count()
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: jaxlib/cuda/versions_helpers.cc:113: operation cuInit(0) failed: Unknown CUDA error 303; cuGetErrorName failed. This probably means that JAX was unable to load the CUDA libraries.
+[taildyn twcrps/t5flat/n6144] DATA heldout truth reference: skew -0.044 kurt 4.15 q999 5.32
+[taildyn twcrps/t5flat/n6144] step    500 loss 14.6364 skew +0.528 kurt 2.39 q999 4.70 disp 0.029 [80s]
+[taildyn twcrps/t5flat/n6144] step   1000 loss 13.9496 skew +0.532 kurt 2.65 q999 4.89 disp 0.034 [155s]
+[taildyn twcrps/t5flat/n6144] step   1500 loss 13.1708 skew +0.412 kurt 2.28 q999 4.81 disp 0.020 [230s]
+[taildyn twcrps/t5flat/n6144] step   2000 loss 12.7949 skew +0.660 kurt 2.60 q999 4.99 disp 0.030 [305s]
+[taildyn twcrps/t5flat/n6144] step   2500 loss 12.8597 skew +0.358 kurt 2.68 q999 4.99 disp 0.047 [385s]
+[taildyn twcrps/t5flat/n6144] step   3000 loss 13.8532 skew +0.242 kurt 2.42 q999 4.89 disp 0.016 [461s]
+[taildyn twcrps/t5flat/n6144] step   3500 loss 12.9834 skew +0.324 kurt 2.70 q999 4.97 disp 0.015 [535s]
+[taildyn twcrps/t5flat/n6144] step   4000 loss 14.5166 skew +0.479 kurt 2.91 q999 4.99 disp 0.041 [611s]
+[taildyn twcrps/t5flat/n6144] step   4500 loss 12.8807 skew +0.568 kurt 3.10 q999 5.05 disp 0.044 [685s]
+[taildyn twcrps/t5flat/n6144] step   5000 loss 14.3534 skew +0.317 kurt 2.81 q999 4.91 disp 0.051 [759s]
+[taildyn twcrps/t5flat/n6144] step   5500 loss 12.5796 skew +0.285 kurt 3.20 q999 5.05 disp 0.050 [832s]
+[taildyn twcrps/t5flat/n6144] step   6000 loss 13.9419 skew +0.609 kurt 3.51 q999 5.17 disp 0.054 [906s]
+[taildyn twcrps/t5flat/n6144] step   6500 loss 13.4925 skew +0.645 kurt 3.70 q999 5.20 disp 0.038 [980s]
+[taildyn twcrps/t5flat/n6144] step   7000 loss 12.5482 skew +0.469 kurt 3.62 q999 5.20 disp 0.069 [1054s]
+[taildyn twcrps/t5flat/n6144] step   7500 loss 13.2156 skew +0.329 kurt 3.66 q999 5.23 disp 0.057 [1128s]
+[taildyn twcrps/t5flat/n6144] step   8000 loss 14.3471 skew +0.411 kurt 3.76 q999 5.22 disp 0.067 [1201s]
+[taildyn twcrps/t5flat/n6144] step   8500 loss 13.7415 skew +0.403 kurt 3.93 q999 5.30 disp 0.078 [1274s]
+[taildyn twcrps/t5flat/n6144] step   9000 loss 13.0490 skew +0.446 kurt 4.02 q999 5.33 disp 0.061 [1348s]
+[taildyn twcrps/t5flat/n6144] step   9500 loss 12.1131 skew +0.558 kurt 4.42 q999 5.46 disp 0.080 [1422s]
+[taildyn twcrps/t5flat/n6144] step  10000 loss 12.5367 skew +0.540 kurt 4.40 q999 5.46 disp 0.079 [1495s]
+[taildyn twcrps/t5flat/n6144] step  10500 loss 13.3450 skew +0.583 kurt 4.51 q999 5.52 disp 0.087 [1568s]
+[taildyn twcrps/t5flat/n6144] step  11000 loss 12.3382 skew +0.593 kurt 4.53 q999 5.53 disp 0.085 [1641s]
+[taildyn twcrps/t5flat/n6144] step  11500 loss 12.9965 skew +0.601 kurt 4.59 q999 5.54 disp 0.084 [1714s]
+[taildyn twcrps/t5flat/n6144] step  12000 loss 12.8724 skew +0.603 kurt 4.59 q999 5.53 disp 0.086 [1788s]
+[taildyn twcrps/t5flat/n6144] wrote /home/tersenov/software/scale-extrapolation/results_p2/taildyn_twcrps_t5flat_n6144.json
