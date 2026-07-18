@@ -4,6 +4,16 @@ Last updated 2026-07-17 (C3 gate investigation). Envs: `source env.sh` (scaledri
 CPU, has pywt) for measurement; `~/wl-challenge-env/bin/python` (JAX) for training/
 generation. GPU via SLURM only.
 
+## ARM C1-t (2026-07-18, R17) — sandbox leg IN FLIGHT, prereg 6822ced
+
+- **16666378** GPU (MIG h100_20gb, 2:00, `scripts_p2/arms_c1t_sandbox.slurm`):
+  train both arms 20k steps with dense ckpts (every 500), caged validation
+  selection (val-32 only), TEST-32 adjudication numbers + e2e recursion npz from
+  the selected checkpoint. **16666379** CPU (def-lplevass, 16c/1h,
+  `scripts_p2/score_c1_tails.py`): zero-cost C1-checkpoint tail attribution on
+  the same validation fields. Verdict → score_c1t_endtoend.py (env.sh);
+  gowerstreet leg only on the pre-registered trigger. STOP at the readout.
+
 ## R15 TAIL-DYNAMICS DIAGNOSIS (2026-07-17) — CLOSED: data-limited, mechanism in hand
 
 - Jobs 16613873–880 (matrix as below) all COMPLETED 30–82 min, no resubmissions,
