@@ -74,27 +74,60 @@ generated octave-1 details from full generations removes it (T = 1.7 / 0.9).
 
 ## M5 — the checkpoint curve (does the caged selection influence it?)
 
-Job 17368763 (MIG, inference only): e2e generations from committed dense
-checkpoints, arms A and B, steps 2500–20000 by 2500, scored for level-1
-parity T + octave-1/2 coefficient stats.
+Job 17368763 (MIG, inference only, COMPLETED 3:16): e2e generations from
+committed dense checkpoints, arms A and B, steps 2500–20000 by 2500, scored
+for level-1 parity T + octave-1/2 coefficient stats. Verbatim from
+results_p2/parity_ckpt_curve.json:
 
-RESULT: PENDING (filled verbatim from results_p2/parity_ckpt_curve.json when
-the job lands).
+| step | A: coef-oct1 T | A: parity T (odd-odd) | B: coef-oct1 T |
+|---|---|---|---|
+| 2500 | 10.6 | 2.4 (0.240) | **10.8 (B's committed pick)** |
+| 5000 | 13.0 | 3.1 (0.248) | 16.9 |
+| 7500 | **15.3 (A's committed pick — the curve MAXIMUM)** | 7.3 (0.303) | 11.6 |
+| 10000 | 7.4 | 4.6 (0.254) | 6.0 |
+| 12500 | 5.4 | 1.9 (0.255) | 6.5 |
+| 15000 | 8.2 | 2.4 (0.264) | 8.5 |
+| 17500 | 2.3 | 1.9 (0.260) | 8.3 |
+| 20000 | 2.1 | 2.0 (0.261) | 7.0 |
 
-## What this means (for the re-posed prereg; the reconvene's 55% lean is on
-## "architectural/synthesis-grid rather than data-limited")
+**Three facts.** (i) At 1× data the defect TRAINS AWAY in arm A: by
+17.5k–20k steps the coefficient statistic is null-consistent (T = 2.3/2.1) —
+the defect is an optimization TRANSIENT, not a fixed property of the
+architecture or synthesis grid (its channel-mean signs also wander along the
+curve). (ii) **The caged marginal-optimal selection harvested the defect:**
+A@7500 is the exact maximum of the defect curve; B@2500 sits at 10.8 — the
+early stop that rescues the tails (disease III's cure) lands on the
+parity-dirty part of the curve. The selection-interaction question R31 asked
+is answered descriptively: yes, and in the harmful direction. (iii) Arm B
+never becomes clean in this window (T = 7–8.5 late) — the dial arm holds the
+defect, consistent with its Stage-D blow-up.
 
-The defect is a learned, systematic DC offset in the per-channel conditional
-detail output — not a property of the synthesis grid itself (truth
-coefficients through the same synthesis are clean), and not created by the
-sampler's stochasticity (the μ-only path carries it). Three facts point AWAY
-from "purely architectural" and toward "trainable-but-undisciplined":
-(i) the octave gradient tracks training-signal strength (worst where
-extrapolated, mildest at the best-trained coarse octaves); (ii) the C1→C1-t
-difference shows design choices (base + caged early stop) MODULATE it;
-(iii) the training data is exactly D4-symmetrized, so nothing in the data
-demands the offset — finite optimization leaves it. Whether more parents
-shrink it is precisely the re-posed Phase-B question, now with a coefficient-
-level estimand (channel-mean z) that is far more powerful than peak parity
-(T = 15–17 vs 7) and directly mechanical. The M5 curve adds the
-selection-interaction answer. STOP after the re-posed prereg draft, per R31.
+**The mechanism statement this yields:** the moment ladder from a new angle —
+different statistics are healthy at different training times (tails early,
+lattice symmetry late), and SINGLE-checkpoint selection on marginals cannot
+satisfy both at 1× data. The re-posed Phase B asks whether (a) an
+inference-time DC correction removes the defect at the tail-optimal
+checkpoint, (b) a joint selection criterion finds a both-clean checkpoint at
+1× (window may not exist), and (c) more data widens the joint-viable window
+(the taildyn precedent: 8× holds tails flat for thousands of steps — a late,
+parity-clean checkpoint may then also be tail-clean).
+
+## What this means (for the re-posed prereg)
+
+The defect is a learned, transient DC offset in the per-channel conditional
+detail output — not a property of the synthesis grid (truth coefficients
+through the same synthesis are clean), not the sampler's stochasticity (the
+μ-only path carries it), and not permanent (it trains away by 17.5k steps at
+1× in arm A). The deployed generator carries it because the tail-rescuing
+early stop harvests the dirty part of the curve: the proximate cause is the
+SELECTION-LADDER TRADE, with the reconvene's registered 55%
+"architectural/synthesis-grid" lean set against this evidence for scoring at
+the review. The octave gradient (worst at the extrapolated octave), the
+C1→C1-t amplification, and the arm-B persistence are all consistent with an
+optimization transient whose decay is slowest where the training signal is
+weakest. The re-posed prereg (drafted alongside this readout) tests the three
+candidate cures — inference-time DC correction, joint selection, and the data
+dial (does 8×/32× widen the joint-viable window?) — with the coefficient
+channel-mean statistic as primary (T = 15–17 at the committed picks vs 7 for
+peak parity: more powerful and mechanically upstream). STOP after the prereg
+draft, per R31.

@@ -1,0 +1,21 @@
+jax devices: [CudaDevice(id=0)]
+E0724 18:55:12.730461 2708763 ptx_compiler_helpers.cc:154] *** WARNING *** Invoking ptxas with version 12.6.77, which corresponds to a CUDA version <=12.6.2. CUDA versions 12.x.y up to and including 12.6.2 miscompile certain edge cases around clamping.
+Please upgrade to CUDA 12.6.3 or newer.
+[18:55:18] test coarse (32, 8, 8, 1); std_by_j {2: 0.9834389090538025, 3: 1.8318419456481934, 4: 3.510596513748169, 1: 0.5180502696386518}
+[18:55:51] arm A @2500: e2e done [34s]
+[18:56:00] arm A @5000: e2e done [8s]
+[18:56:08] arm A @7500: e2e done [8s]
+[18:56:17] arm A @10000: e2e done [9s]
+[18:56:25] arm A @12500: e2e done [8s]
+[18:56:34] arm A @15000: e2e done [8s]
+[18:56:42] arm A @17500: e2e done [8s]
+[18:56:51] arm A @20000: e2e done [8s]
+[18:57:05] arm B @2500: e2e done [14s]
+[18:57:15] arm B @5000: e2e done [11s]
+[18:57:26] arm B @7500: e2e done [11s]
+[18:57:37] arm B @10000: e2e done [11s]
+[18:57:47] arm B @12500: e2e done [11s]
+[18:57:58] arm B @15000: e2e done [11s]
+[18:58:09] arm B @17500: e2e done [11s]
+[18:58:19] arm B @20000: e2e done [11s]
+[18:58:19] SAMPLE phase done -> results_p2/parity_ckpt_gen.npz; score with parity_ckpt_score.py under env.sh
