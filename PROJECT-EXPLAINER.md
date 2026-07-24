@@ -377,3 +377,63 @@ mechanisms (the moment ladder, locality, parents-as-currency) that outlive this
 particular model. The honest one-sentence summary: **trustworthy beyond-data
 generation is achievable one validated step at a time — provided the validation
 machine is at least as sophisticated as the generator it audits.**
+
+---
+
+## 10. Questions a skeptic should ask (added 2026-07-24, from Andreas's review)
+
+**Does weight-tying assume fractal structure?** No — exact self-similarity would
+make the rung conditionals identical, and our founding measurement says they are
+not. The assumption is weaker: the conditionals form a smooth, low-dimensional
+family one network can represent (near-self-similarity of hierarchical
+clustering, with measured departures). Adequacy was measured, not presumed — and
+it must degrade where new physics enters; the claim never extends past the
+measured regime.
+
+**Isn't extrapolation speculation?** The economic foundation is a sample-size
+asymmetry: training needs thousands of fields, validating summary statistics
+needs tens. The deployment pattern is therefore: train on cheap simulations,
+validate on a SMALL held-out set of expensive ones (far too few to train on),
+and never claim beyond the octave that validation reached. The blind edge test
+is the rehearsal of exactly this. One octave past all validation truth, the
+support is indirect (scale-generic mechanism, self-consistency monitors, theory
+anchors) — stated as such, always.
+
+**"Weight-tied across scales"?** One network, one parameter set, every rung —
+which is simultaneously statistical sharing, the near-scale-covariance bias, and
+the entire license for extrapolation: applying the shared rule one octave beyond
+training is defined; applying a per-octave model there is not.
+
+**Are the two drift components arbitrary and permanent?** Neither: the dimension
+fell out of a principal-component measurement (not imposed), the components have
+physical identities (modulation slope, tail weight) — and the final model does
+not consume them at all. The scale-blind result demoted the drift fit from model
+input to monitoring instrument, where a descriptive parameterization is adequate.
+It is a measured property of four octaves of gravity-only fields, not a law.
+
+**Were the fixes principled or recipes?** Mixed, honestly: symmetry augmentation
+is exact group theory (principled); removing the variance head deleted a hack;
+the heavy-tailed base is principled in kind (measured structure into the model
+class) with a convenience choice of tail index; checkpoint selection is a caged
+recipe treating a symptom. Every fix sits on a measured mechanism with a causal
+test — and the audit is what makes recipe-grade fixes safe (verify the result,
+never trust the recipe). The principled agenda for the next phase: data design
+(paired/constrained ensembles — the cure that attacks the cause), bases fitted
+to measured marginals, and a real theory of the moment ladder.
+
+**Is the placement residual another data limitation?** Plausibly — positional
+structure is the next rung of the moment ladder, where the effective-data
+requirement (parents, not tiles) bites hardest. The hypothesis is cheaply
+falsifiable: the exact-truth sandbox supports the same causal data-size test
+that confirmed rungs two and four, applied to placement statistics. If data →
+constrained ensembles are the designated cure; if not → the
+unconditional-prior/posterior-sampling reframe, where joint structure comes from
+the prior's full law, is the principled candidate.
+
+**If only one octave, why the ladder at all?** Generation is recursive across
+all trained octaves (the cross-scale compounding results were multi-rung);
+what is single-octave is the extrapolation. For one octave of extension a
+non-laddered pair model is a legitimate competitor — but has no defined claim
+beyond its trained resolutions. The weight-tied ladder is what converts "apply
+the rule again" into a testable scientific statement; the multi-octave promise
+is real, unrealized, and priced (the second octave's degradation is measured).
