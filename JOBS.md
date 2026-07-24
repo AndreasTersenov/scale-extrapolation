@@ -273,3 +273,9 @@ Rung (iv): reuse `run_pnull.py` with `--field gowerstreet` (add gowerstreet's re
 `scale_coord`), then `measure_generated.py` → P4/P5/P6. Arm A should BREAK at the
 extrapolated octave (P5: var_slope/kurtosis far from real); arm B should repair ≥70% (P6).
 This is the load-bearing run and wants a full H100 (`--gpus-per-node=1`, ≤2:59).
+
+## 2026-07-25 — Phase A' M5 (parity checkpoint curve; R31 order 1)
+- scripts_p2/parity_ckpt_sample.slurm: MIG h100_20gb, 45 min cap, inference only
+  (e2e from committed ckpt_c1t_sandbox dense checkpoints, arms A+B, steps
+  2500..20000 by 2500, 32 test tiles). Output results_p2/parity_ckpt_gen.npz +
+  job log. Logged pre-submission.
