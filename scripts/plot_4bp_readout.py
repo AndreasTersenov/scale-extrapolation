@@ -19,7 +19,7 @@ K, BLUE, GREEN, ORANGE = "#000000", "#0072B2", "#009E73", "#E69F00"
 octs = [2, 3, 4]
 
 real = {2: (1.020, 0.038), 3: (0.801, 0.037), 4: (0.532, 0.033)}
-ceil4a = json.load(open(os.path.join(REPO, "results", "ceiling_4a.json")))
+ceil4a = json.load(open(os.path.join(REPO, "results", "scores", "ceiling_4a.json")))
 own = {("0.1", "A"): [0.991, 0.732, 0.489], ("0.1", "B"): [1.015, 0.723, 0.497],
        ("0.3", "A"): [0.996, 0.748, 0.489], ("0.3", "B"): [1.007, 0.740, 0.471]}
 e2e = {}
@@ -60,6 +60,6 @@ fig.suptitle("4b' readout — LEVER BAR FAILED: corruption lifted the HEADS (das
              "but not the RECURSION (solid, unchanged at octave 2): the gap is compounding, and s=0 sampling never engages the robustness",
              fontsize=11.5)
 fig.tight_layout(rect=[0, 0, 1, 0.90])
-out = os.path.join(REPO, "results", "readout_4bp.png")
+out = os.path.join(REPO, "results", "figures", "readouts", "readout_4bp.png")
 fig.savefig(out, dpi=130, bbox_inches="tight")
 print("wrote", out)

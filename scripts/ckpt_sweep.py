@@ -46,7 +46,7 @@ def main():
     ap.add_argument("--sample-steps", type=int, default=80)
     ap.add_argument("--churn", type=float, default=0.0)
     ap.add_argument("--data", default=os.path.join(REPO, "data_cache", "tiles_pnull.npz"))
-    ap.add_argument("--out-prefix", default=os.path.join(REPO, "results", "sweep"))
+    ap.add_argument("--out-prefix", default=os.path.join(REPO, "results", "npz", "sweep"))
     ap.add_argument("--seed", type=int, default=0)
     args = ap.parse_args()
     print(f"[sweep] devices={jax.devices()} field={args.field} ckpt_steps={args.ckpt_steps}",

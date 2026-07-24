@@ -84,5 +84,5 @@ for arm in "AB":
         out[f"arm{arm}_oct{j}"] = {"ceiling": point, "se": se}
         print(f"arm {arm} oct {j}: ceiling = {point:.3f} +- {se:.3f}")
 
-json.dump(out, open(os.path.join(REPO, "results", "ceiling_4a.json"), "w"), indent=1)
-print("wrote results/ceiling_4a.json")
+json.dump(out, open(os.path.join(REPO, "results", "scores", "ceiling_4a.json"), "w"), indent=1)
+print("wrote results/scores/ceiling_4a.json")

@@ -4,7 +4,7 @@
 #SBATCH --time=00:59:00
 #SBATCH --cpus-per-task=4
 #SBATCH --mem=32G
-#SBATCH --output=results/arms_%j.log
+#SBATCH --output=results/joblogs/arms_%j.log
 # Rung (iv) break & repair on gowerstreet. MIG h100_20gb slice (near-instant start; the
 # model is small — same sizes as the rung-iii run that finished in 217s). <3h => fast b1
 # pool. rrg-lplevass GPU account. Submit from repo root:  sbatch scripts/train_gowerstreet.slurm

@@ -140,7 +140,7 @@ branch = (classify(on_a) if classify(on_a) == classify(on_a_run) else
           f"rule-dependent: literal={classify(on_a)}, intent={classify(on_a_run)} — reconvene adjudicates")
 print("SIGNATURE BRANCH:", branch)
 
-np.savez(os.path.join(REPO, "results", "signature_4a.npz"),
+np.savez(os.path.join(REPO, "results", "npz", "signature_4a.npz"),
          steps_aug=st_a, S_aug=S_a, share_aug=sh_a, steps_base=st_b, S_base=S_b,
          share_base=sh_b, steps_aug3=st_a3, S_aug3=S_a3,
          onset_base=on_b or -1, onset_aug=on_a or -1,
@@ -176,6 +176,6 @@ fig.suptitle("Attempt 4a readout: NO collapse within 20k steps (green stays at t
              "σ-channel alive at ~90%)\nliteral onset rule mis-fires on the pre-peak warm-up dip at 2k "
              "— both rule readings reported; reconvene adjudicates", fontsize=11.5)
 fig.tight_layout(rect=[0, 0, 1, 0.93])
-out = os.path.join(REPO, "results", "signature_4a.png")
+out = os.path.join(REPO, "results", "figures", "readouts", "signature_4a.png")
 fig.savefig(out, dpi=130, bbox_inches="tight")
 print("wrote", out)

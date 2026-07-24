@@ -122,8 +122,8 @@ trained-octave var_slope within 1σ of real, with the frozen P6/P13 bars unchang
   is confirmed end-to-end in a trained generator, not just in the fields.
 
 ## Files
-`results/arms_{generated,film,big}_score.json` (per-config scores),
-`results/transfer_generated_score.json`; logs `log/2026-07-10-prereg-rung-iv-gowerstreet.md`
+`results/scores/arms_{generated,film,big}_score.json` (per-config scores),
+`results/scores/transfer_generated_score.json`; logs `log/2026-07-10-prereg-rung-iv-gowerstreet.md`
 and `log/2026-07-10-rung-iv-film.md` (attempts + the under-dispersion finding);
 `log/2026-07-10-job-pnull-gpu.md` (P-null). Reproduce: `sbatch scripts/train_gowerstreet*.slurm`
 → `python scripts/measure_generated.py`; transfer via `scripts/run_transfer.py`.

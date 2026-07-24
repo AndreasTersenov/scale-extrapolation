@@ -18,7 +18,7 @@ import matplotlib.pyplot as plt
 
 REPO = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 K, BLUE, VERM, GREEN = "#000000", "#0072B2", "#D55E00", "#009E73"
-d = json.load(open(os.path.join(REPO, "results", "smatched_4bpii.json")))
+d = json.load(open(os.path.join(REPO, "results", "scores", "smatched_4bpii.json")))
 grid = [0.0, 0.05, 0.10, 0.15, 0.20, 0.25, 0.30, 0.35]
 
 fig, ax = plt.subplots(1, 2, figsize=(12.4, 4.9))
@@ -43,6 +43,6 @@ fig.suptitle("4b'-ii stops at its own gate: to mimic the real conditioning drift
              "the trained range — the drift is NOT additive noise (solid curves never reach the dashed targets before the red line)",
              fontsize=11.5)
 fig.tight_layout(rect=[0, 0, 1, 0.90])
-out = os.path.join(REPO, "results", "smatched_4bpii.png")
+out = os.path.join(REPO, "results", "figures", "readouts", "smatched_4bpii.png")
 fig.savefig(out, dpi=130, bbox_inches="tight")
 print("wrote", out)

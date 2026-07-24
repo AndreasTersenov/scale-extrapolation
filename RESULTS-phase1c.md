@@ -22,7 +22,7 @@ Scored with the untouched scaledrift instrument, bootstrap over 64 held-out fiel
   amplitude at the extrapolated octave is inflated on GRF too: arm A +14%, arm B
   **+43%** — arm B's placeholder coordinate is likewise out-of-range at j=1, so this
   independently corroborates the exp-head OOD instability (finding 3) on a different
-  field. (`results/pnull_nll_score.json`.)
+  field. (`results/scores/pnull_nll_score.json`.)
 - Trained-octave detail amplitude: fine (≤6%, both arms) — the failure is purely in the
   conditional MODULATION, as before.
 
@@ -36,8 +36,8 @@ Scored with the untouched scaledrift instrument, bootstrap over 64 held-out fiel
 | 1 (extrap) | var_slope | 1.117±0.051 | 0.612±0.005 | **0.021±0.003** |
 | 1 (extrap) | detail_std | 0.743 | 0.775 | **1.275** |
 
-Figures: `results/g1c_verdict.png` (the bars, visually), `results/nll_diagnosis.png`
-(the mechanism), `results/nll_sigma_maps.png` (the learned σ map).
+Figures: `results/figures/readouts/g1c_verdict.png` (the bars, visually), `results/figures/readouts/nll_diagnosis.png`
+(the mechanism), `results/figures/maps/nll_sigma_maps.png` (the learned σ map).
 
 ## Diagnosis (exact decomposition, no sampling — `scripts/diagnose_nll.py`)
 
@@ -90,7 +90,7 @@ substitute for variance), which is exactly the gap the diagnosis exposes.
 ## Attempt 4a — the diagnosis test (D4 augmentation alone; ruling of 2026-07-11)
 
 Pre-registered `log/2026-07-11-prereg-4a-augment.md`; job 15744601, hash 1e61bd812a
-verified. Figure: `results/signature_4a.png`.
+verified. Figure: `results/figures/readouts/signature_4a.png`.
 
 **Readout: the collapse is GONE within the 20k horizon.** Implied var_slope (oct 2,
 arm A): baseline 0.97@2k → 0.75@10k (collapse); augmented 0.94@1k → dip 0.85@2k →
@@ -109,7 +109,7 @@ are computed and reported (`scripts/signature_4a.py`); the visual fact is not in
 dispute. **Stopped at the readout; the reconvene adjudicates the rule.**
 
 **Second finding (descriptive, frozen scorer on the 20k fields —
-`results/arms_aug_score.json`): the head is fixed but the RECURSION now limits.**
+`results/scores/arms_aug_score.json`): the head is fixed but the RECURSION now limits.**
 End-to-end (coarse-to-fine from octave 4), oct-2 var_slope measures 0.746±0.014 vs
 real 1.020±0.038 (~7σ) even though the head's conditional response GIVEN REAL COARSE
 is 0.96. The deficit has moved: no longer the head's collapse, but octave-to-octave
@@ -123,7 +123,7 @@ P5 break intact (z≈8); kurtosis still fails (~3.0 vs 6.7 at oct 2).
 ## Attempt 4b′ — conditioning robustness (ruling of 2026-07-11, post-4a)
 
 Pre-registered `log/2026-07-11-prereg-4bprime-condrobust.md`; jobs 15753842/15753843,
-hashes 4f5bbe7b0f/9f56a059ad verified. Figure: `results/readout_4bp.png`.
+hashes 4f5bbe7b0f/9f56a059ad verified. Figure: `results/figures/readouts/readout_4bp.png`.
 
 **LEVER BAR: FAILED** (both s_max, both arms; binding at octave 2). End-to-end oct-2
 var_slope vs the fixed 4a ceiling: arm A 0.709±0.012 (s=0.1) / 0.773±0.018 (s=0.3) vs
@@ -163,7 +163,7 @@ Ruling `log/2026-07-11-reconvene-4bprime.md` authorized engaging the trained
 robustness at inference (existing s=0.3 checkpoints, zero training), gated on a
 pre-generation drift measurement: primary adjudication only at s_gen = s_matched, and
 **stop if s_matched > 0.3**. The measurement (`scripts/measure_drift_smatched.py`,
-`results/smatched_4bpii.{json,png}`) fired the stop: white-noise corruption of real
+`results/scores/smatched_4bpii.json + results/figures/readouts/smatched_4bpii.png`) fired the stop: white-noise corruption of real
 coarse cannot reproduce the measured end-to-end attenuation anywhere in the trained
 range (head reaches only 0.86/0.85 at s=0.35 vs targets 0.773/0.701 at oct 2; the only
 crossing at all is arm A oct 3 at 0.335 > 0.3). Aligned generated-vs-real coarse
@@ -182,7 +182,7 @@ oct-3 0.748±0.026).
 ## Attempt 5 — self-conditioning (FINAL generator attempt): LEVER FAILED, branch B5 — GENERATOR FROZEN
 
 Pre-registered `log/2026-07-11-prereg-attempt5-selfcond.md` (weighted branches); jobs
-15762584/15762585, hashes ffdeac4d4b/ccc86ccf1b verified. Figure: `results/readout_a5.png`.
+15762584/15762585, hashes ffdeac4d4b/ccc86ccf1b verified. Figure: `results/figures/readouts/readout_a5.png`.
 
 **Branch B5 (degradation; my weight 5%, largest single miss of my distribution —
 though B4+B5 = 40% carried the mechanism).** Octave-2 end-to-end DROPPED: 4a reference
@@ -219,7 +219,7 @@ no-recovery (B4+B5=40 vs reconvene's 45 on pass), wrong that it would be harmles
 ## Phase 1d, step 2 — the INVERTED validation pilot (2026-07-16): the protocol catches everything we know is there
 
 Prereg + result: `log/2026-07-16-prereg-step2-pilot.md`; figure
-`results/pilot_validation.png`; numbers `results/pilot_validation.json`.
+`results/figures/stage0/pilot_validation.png`; numbers `results/scores/pilot_validation.json`.
 **P-edge PASS** (extrapolation error edge-consistent within factor 2: 1.62 arm B, 1.46
 arm A). **Self-consistency (truth-referenced): detects the extrapolated-octave failure
 (z=7.9) and the trained-octave compounding (z=7.1), passes where the generator is good
@@ -237,7 +237,7 @@ truth beyond the coupling curve.**
 ## Phase 1d, step 3 — the downstream-bias demo (2026-07-16): P(k) passes, peaks are tilted
 
 Prereg + result: `log/2026-07-16-prereg-step3-downstream.md`; figure
-`results/downstream_peaks.png`. On the frozen generator's fields (P4 amplitude ≤7%
+`results/figures/readouts/downstream_peaks.png`. On the frozen generator's fields (P4 amplitude ≤7%
 everywhere — power-level checks PASS), the peak-count function is distorted with a
 SIGN FLIP: +30%/+23% excess low peaks (ν=1, z=+14/+10 — spurious graininess from the
 spatially-white conditional noise) and −14%/−23% missing extreme peaks (ν=3,
@@ -251,7 +251,7 @@ counted.**
 ## Phase 1d, step 4 — the self-similar control (2026-07-16): the negative claim's boundary
 
 Prereg + result: `log/2026-07-16-prereg-step4-selfsim.md`; figure
-`results/selfsim_control.png`. On a synthesized exactly scale-invariant in-class
+`results/figures/readouts/selfsim_control.png`. On a synthesized exactly scale-invariant in-class
 cascade, the same frozen architecture extrapolates to **2.5% residual** at the
 untrained octave (vs 39–65% on gowerstreet); trained octaves exact. The literal 1σ
 bar fails (z≈5; the control's SEs are ±0.002 — a logged bar-calibration miss), but

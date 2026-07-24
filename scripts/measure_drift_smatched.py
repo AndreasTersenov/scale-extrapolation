@@ -3,7 +3,7 @@
 
 NO generation is run here (ruling: compute BEFORE any generation run). Everything comes
 from existing artifacts: the s=0.3 checkpoints, the s=0.3 end-to-end fields
-(results/arms_4bp_s0.3.npz), and the real held-out tiles.
+(results/npz/arms_4bp_s0.3.npz), and the real held-out tiles.
 
 Primary estimator (attenuation matching, in the corruption model's own units):
   s_matched_j = the white-noise level s at which the head, fed CORRUPTED REAL coarse
@@ -46,7 +46,7 @@ heldout = normalize_tiles(tiles.astype(np.float32)[-64:])
 coords = {int(j): np.asarray(v) for j, v in
           json.load(open(os.path.join(REPO, "data_cache",
                                       "running_couplings.json")))["gowerstreet"].items()}
-e2e = json.load(open(os.path.join(REPO, "results", "arms_4bp_s0.3_score.json")))
+e2e = json.load(open(os.path.join(REPO, "results", "scores", "arms_4bp_s0.3_score.json")))
 
 
 def load_ck(arm):
@@ -142,7 +142,7 @@ for arm in "AB":
 
 # ---- 3. cross-check: pixel-aligned generated-vs-real coarse residual ----
 print("== cross-check: aligned relative coarse residual (upper-bound-flavored) ==")
-d = np.load(os.path.join(REPO, "results", "arms_4bp_s0.3.npz"))
+d = np.load(os.path.join(REPO, "results", "npz", "arms_4bp_s0.3.npz"))
 aligned = {}
 for arm in "AB":
     gen = jnp.asarray(d[f"gen_{arm}"])[..., None]
@@ -156,5 +156,5 @@ for arm in "AB":
 
 json.dump({"own_ceiling_s03": ceil, "attenuation_match": match,
            "aligned_residual": aligned},
-          open(os.path.join(REPO, "results", "smatched_4bpii.json"), "w"), indent=1)
-print("wrote results/smatched_4bpii.json")
+          open(os.path.join(REPO, "results", "scores", "smatched_4bpii.json"), "w"), indent=1)
+print("wrote results/scores/smatched_4bpii.json")

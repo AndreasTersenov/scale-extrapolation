@@ -38,11 +38,11 @@ REPO = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 IDX = 0                                     # SPEC rule 1: first held-out index
 CMAP = "inferno"
 
-aug = np.load(os.path.join(REPO, "results", "arms_aug.npz"))
-ssim = np.load(os.path.join(REPO, "results", "arms_selfsim.npz"))
-sc_g = json.load(open(os.path.join(REPO, "results", "arms_aug_score.json")))
-sc_s = json.load(open(os.path.join(REPO, "results", "arms_selfsim_score.json")))
-peaks = json.load(open(os.path.join(REPO, "results", "downstream_peaks.json")))
+aug = np.load(os.path.join(REPO, "results", "npz", "arms_aug.npz"))
+ssim = np.load(os.path.join(REPO, "results", "npz", "arms_selfsim.npz"))
+sc_g = json.load(open(os.path.join(REPO, "results", "scores", "arms_aug_score.json")))
+sc_s = json.load(open(os.path.join(REPO, "results", "scores", "arms_selfsim_score.json")))
+peaks = json.load(open(os.path.join(REPO, "results", "scores", "downstream_peaks.json")))
 coords = json.load(open(os.path.join(REPO, "data_cache",
                                      "running_couplings.json")))["gowerstreet"]
 
@@ -105,10 +105,10 @@ fig.suptitle("FIG-G1 — how it works: the generator climbs the ladder from the 
              "(arm B, frozen 4a checkpoint; held-out field #0)", fontsize=11)
 fig.tight_layout(rect=[0, 0, 1, 0.965])
 fig.subplots_adjust(hspace=0.18)
-fig.savefig(os.path.join(REPO, "results", "gallery_ladder.png"), dpi=130,
+fig.savefig(os.path.join(REPO, "results", "figures", "maps", "gallery_ladder.png"), dpi=130,
             bbox_inches="tight")
 plt.close(fig)
-print("wrote results/gallery_ladder.png")
+print("wrote results/figures/maps/gallery_ladder.png")
 
 # ================= FIG-G2: the boundary, in maps (arm A both rows) =================
 fig, ax = plt.subplots(2, 2, figsize=(10.6, 11.2))
@@ -137,10 +137,10 @@ fig.suptitle("FIG-G2 — the boundary, in maps: where the between-scale law is s
              fontsize=10.5)
 fig.tight_layout(rect=[0, 0, 1, 0.925])
 fig.subplots_adjust(hspace=0.16)
-fig.savefig(os.path.join(REPO, "results", "gallery_boundary.png"), dpi=130,
+fig.savefig(os.path.join(REPO, "results", "figures", "maps", "gallery_boundary.png"), dpi=130,
             bbox_inches="tight")
 plt.close(fig)
-print("wrote results/gallery_boundary.png")
+print("wrote results/figures/maps/gallery_boundary.png")
 
 # ================= FIG-G3: where the peaks go (arm A map + measured inset) =========
 def peak_coords(f, lo, hi=None):
@@ -194,10 +194,10 @@ fig.suptitle("FIG-G3 — where the peaks go: power-level checks pass at ≤7% on
              "the generated panel is a conditional sample — compare peak POPULATIONS, not positions",
              fontsize=10.5)
 fig.tight_layout(rect=[0, 0, 1, 0.90])
-fig.savefig(os.path.join(REPO, "results", "gallery_peaks.png"), dpi=130,
+fig.savefig(os.path.join(REPO, "results", "figures", "maps", "gallery_peaks.png"), dpi=130,
             bbox_inches="tight")
 plt.close(fig)
-print("wrote results/gallery_peaks.png")
+print("wrote results/figures/maps/gallery_peaks.png")
 
 # ================= FIG-G4: the ensemble view (nine new samples, seeds 1..9) ========
 with open(os.path.join(REPO, "data_cache", "ckpt_aug", "armA_gowerstreet.pkl"),
@@ -229,7 +229,7 @@ fig.suptitle("FIG-G4 — what \"sampling the conditional\" means: nine generated
              "start; every fine texture is a fresh draw — the real field is ONE more draw from the (ideal) same law",
              fontsize=11)
 fig.tight_layout(rect=[0, 0, 1, 0.92])
-fig.savefig(os.path.join(REPO, "results", "gallery_ensemble.png"), dpi=130,
+fig.savefig(os.path.join(REPO, "results", "figures", "maps", "gallery_ensemble.png"), dpi=130,
             bbox_inches="tight")
 plt.close(fig)
-print("wrote results/gallery_ensemble.png")
+print("wrote results/figures/maps/gallery_ensemble.png")

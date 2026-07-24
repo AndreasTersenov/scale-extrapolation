@@ -58,8 +58,8 @@ def load_arm_a(ckpt_dir):
 
 
 # ------------------------------------------------ figure 1: texture, from saved runs
-base = np.load(os.path.join(REPO, "results", "arms_nll.npz"))
-aug = np.load(os.path.join(REPO, "results", "arms_aug.npz"))
+base = np.load(os.path.join(REPO, "results", "npz", "arms_nll.npz"))
+aug = np.load(os.path.join(REPO, "results", "npz", "arms_aug.npz"))
 assert np.allclose(base["real"], aug["real"])            # same held-out fields
 real, gN, gA = base["real"], base["gen_A"], aug["gen_A"]
 i, Z = 0, 40
@@ -90,9 +90,9 @@ fig.suptitle("Same start, three maps: the real field vs the collapsed generator 
              fontsize=12.5)
 fig.tight_layout(rect=[0, 0, 1, 0.94])
 fig.subplots_adjust(hspace=0.16)
-fig.savefig(os.path.join(REPO, "results", "maps_4a_texture.png"), dpi=130,
+fig.savefig(os.path.join(REPO, "results", "figures", "maps", "maps_4a_texture.png"), dpi=130,
             bbox_inches="tight")
-print("wrote results/maps_4a_texture.png")
+print("wrote results/figures/maps/maps_4a_texture.png")
 
 # ------------------------------------- figure 2: the dice-roll (diversity) test
 tiles = np.load(os.path.join(REPO, "data_cache", "tiles_pnull.npz"))["gowerstreet"]
@@ -133,6 +133,6 @@ fig.suptitle("The dice-roll test: two draws from the SAME 8x8 start — a collap
              fontsize=12)
 fig.tight_layout(rect=[0, 0, 1, 0.92])
 fig.subplots_adjust(hspace=0.1)
-fig.savefig(os.path.join(REPO, "results", "maps_4a_diversity.png"), dpi=130,
+fig.savefig(os.path.join(REPO, "results", "figures", "maps", "maps_4a_diversity.png"), dpi=130,
             bbox_inches="tight")
-print("wrote results/maps_4a_diversity.png")
+print("wrote results/figures/maps/maps_4a_diversity.png")

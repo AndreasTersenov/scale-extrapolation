@@ -94,6 +94,6 @@ d.legend(loc="upper left", fontsize=8)
 fig.suptitle("Phase-1 break & repair: P5 confirmed; P6 blocked by generator variance under-dispersion (not the conditioning)",
              fontsize=12.5, y=0.995)
 fig.tight_layout(rect=[0, 0, 1, 0.98])
-out = os.path.join(REPO, "results", "phase1_story.png")
+out = os.path.join(REPO, "results", "figures", "explainers", "phase1_story.png")
 fig.savefig(out, dpi=130, bbox_inches="tight")
 print("wrote", out)

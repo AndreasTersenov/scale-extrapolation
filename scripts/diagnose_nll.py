@@ -9,8 +9,8 @@ EXACTLY Var(mu|bin) + mean(sigma^2|bin), so we can decompose the var_slope defic
 reconvene needs answered. Also traces the head's implied var_slope across the
 2k-granularity training checkpoints (does it collapse with training, like L2-CFM did?).
 
-Outputs: printed table, results/nll_diagnosis.npz, and two figures
-(results/nll_diagnosis.png, results/nll_sigma_maps.png).
+Outputs: printed table, results/npz/nll_diagnosis.npz, and two figures
+(results/figures/readouts/nll_diagnosis.png, results/figures/maps/nll_sigma_maps.png).
 """
 import os
 try:
@@ -124,7 +124,7 @@ for s in steps_axis:
         cc, vr, vg, vm, vn = decompose(mu, sig, det_n, coarse)
         curve[j].append(slope(cc, vg))
 
-np.savez(os.path.join(REPO, "results", "nll_diagnosis.npz"),
+np.savez(os.path.join(REPO, "results", "npz", "nll_diagnosis.npz"),
          steps=steps_axis, curve2=curve[2], curve3=curve[3],
          **{f"prof_{j}{arm}": np.array(prof[(j, arm)]) for j, arm in prof})
 
@@ -157,9 +157,9 @@ a.grid(alpha=0.25)
 fig.suptitle("G-1c diagnosis: WHERE the conditional-variance modulation is missing "
              "(decomposition is exact, no sampling)", fontsize=12.5)
 fig.tight_layout(rect=[0, 0, 1, 0.94])
-fig.savefig(os.path.join(REPO, "results", "nll_diagnosis.png"), dpi=130,
+fig.savefig(os.path.join(REPO, "results", "figures", "readouts", "nll_diagnosis.png"), dpi=130,
             bbox_inches="tight")
-print("wrote results/nll_diagnosis.png")
+print("wrote results/figures/readouts/nll_diagnosis.png")
 
 # ------------------------------- figure 2: sigma maps (octave 2, one field)
 det, coarse = haar.octave_pair(heldout, 2)
@@ -179,6 +179,6 @@ for a in ax:
     a.set_xticks([]); a.set_yticks([])
 fig.suptitle("Is the learned σ map modulating with the environment?", fontsize=12.5)
 fig.tight_layout(rect=[0, 0, 1, 0.93])
-fig.savefig(os.path.join(REPO, "results", "nll_sigma_maps.png"), dpi=130,
+fig.savefig(os.path.join(REPO, "results", "figures", "maps", "nll_sigma_maps.png"), dpi=130,
             bbox_inches="tight")
-print("wrote results/nll_sigma_maps.png")
+print("wrote results/figures/maps/nll_sigma_maps.png")

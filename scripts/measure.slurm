@@ -4,7 +4,7 @@
 #SBATCH --time=01:30:00
 #SBATCH --cpus-per-task=4
 #SBATCH --mem=32G
-#SBATCH --output=results/measure_%j.log
+#SBATCH --output=results/joblogs/measure_%j.log
 # CPU-only Measurement M1 on a compute node (dedicated cores + guaranteed /project
 # data access; avoids the login-node arbiter). Submit from the repo root:
 #   sbatch scripts/measure.slurm

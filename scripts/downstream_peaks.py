@@ -28,7 +28,7 @@ from pilotstats import peak_counts, z_stack
 REPO = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 K, BLUE, ORANGE, VERM = "#000000", "#0072B2", "#E69F00", "#D55E00"
 
-d = np.load(os.path.join(REPO, "results", "arms_aug.npz"))
+d = np.load(os.path.join(REPO, "results", "npz", "arms_aug.npz"))
 real, gA, gB = d["real"], d["gen_A"], d["gen_B"]
 NUS = [1.0, 1.5, 2.0, 2.5, 3.0]          # {1,2,3} adjudicated; 1.5/2.5 for the curve
 out = {"nus": NUS, "counts": {}, "z": {}}
@@ -45,7 +45,7 @@ for nu in NUS:
     a, b = out["counts"]["A"][nu][0], out["counts"]["B"][nu][0]
     print(f"  nu={nu}: real {r:7.1f}  A {a:7.1f} (z={out['z']['A'][nu]:+.1f})  "
           f"B {b:7.1f} (z={out['z']['B'][nu]:+.1f})")
-json.dump(out, open(os.path.join(REPO, "results", "downstream_peaks.json"), "w"),
+json.dump(out, open(os.path.join(REPO, "results", "scores", "downstream_peaks.json"), "w"),
           indent=1)
 
 fig, ax = plt.subplots(1, 2, figsize=(12.4, 4.9))
@@ -77,6 +77,6 @@ ax[1].grid(alpha=0.25)
 fig.suptitle("Step 3 — downstream-bias demo: power-level checks pass, the peak observable is biased",
              fontsize=12)
 fig.tight_layout(rect=[0, 0, 1, 0.92])
-fig.savefig(os.path.join(REPO, "results", "downstream_peaks.png"), dpi=130,
+fig.savefig(os.path.join(REPO, "results", "figures", "readouts", "downstream_peaks.png"), dpi=130,
             bbox_inches="tight")
-print("wrote results/downstream_peaks.{json,png}")
+print("wrote results/scores+figures/readouts/downstream_peaks.{json,png}")

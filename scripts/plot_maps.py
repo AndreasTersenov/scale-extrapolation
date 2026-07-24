@@ -62,9 +62,9 @@ for r, (key, label) in enumerate(rows):
 fig.suptitle("The actual fields (three 128x128 tiles of each; brighter = more mass)",
              fontsize=13)
 fig.tight_layout(rect=[0, 0, 1, 0.96])
-fig.savefig(os.path.join(REPO, "results", "maps_fields.png"), dpi=130,
+fig.savefig(os.path.join(REPO, "results", "figures", "maps", "maps_fields.png"), dpi=130,
             bbox_inches="tight")
-print("wrote results/maps_fields.png")
+print("wrote results/figures/maps/maps_fields.png")
 
 # ------------------------------------------------------- 2. the octave ladder
 f = norm(tiles["gowerstreet"][5].astype(float))[None, :, :, None]
@@ -98,12 +98,12 @@ for i, j in enumerate((1, 2, 3, 4)):
     show(axb, img, f"detail band, octave {j}", vmin=-s, vmax=s, cmap="RdBu_r")
 fig.suptitle("One real tile taken apart: the generator starts from the 8x8 thumbnail (right) "
              "and must invent every detail band on the way back", fontsize=12.5)
-fig.savefig(os.path.join(REPO, "results", "maps_ladder.png"), dpi=130,
+fig.savefig(os.path.join(REPO, "results", "figures", "maps", "maps_ladder.png"), dpi=130,
             bbox_inches="tight")
-print("wrote results/maps_ladder.png")
+print("wrote results/figures/maps/maps_ladder.png")
 
 # ------------------------------------------------- 3. real vs generated (the break)
-d = np.load(os.path.join(REPO, "results", "arms_film.npz"), allow_pickle=True)
+d = np.load(os.path.join(REPO, "results", "npz", "arms_film.npz"), allow_pickle=True)
 real, gA, gB = d["real"], d["gen_A"], d["gen_B"]
 idx = [0, 3]
 Z = 40                                   # zoom crop size
@@ -132,6 +132,6 @@ fig.suptitle("The experiment in pictures (CURRENT pre-NLL generator, FiLM checkp
              "same large blobs --\nthe contest is entirely in the fine texture, which is where the "
              "under-dispersion lives", fontsize=12)
 fig.tight_layout(rect=[0, 0, 1, 0.94])
-fig.savefig(os.path.join(REPO, "results", "maps_break.png"), dpi=130,
+fig.savefig(os.path.join(REPO, "results", "figures", "maps", "maps_break.png"), dpi=130,
             bbox_inches="tight")
-print("wrote results/maps_break.png")
+print("wrote results/figures/maps/maps_break.png")

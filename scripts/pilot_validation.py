@@ -1,8 +1,8 @@
 #!/usr/bin/env python
 """Step-2 inverted validation pilot: compute all three components and the figure.
 
-Component 1 (slide-the-edge): reads results/arms_aug_score.json (edge 1, trained 2-4,
-extrapolated oct 1) and results/arms_edge2_score.json (edge 2, trained 3-4,
+Component 1 (slide-the-edge): reads results/scores/arms_aug_score.json (edge 1, trained 2-4,
+extrapolated oct 1) and results/scores/arms_edge2_score.json (edge 2, trained 3-4,
 extrapolated oct 2); compares arm-wise relative var_slope errors at each edge's first
 extrapolated octave (P-edge: within factor 2).
 Component 2 (self-consistency): per octave, z of |measured-on-generated coupling minus
@@ -38,8 +38,8 @@ K, BLUE, GREEN, ORANGE, VERM = "#000000", "#0072B2", "#009E73", "#E69F00", "#D55
 coords = {int(j): v for j, v in
           json.load(open(os.path.join(REPO, "data_cache",
                                       "running_couplings.json")))["gowerstreet"].items()}
-s1 = json.load(open(os.path.join(REPO, "results", "arms_aug_score.json")))
-s2 = json.load(open(os.path.join(REPO, "results", "arms_edge2_score.json")))
+s1 = json.load(open(os.path.join(REPO, "results", "scores", "arms_aug_score.json")))
+s2 = json.load(open(os.path.join(REPO, "results", "scores", "arms_edge2_score.json")))
 out = {}
 
 # ---------------- component 1: slide the edge ----------------
@@ -80,7 +80,7 @@ print("[selfcons] SC-a calibration on REAL fields (edge1):",
       {j: round(v["sc_a"], 1) for j, v in sc["edge1"]["real"].items()})
 
 # ---------------- component 3: held-out statistics ----------------
-d = np.load(os.path.join(REPO, "results", "arms_aug.npz"))
+d = np.load(os.path.join(REPO, "results", "npz", "arms_aug.npz"))
 real_f, gA, gB = d["real"], d["gen_A"], d["gen_B"]
 ho = {"l1": {}, "scatter": {}}
 for arm, g in (("A", gA), ("B", gB)):
@@ -96,7 +96,7 @@ out["heldout"] = {"l1": {a: {j: float(v) for j, v in ho["l1"][a].items()}
 print("[heldout] L1 z by octave:", out["heldout"]["l1"])
 print("[heldout] scattering:", out["heldout"]["scatter"])
 
-json.dump(out, open(os.path.join(REPO, "results", "pilot_validation.json"), "w"),
+json.dump(out, open(os.path.join(REPO, "results", "scores", "pilot_validation.json"), "w"),
           indent=1)
 
 # ---------------- figure ----------------
@@ -152,6 +152,6 @@ for a in ax:
 fig.suptitle("Step 2 — the INVERTED validation pilot on the frozen failing generator: does the protocol catch what we know is there?",
              fontsize=11.5)
 fig.tight_layout(rect=[0, 0, 1, 0.92])
-fig.savefig(os.path.join(REPO, "results", "pilot_validation.png"), dpi=130,
+fig.savefig(os.path.join(REPO, "results", "figures", "stage0", "pilot_validation.png"), dpi=130,
             bbox_inches="tight")
-print("wrote results/pilot_validation.{json,png}")
+print("wrote results/scores+figures/stage0/pilot_validation.{json,png}")

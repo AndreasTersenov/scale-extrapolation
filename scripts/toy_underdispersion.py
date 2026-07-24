@@ -145,6 +145,6 @@ ax[1].legend(fontsize=8); ax[1].grid(alpha=0.25)
 fig.suptitle("The generator blocker in 1-D (known truth): why P6 is blocked and why a training penalty can't fix it",
              fontsize=12)
 fig.tight_layout(rect=[0, 0, 1, 0.93])
-out = os.path.join(REPO, "results", "toy_underdispersion.png")
+out = os.path.join(REPO, "results", "figures", "readouts", "toy_underdispersion.png")
 fig.savefig(out, dpi=130, bbox_inches="tight")
 print("wrote", out)

@@ -41,6 +41,6 @@ ax.text(5.0, -0.45, "Prior for when the generator is fixed:  once dispersion is 
 ax.set_title("Where we are: the break (P5) is proven; the repair (P6) is blocked by ONE generator-side problem",
              fontsize=13.5, fontweight="bold", pad=14)
 fig.tight_layout()
-out = os.path.join(REPO, "results", "roadmap.png")
+out = os.path.join(REPO, "results", "figures", "explainers", "roadmap.png")
 fig.savefig(out, dpi=130, bbox_inches="tight")
 print("wrote", out)

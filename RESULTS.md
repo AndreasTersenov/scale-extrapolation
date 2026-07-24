@@ -2,7 +2,7 @@
 
 **Scale-drift of conditional wavelet statistics, measured directly on the fields.**
 For a reader who knows `PLAN.md` but not the code. Numbers are the final production run
-(`results/measurement.json`); figures are in `results/`.
+(`results/scores/measurement.json`); figures are in `results/`.
 
 ---
 
@@ -76,7 +76,7 @@ needed. The 1→2 pair sits at the tile Nyquist scale and is the noisiest.)
 Three of four adjacent pairs clear the pre-registered bar (>3σ **and** >10%); the finest
 pair (1→2, tile Nyquist) is marginal. **Cumulative** drift from the finest octave grows
 monotonically: excess 0.045 (z=6.7) / 0.103 (**z=11.4**) / 0.143 (z=9.5) at separations
-2/3/4 — see `results/drift_vs_separation.png` and `results/drift_adjacent.png`. GRF_HF sits
+2/3/4 — see `results/figures/stage0/drift_vs_separation.png` and `results/figures/stage0/drift_adjacent.png`. GRF_HF sits
 flat on zero in the same figure. **K-M1b is not triggered.**
 
 ## P9b — the drift is low-dimensional — TRUE
@@ -92,7 +92,7 @@ The scale-drift lives in a ~2-D subspace → "few running couplings," as bet.
 
 Three interpretable, smooth, monotonic functions of octave j (1=finest → 5=coarsest);
 these are what a scale-conditioning must carry. Values below are `gowerstreet`
-(± bootstrap SE ~0.03–0.06); `results/running_couplings.png` shows all fields with bars.
+(± bootstrap SE ~0.03–0.06); `results/figures/stage0/running_couplings.png` shows all fields with bars.
 
 | coupling | meaning | j=1 | j=2 | j=3 | j=4 | j=5 |
 |---|---|---|---|---|---|---|
@@ -107,7 +107,7 @@ systematically **under-represents small-scale non-Gaussianity**. The required co
 the extrapolation of these curves, and PCA says it is ~2-dimensional. `var_slope` is the
 cleanest, contamination-free coupling; `kurtosis` is partly inflated by pooling sky tiles
 of differing amplitude (flat in j for the GRF, so it adds no spurious drift).
-`results/conditional_variance_profiles.png` shows the mechanism directly: for GRF_HF the
+`results/figures/readouts/conditional_variance_profiles.png` shows the mechanism directly: for GRF_HF the
 per-octave `Var(detail|coarse)` curves collapse (octave-invariant); for gowerstreet they
 **fan out** — the finest octave has the steepest rise (~5×), decreasing with scale.
 
@@ -135,8 +135,8 @@ field.
 
 ## Files & reproduction
 
-- `results/measurement.json` — every number (drift, couplings, PCA, cross-octave ρ, PDFs).
-- `results/profiles.npz` — conditional-moment profiles per field/octave.
-- `results/{drift_adjacent,drift_vs_separation,running_couplings,conditional_variance_profiles}.png`.
+- `results/scores/measurement.json` — every number (drift, couplings, PCA, cross-octave ρ, PDFs).
+- `results/npz/profiles.npz` — conditional-moment profiles per field/octave.
+- `results/figures/stage0/{drift_adjacent,drift_vs_separation,running_couplings}.png + results/figures/readouts/conditional_variance_profiles.png`.
 - Reproduce: `sbatch scripts/measure.slurm` (CPU, def-lplevass) → `python scripts/summarize.py`.
   Gates: `source env.sh && pytest tests/`.

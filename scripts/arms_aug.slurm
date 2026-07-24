@@ -4,7 +4,7 @@
 #SBATCH --time=01:30:00
 #SBATCH --cpus-per-task=4
 #SBATCH --mem=48G
-#SBATCH --output=results/arms_aug_%j.log
+#SBATCH --output=results/joblogs/arms_aug_%j.log
 # Attempt 4a: D4 augmentation ALONE (the diagnosis falsification test). Pre-registered
 # log/2026-07-11-prereg-4a-augment.md, config_hash 1e61bd812a. MIG + <=3h => b1 pool.
 # Paths absolute so the runtime hash matches the pre-registered one exactly.
@@ -20,5 +20,5 @@ $PY scripts/run_two_arms.py --field gowerstreet --train-octaves 2 3 4 --gen-from
     --ckpt-steps 1000 2000 4000 6000 8000 12000 16000 \
     --data "$REPO/data_cache/tiles_pnull.npz" \
     --coords-file "$REPO/data_cache/running_couplings.json" \
-    --out "$REPO/results/arms_aug.npz" \
+    --out "$REPO/results/npz/arms_aug.npz" \
     --ckpt-dir "$REPO/data_cache/ckpt_aug"

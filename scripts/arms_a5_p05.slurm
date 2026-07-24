@@ -4,7 +4,7 @@
 #SBATCH --time=01:30:00
 #SBATCH --cpus-per-task=4
 #SBATCH --mem=48G
-#SBATCH --output=results/arms_a5_p05_%j.log
+#SBATCH --output=results/joblogs/arms_a5_p05_%j.log
 # Attempt 5 (self-conditioning), p=0.5. Pre-registered
 # log/2026-07-11-prereg-attempt5-selfcond.md, config_hash ffdeac4d4b.
 REPO=/home/tersenov/software/scale-extrapolation
@@ -19,5 +19,5 @@ $PY scripts/run_two_arms.py --field gowerstreet --train-octaves 2 3 4 --gen-from
     --selfcond-src "$REPO/data_cache/ckpt_aug" \
     --data "$REPO/data_cache/tiles_pnull.npz" \
     --coords-file "$REPO/data_cache/running_couplings.json" \
-    --out "$REPO/results/arms_a5_p05.npz" \
+    --out "$REPO/results/npz/arms_a5_p05.npz" \
     --ckpt-dir "$REPO/data_cache/ckpt_a5_p05"

@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-"""Print the RESULTS-relevant summary from results/measurement.json:
+"""Print the RESULTS-relevant summary from results/scores/measurement.json:
 GRF null verdict, P9a (adjacent-octave drift significance & size), P9b (effective
 dimensionality), running couplings, and cross-octave couplings.
 """
@@ -16,7 +16,7 @@ def pct(x, y):
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("--json", default=os.path.join(REPO, "results", "measurement.json"))
+    ap.add_argument("--json", default=os.path.join(REPO, "results", "scores", "measurement.json"))
     args = ap.parse_args()
     b = json.load(open(args.json))
     cfg = b["config"]

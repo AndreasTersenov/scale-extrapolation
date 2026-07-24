@@ -5,24 +5,25 @@ __pycache__/
 venv/
 *.ipynb_checkpoints
 # scratch measurement artifacts (keep the final measurement.json + plots + npz)
-results/*.log
-results/measurement_quick.json
+results/joblogs/
+results/scores/measurement_quick.json
 # derived data cache (reproducible from wl_chall_data via scaledrift.data)
 data_cache/
 # large generated-field bundles (regenerate via run_pnull.py); keep small *_score.json
-results/pnull_*.npz
-results/*_validate*
-results/arms_*.npz
-results/film_smoke.npz
-results/transfer_generated.npz
-results/arms_big.npz
-results/sweep*.npz
-results/sde_c*.npz
-results/arms_2k*.npz
-results/sde_c*_score.json
-results/sweep*_score.json
-results/arms_2k*_score.json
-results/disp_*.npz
-results/arms_disp*.npz
-results/arms_opt1*.npz
-results/opt1_smoke.npz
+results/npz/pnull_*.npz
+results/npz/*_validate*
+results/scores/*_validate*
+results/npz/arms_*.npz
+results/npz/film_smoke.npz
+results/npz/transfer_generated.npz
+results/npz/arms_big.npz
+results/npz/sweep*.npz
+results/npz/sde_c*.npz
+results/npz/arms_2k*.npz
+results/scores/sde_c*_score.json
+results/scores/sweep*_score.json
+results/scores/arms_2k*_score.json
+results/npz/disp_*.npz
+results/npz/arms_disp*.npz
+results/npz/arms_opt1*.npz
+results/npz/opt1_smoke.npz

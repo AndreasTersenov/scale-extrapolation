@@ -11,7 +11,7 @@ computing for each field:
   * cross-octave |w| couplings rho(j)
   * P9b effective dimensionality of the cross-octave drift (PCA)
 
-Writes results/measurement.json, results/profiles.npz and PNG plots. Fields, octaves,
+Writes results/scores/measurement.json, results/npz/profiles.npz and PNG plots. Fields, octaves,
 map counts, and wavelet are CLI-configurable; --quick shrinks everything for a smoke run.
 """
 from __future__ import annotations
@@ -138,7 +138,7 @@ def plot_all(results, outdir):
     ax.set_ylabel("excess conditional-W1 drift")
     ax.set_title("Adjacent-octave scale-drift (excess over finite-sample floor)")
     ax.legend(fontsize=8); fig.tight_layout()
-    fig.savefig(os.path.join(outdir, "drift_adjacent.png"), dpi=130); plt.close(fig)
+    fig.savefig(os.path.join(outdir, "figures", "stage0", "drift_adjacent.png"), dpi=130); plt.close(fig)
 
     # 2. drift vs separation from finest octave
     fig, ax = plt.subplots(figsize=(7, 4.5))
@@ -153,7 +153,7 @@ def plot_all(results, outdir):
     ax.set_ylabel("excess conditional-W1 drift")
     ax.set_title("Cumulative scale-drift vs separation")
     ax.legend(fontsize=8); fig.tight_layout()
-    fig.savefig(os.path.join(outdir, "drift_vs_separation.png"), dpi=130); plt.close(fig)
+    fig.savefig(os.path.join(outdir, "figures", "stage0", "drift_vs_separation.png"), dpi=130); plt.close(fig)
 
     # 3. running couplings g(j): var_slope, kurtosis
     fig, axes = plt.subplots(1, 3, figsize=(13, 4))
@@ -171,7 +171,7 @@ def plot_all(results, outdir):
     axes[0].set_ylabel("coupling value"); axes[0].legend(fontsize=8)
     fig.suptitle("Empirical running couplings g(j)")
     fig.tight_layout()
-    fig.savefig(os.path.join(outdir, "running_couplings.png"), dpi=130); plt.close(fig)
+    fig.savefig(os.path.join(outdir, "figures", "stage0", "running_couplings.png"), dpi=130); plt.close(fig)
 
     # 4. conditional variance profiles per octave (measurement + null side by side)
     show = [r for r in results if r["role"] in ("null", "measurement")]
@@ -187,7 +187,7 @@ def plot_all(results, outdir):
         ax.set_title(f"{r['key']} ({r['role']})"); ax.legend(fontsize=7)
     fig.suptitle("Conditional variance profiles per octave (drift = octave spread)")
     fig.tight_layout()
-    fig.savefig(os.path.join(outdir, "conditional_variance_profiles.png"), dpi=130)
+    fig.savefig(os.path.join(outdir, "figures", "readouts", "conditional_variance_profiles.png"), dpi=130)
     plt.close(fig)
 
 
@@ -206,13 +206,13 @@ def main():
     ap.add_argument("--out", default="measurement")
     ap.add_argument("--quick", action="store_true")
     ap.add_argument("--plot-only", action="store_true",
-                    help="regenerate plots+npz from an existing results/<out>.json and exit")
+                    help="regenerate plots+npz from an existing results/scores/<out>.json and exit")
     args = ap.parse_args()
     if args.quick:
         args.n_parents, args.n_boot, args.max_shards = 6, 100, 4
 
     os.makedirs(RESULTS, exist_ok=True)
-    json_path = os.path.join(RESULTS, f"{args.out}.json")
+    json_path = os.path.join(RESULTS, "scores", f"{args.out}.json")
 
     if args.plot_only:
         results = json.load(open(json_path))["fields"]
@@ -236,7 +236,7 @@ def main():
 
 def _write_derived(results):
     """npz profiles + plots from the in-memory (or reloaded) results list."""
-    np.savez(os.path.join(RESULTS, "profiles.npz"),
+    np.savez(os.path.join(RESULTS, "npz", "profiles.npz"),
              **{f"{r['key']}_j{j}_{k}": np.array(v)
                 for r in results for j, m in r["moments"].items()
                 for k, v in m.items()})

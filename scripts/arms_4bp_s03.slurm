@@ -4,7 +4,7 @@
 #SBATCH --time=01:30:00
 #SBATCH --cpus-per-task=4
 #SBATCH --mem=48G
-#SBATCH --output=results/arms_4bp_s03_%j.log
+#SBATCH --output=results/joblogs/arms_4bp_s03_%j.log
 # Attempt 4b' (conditioning robustness), s_max=0.3. Pre-registered
 # log/2026-07-11-prereg-4bprime-condrobust.md, config_hash 9f56a059ad.
 REPO=/home/tersenov/software/scale-extrapolation
@@ -18,5 +18,5 @@ $PY scripts/run_two_arms.py --field gowerstreet --train-octaves 2 3 4 --gen-from
     --sample-steps 80 --nll-head --augment --cond-corrupt 0.3 \
     --data "$REPO/data_cache/tiles_pnull.npz" \
     --coords-file "$REPO/data_cache/running_couplings.json" \
-    --out "$REPO/results/arms_4bp_s0.3.npz" \
+    --out "$REPO/results/npz/arms_4bp_s0.3.npz" \
     --ckpt-dir "$REPO/data_cache/ckpt_4bp_s0.3"

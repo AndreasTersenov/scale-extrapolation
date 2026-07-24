@@ -4,7 +4,7 @@
 #SBATCH --time=01:30:00
 #SBATCH --cpus-per-task=4
 #SBATCH --mem=48G
-#SBATCH --output=results/arms_selfsim_%j.log
+#SBATCH --output=results/joblogs/arms_selfsim_%j.log
 # Step 4: the exactly scale-invariant control (no drift, in-class law). Frozen config.
 # Pre-registered log/2026-07-16-prereg-step4-selfsim.md, config_hash 3c03bded83.
 REPO=/home/tersenov/software/scale-extrapolation
@@ -18,5 +18,5 @@ $PY scripts/run_two_arms.py --field selfsim --train-octaves 2 3 4 --gen-from 4 \
     --sample-steps 80 --nll-head --augment \
     --data "$REPO/data_cache/tiles_selfsim.npz" \
     --coords-file "$REPO/data_cache/running_couplings.json" \
-    --out "$REPO/results/arms_selfsim.npz" \
+    --out "$REPO/results/npz/arms_selfsim.npz" \
     --ckpt-dir "$REPO/data_cache/ckpt_selfsim"

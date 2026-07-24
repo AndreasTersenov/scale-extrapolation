@@ -123,7 +123,7 @@ def run_leg(name, leg_idx, npz_path, out_json, with_secondary):
 
 def run_taxonomy():
     c1 = np.load(os.path.join(RES, "arms_c1_gowerstreet.npz"), allow_pickle=True)
-    aug = np.load(os.path.join(REPO, "results", "arms_aug.npz"), allow_pickle=True)
+    aug = np.load(os.path.join(REPO, "results", "npz", "arms_aug.npz"), allow_pickle=True)
     forensic = np.load(os.path.join(RES, "forensic_nllnoise.npz"), allow_pickle=True)
     c1t = np.load(os.path.join(RES, "arms_c1t_gowerstreet.npz"), allow_pickle=True)
     sets = {

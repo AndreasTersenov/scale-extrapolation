@@ -131,7 +131,7 @@ def main():
     ap.add_argument("--data", default=os.path.join(REPO, "data_cache", "tiles_pnull.npz"))
     ap.add_argument("--coords-file",
                     default=os.path.join(REPO, "data_cache", "running_couplings.json"))
-    ap.add_argument("--out", default=os.path.join(REPO, "results", "arms_generated.npz"))
+    ap.add_argument("--out", default=os.path.join(REPO, "results", "npz", "arms_generated.npz"))
     ap.add_argument("--ckpt-dir", default=os.path.join(REPO, "data_cache", "ckpt"))
     ap.add_argument("--seed", type=int, default=0)
     args = ap.parse_args()

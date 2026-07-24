@@ -129,6 +129,6 @@ ax[1].grid(alpha=0.25)
 fig.suptitle("Phase-1c gate, unit scale (truth known exactly): the Gaussian-NLL head restores the spread the ODE loses",
              fontsize=12.5)
 fig.tight_layout(rect=[0, 0, 1, 0.92])
-out = os.path.join(REPO, "results", "nllhead_gate.png")
+out = os.path.join(REPO, "results", "figures", "readouts", "nllhead_gate.png")
 fig.savefig(out, dpi=130, bbox_inches="tight")
 print("wrote", out)

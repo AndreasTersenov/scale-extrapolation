@@ -44,6 +44,6 @@ ax[0].legend(fontsize=9)
 fig.suptitle("Step 4 — the self-similar control bounds the negative claim: where its assumption holds, the method works",
              fontsize=12)
 fig.tight_layout(rect=[0, 0, 1, 0.92])
-out = os.path.join(REPO, "results", "selfsim_control.png")
+out = os.path.join(REPO, "results", "figures", "readouts", "selfsim_control.png")
 fig.savefig(out, dpi=130, bbox_inches="tight")
 print("wrote", out)

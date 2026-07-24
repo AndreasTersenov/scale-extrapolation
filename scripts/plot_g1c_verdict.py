@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 """G-1c verdict figure: the frozen bars applied to the NLL-head arms run, visually.
 
-Reads results/arms_nll_score.json (the frozen scaledrift instrument's output) and shows
+Reads results/scores/arms_nll_score.json (the frozen scaledrift instrument's output) and shows
 var_slope and kurtosis vs octave for real / arm A / arm B with bootstrap error bars.
 The bars: var_slope within 1 sigma AND kurtosis within 2 sigma at octaves 2,3,4.
 """
@@ -16,7 +16,7 @@ import matplotlib.pyplot as plt
 REPO = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 K, BLUE, VERM = "#000000", "#0072B2", "#D55E00"
 
-s = json.load(open(os.path.join(REPO, "results", "arms_nll_score.json")))
+s = json.load(open(os.path.join(REPO, "results", "scores", "arms_nll_score.json")))
 octs = [1, 2, 3, 4]
 
 
@@ -56,6 +56,6 @@ ax[1].set_title("Kurtosis check — FAILED\n(generated details far too tame; "
 fig.suptitle("G-1c verdict on the Gaussian-NLL head (10k-step checkpoint, frozen bars verbatim): STOP → reconvene",
              fontsize=12.5)
 fig.tight_layout(rect=[0, 0, 1, 0.93])
-out = os.path.join(REPO, "results", "g1c_verdict.png")
+out = os.path.join(REPO, "results", "figures", "readouts", "g1c_verdict.png")
 fig.savefig(out, dpi=130, bbox_inches="tight")
 print("wrote", out)

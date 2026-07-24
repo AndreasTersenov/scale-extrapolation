@@ -4,7 +4,7 @@
 #SBATCH --time=00:59:00
 #SBATCH --cpus-per-task=4
 #SBATCH --mem=32G
-#SBATCH --output=results/disp_sweep_%j.log
+#SBATCH --output=results/joblogs/disp_sweep_%j.log
 # Step (c): sweep the dispersion-regularizer weight lambda in {0.1,0.3,1.0} on gowerstreet
 # (FiLM arm B), early stopping at 3000 steps (~ the 2-4k dispersion window). Saves per-lambda
 # gen npz + checkpoints. Harvest: measure_generated.py per npz -> trained-octave var_slope
@@ -18,6 +18,6 @@ for lam in 0.1 0.3 1.0; do
   $PY scripts/run_two_arms.py --field gowerstreet --cond-mode film --lambda-disp $lam \
       --steps 3000 --channels 32 64 128 --batch 32 --n-heldout 64 --sample-steps 80 \
       --ckpt-dir "$R/data_cache/ckpt_disp_lam${lam}" \
-      --out "$R/results/arms_disp_lam${lam}.npz"
+      --out "$R/results/npz/arms_disp_lam${lam}.npz"
 done
 echo "DONE disp sweep"

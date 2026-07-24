@@ -24,7 +24,7 @@ REPO = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, REPO)
 from sandbox.haar import haar_level
 
-AUG = np.load(os.path.join(REPO, "results", "arms_aug.npz"))          # 4a with-noise
+AUG = np.load(os.path.join(REPO, "results", "npz", "arms_aug.npz"))          # 4a with-noise
 FOR = np.load(os.path.join(REPO, "results_p2", "forensic_nllnoise.npz"))
 C1 = np.load(os.path.join(REPO, "results_p2", "arms_c1_gowerstreet.npz"))
 

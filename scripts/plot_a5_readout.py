@@ -69,6 +69,6 @@ ax[1].grid(alpha=0.25)
 fig.suptitle("Attempt 5 (FINAL): lever bar FAILED, branch B5 — self-conditioning installs the honest attenuated conditional and makes generation worse.\n"
              "GENERATOR FROZEN at calibrated heads + measured compounding limit (pre-committed reshape).", fontsize=11)
 fig.tight_layout(rect=[0, 0, 1, 0.88])
-out = os.path.join(REPO, "results", "readout_a5.png")
+out = os.path.join(REPO, "results", "figures", "readouts", "readout_a5.png")
 fig.savefig(out, dpi=130, bbox_inches="tight")
 print("wrote", out)
