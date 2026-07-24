@@ -456,3 +456,30 @@ is unchanged.
    fields): peak-count excess +13.1%±3.1% and +14.6%±3.1% at the two scored
    thresholds, consistent in sign and magnitude across all three independent
    parent simulations of the test set.
+
+## Revision note 2 (2026-07-24, reconvene ruling R27 — this entry governs the wordings below)
+
+The takeover audit's objection 4.1 was accepted and extended: a peak COUNT is
+a joint/morphological statistic (local-maximum density rides the correlation
+structure) but does not measure WHERE peaks sit. Wherever this document says
+the residual is in the extremes' "spatial arrangement" (§5.6), that the third
+tier asks whether extremes "land where the environment demands them" (§2.3),
+or that the starlet contrast shows a position-blind statistic missing a
+positional failure (§5.6, §10), the adopted wording governs instead:
+
+- What is measured: **joint/morphological structure — a peak-count excess at
+  fixed marginal calibration** (+13.1%±3.1% / +14.6%±3.1% at the deployment
+  edge, arm A; parent-robust).
+- The starlet contrast: **even the field's most constraining marginal
+  statistic cannot see the morphological excess** — the demonstrated tier gap
+  is marginal-vs-morphological, not position-blind-vs-position-aware.
+- Literal placement (environment-conditioned peak rates, peak clustering) is
+  **untested** pending the placement experiment's instruments.
+
+And one finding promoted by the same ruling (audit 2c, accepted 4.2): the
+joint/morphological residual is **field-structure-dependent** — on the
+exact-truth sandbox the same reference arm shows a significant peak *deficit*
+(−9.4%±1.7% at the top threshold, replicated on 64 fresh fields) where the
+real field shows an *excess*. Any cure demonstrated on the sandbox licenses
+"joint structure is data-limited in this model class," never "the real-field
+excess is thereby cured" — the real-field echo measurement is load-bearing.
