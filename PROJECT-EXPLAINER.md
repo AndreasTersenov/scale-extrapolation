@@ -437,3 +437,22 @@ non-laddered pair model is a legitimate competitor — but has no defined claim
 beyond its trained resolutions. The weight-tied ladder is what converts "apply
 the rule again" into a testable scientific statement; the multi-octave promise
 is real, unrealized, and priced (the second octave's degradation is measured).
+
+---
+
+## Revision note (2026-07-24, takeover audit — compliance with the adjudicated record)
+
+Two statements in §5 are tightened to match the binding rulings; the substance
+is unchanged.
+
+1. §5.5's pass summary ("dispersion within ~5–8%, tail weight within 3–4%")
+   quotes the end-to-end numbers (dispersion 4.7%/7.9%, tail weight 3.2%/4.4%
+   for the two arms). Per the Stage-D ruling, the following attaches wherever
+   that result is stated: the conditional-level (head-conditional) tail check
+   of the reference arm passed its 15% floor with a 0.1% margin (14.9%) — the
+   end-to-end pass is unambiguous; the conditional-level margin is razor-thin.
+2. §5.6's placement residual ("biased at the ~15% level") now carries error
+   bars (results_p2/audit_peak_ci.json, computed from the committed Stage-D
+   fields): peak-count excess +13.1%±3.1% and +14.6%±3.1% at the two scored
+   thresholds, consistent in sign and magnitude across all three independent
+   parent simulations of the test set.
