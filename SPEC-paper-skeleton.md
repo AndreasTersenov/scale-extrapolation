@@ -71,3 +71,26 @@ nanmedian + SC bands + any figure regeneration (cheap jobs, prereg-exempt as
 pure re-rendering of committed numbers). One session, STOP with the skeleton
 committed for Andreas's read — no submission-ready prose polishing before his
 structural sign-off.
+
+## Addendum (2026-07-24) — updates since this spec was written
+
+1. **The starlet-ℓ1 readout is in** (log/2026-07-18-starlet-l1-readout.md +
+   reconvene ruling): §4 gains the held-out-basis exhibit (position-blind ℓ1
+   passes where the peak audit fails — the tier claim demonstrated with the
+   field's own instrument) and the taxonomy figure (starlet_l1.png); §6 gains
+   the edge-leg row (+4.0%). The instrument-findings note (upstream package
+   bugs) belongs in the reproducibility appendix as an example of auditing the
+   validators.
+2. **PROJECT-EXPLAINER.md exists** — use it as the narrative source for §1–§3
+   prose (it is codename-free by construction) and mine its §10 (the skeptic
+   questions) for the discussion section: the train/validate sample asymmetry,
+   the fractality clarification, and the principled-vs-recipe audit of the
+   fixes are referee-proofing material.
+3. **The placement experiment (SPEC-placement-test.md) is now the frontier
+   section's forward pointer** — cite it as registered future work; if its
+   readout lands before submission, it becomes a results subsection either way
+   (both branches are mechanisms).
+4. **Venue note:** the scale-blind result + moment ladder strengthen the
+   ML-methods framing; the starlet/peak demonstrations strengthen the astro
+   framing. The trade-off memo the spec requests should weigh both WITH the
+   Phase-0 audit's independent view.
