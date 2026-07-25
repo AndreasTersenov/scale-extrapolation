@@ -298,3 +298,9 @@ This is the load-bearing run and wants a full H100 (`--gpus-per-node=1`, ≤2:59
 - scripts_p2/f2_disambig.slurm: MIG, 20 min cap, inference only. F2 e2e arm A
   @7500 on the repl64 stream; reading rule pre-stated in the script docstring.
   Logged pre-submission.
+
+## 2026-07-25 — Arm D training (parity-cure prereg, R32 approved; R34 GO)
+- scripts_p2/arms_pcure_D.slurm x4 (ARM=n1s1/n8/n32/cens): MIG, 2:30 cap each,
+  unmodified runner (execution reading in the F2 readout append). Outputs
+  arms_pcure_<arm>.npz + pcure_selection_<arm>.json + dense ckpts. Logged
+  pre-submission.

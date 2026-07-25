@@ -1,0 +1,6 @@
+jax devices: [CudaDevice(id=0)]
+E0725 12:09:43.502955  392001 ptx_compiler_helpers.cc:154] *** WARNING *** Invoking ptxas with version 12.6.77, which corresponds to a CUDA version <=12.6.2. CUDA versions 12.x.y up to and including 12.6.2 miscompile certain edge cases around clamping.
+Please upgrade to CUDA 12.6.3 or newer.
+[12:09:43] config_hash=b5d98539e6 devices=[CudaDevice(id=0)]
+[12:09:43] config={"field": "sandbox", "train_octaves": [2, 3, 4], "gen_from": 4, "channels": [32, 64, 128], "cond_mode": "film", "steps": 20000, "ckpt_every": 500, "batch": 32, "lr": 0.001, "n_heldout": 64, "sample_steps": 80, "sel_K": 4, "sel_octave": 2, "data": "/home/tersenov/links/scratch/scale-extrap-p2/tiles_placement_cens.npz", "coords_file": "/home/tersenov/software/scale-extrapolation/data_cache/running_couplings_sandbox.json", "truth": "/home/tersenov/software/scale-extrapolation/results_p2/sandbox_truth_normconv.json", "out": "/home/tersenov/software/scale-extrapolation/results_p2/arms_pcure_cens.npz", "sel_out": "/home/tersenov/software/scale-extrapolation/results_p2/pcure_selection_cens.json", "ckpt_dir": "/home/tersenov/software/scale-extrapolation/data_cache/ckpt_pcure_cens", "seed": 0}
+[12:09:46] sandbox: 2576 train / 32 val / 32 test; selection reference oct2 vs=1.070 kurt=4.917
