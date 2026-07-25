@@ -18,6 +18,9 @@ $PY -c "import jax; print('jax devices:', jax.devices())" || exit 1
 
 case "$ARM" in
   n1s1) DATA="$REPO/data_cache/tiles_sandbox.npz"; SEED=1 ;;
+  n1s2) DATA="$REPO/data_cache/tiles_sandbox.npz"; SEED=2 ;;
+  n1s3) DATA="$REPO/data_cache/tiles_sandbox.npz"; SEED=3 ;;
+  n1s4) DATA="$REPO/data_cache/tiles_sandbox.npz"; SEED=4 ;;
   n8)   DATA="$SCRATCH/tiles_placement_n8.npz"; SEED=0 ;;
   n32)  DATA="$SCRATCH/tiles_placement_n32.npz"; SEED=0 ;;
   cens) DATA="$SCRATCH/tiles_placement_cens.npz"; SEED=0 ;;

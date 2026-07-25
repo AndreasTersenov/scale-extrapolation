@@ -311,3 +311,8 @@ This is the load-bearing run and wants a full H100 (`--gpus-per-node=1`, ≤2:59
   MIG, 90 min cap, val T_coef curves + F2-mode texture, all four arms.
 - 17437678 (curves) FAILED: same n32 d4_augment OOM on MIG; resubmitting on a
   full H100 (the 17437389 pattern).
+
+## 2026-07-25 — Program close (R35 orders 7a/7b; pre-stated in the readout log)
+- pcure_confirm.slurm: full H100, 30 min, n32@joint-pick test e2e+hc.
+- arms_pcure_D.slurm ARM=n1s2/n1s3/n1s4: MIG, seed mini-ensemble (option b,
+  taken). All logged pre-submission.
