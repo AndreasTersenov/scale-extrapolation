@@ -1,0 +1,8 @@
+jax devices: [CudaDevice(id=0)]
+E0725 12:00:38.789550  377352 ptx_compiler_helpers.cc:154] *** WARNING *** Invoking ptxas with version 12.6.77, which corresponds to a CUDA version <=12.6.2. CUDA versions 12.x.y up to and including 12.6.2 miscompile certain edge cases around clamping.
+Please upgrade to CUDA 12.6.3 or newer.
+[12:01:47] octave 4 assembled
+[12:02:55] octave 3 assembled
+[12:04:03] octave 2 assembled
+[12:05:00] octave 1 assembled
+[12:05:00] disambig SAMPLE done -> f2_disambig_gen.npz

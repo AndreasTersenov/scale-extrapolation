@@ -293,3 +293,8 @@ This is the load-bearing run and wants a full H100 (`--gpus-per-node=1`, ≤2:59
   e2e+hc at committed picks + gowerstreet echo. Logged pre-submission.
 - 17424070 FAILED at arm B (full-batch FiLM cond vs per-group subset; arm A +
   identity gate clean); fix committed, resubmitting.
+
+## 2026-07-25 — F2 disambiguation (R34 order 1)
+- scripts_p2/f2_disambig.slurm: MIG, 20 min cap, inference only. F2 e2e arm A
+  @7500 on the repl64 stream; reading rule pre-stated in the script docstring.
+  Logged pre-submission.
