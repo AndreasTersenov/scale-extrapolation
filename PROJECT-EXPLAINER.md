@@ -483,3 +483,104 @@ exact-truth sandbox the same reference arm shows a significant peak *deficit*
 real field shows an *excess*. Any cure demonstrated on the sandbox licenses
 "joint structure is data-limited in this model class," never "the real-field
 excess is thereby cured" — the real-field echo measurement is load-bearing.
+
+---
+
+## 11. Epilogue — what the audit found next: the lattice saga and the schedule
+*(appended 2026-07-25, after the closing week of experiments; same conventions —
+no internal codenames, every number from a pre-registered committed measurement)*
+
+### 11.1 The question we asked, and how it refused to be answered
+
+After the blind extrapolation test, one audit failure remained open: the
+generator slightly over-produces extreme peaks on the real field even though
+every marginal statistic is calibrated. We hypothesized this was the moment
+ladder's next rung — joint structure starving for data as variance and tails
+had — and designed a causal experiment to test it. The experiment's own
+discipline intervened twice before any training compute was spent. First, its
+instruments (statistics sensitive only to peak POSITIONS, not counts) had to
+prove they could see the known residual — and they could not: on the
+exact-truth sandbox, the residual is not positional at all. The experiment
+stopped at its own gate. Second, the gate's consolation instrument — built
+merely to catch grid artifacts as a confound — found something real: generated
+fields prefer to place their peaks at particular pixel PARITIES (odd-odd
+positions ~30% of the time versus the correct 25%). A checkerboard bias,
+invisible to power spectra, marginals, kurtosis, peak counts, and the starlet
+ℓ1 alike. A fourth tier of failure, discovered by the instrument nobody
+expected to matter.
+
+### 11.2 The mechanism hunt (zero training, all measurements)
+
+Cheap forensic measurements localized the artifact completely. It lives in the
+wavelet detail coefficients as small violations of the field's discrete
+symmetry: the coefficient channels carry nonzero MEANS (the data's are zero by
+symmetry), plus a second, subtler layer — the horizontal and vertical channels
+are CORRELATED with each other, which isotropy forbids. Transplant surgery
+proved causality (swap only the finest octave's coefficients and the
+checkerboard follows). The defect predates the final model: it was always
+present in the mean pathway, and the old variance head's noise bath had HIDDEN
+it — the same instrument artifact that once faked an "information limit" had
+also been concealing a symmetry defect. And the decisive measurement: the
+defect is an optimization TRANSIENT. It peaks mid-training and fades on its
+own — but our checkpoint selection, tuned to marginal statistics, had picked
+the training moment where the defect is at its MAXIMUM.
+
+### 11.3 The schedule: the campaign's sharpest generalization
+
+This upgraded the moment ladder from an ordering to a SCHEDULE: different
+statistical properties become healthy at different training times — tails
+early, lattice symmetry late — and at modest data sizes the healthy windows
+need not overlap. We then demonstrated the bind mechanically: at the standard
+data size, NO single checkpoint satisfies both the tail bars and the symmetry
+bar; a selection rule tuned to one tier provably harvests another tier at its
+worst moment (both defect layers peak exactly at the marginally-optimal
+checkpoint, at every data size tested). Model selection is not bookkeeping;
+it is part of the model.
+
+### 11.4 The cures, in ascending principledness
+
+1. *Subtract the offsets* (a per-channel constant, fitted on validation data):
+   free, costs no marginal calibration, halves the defect — and its residual
+   exposed the second (correlation) layer that no constant can fix.
+2. *Restore the symmetry exactly*: sample through a random element of the
+   field's symmetry group — transform the conditioning by a random
+   flip/rotation $g$, generate, transform back:
+   $d = g^{-1}\, f_\theta(g \cdot c)$. The sampling ensemble is then
+   equivariant BY CONSTRUCTION: every symmetry-violating statistic (channel
+   means, cross-channel correlation, pixel parity) is annihilated because some
+   group element flips its sign, while every symmetry-invariant statistic —
+   all the calibration bars — is provably untouched. Same cost per sample,
+   zero training. Verified clean (one component sat exactly at the detection
+   bar; a replication resolved it as noise). This sampler now SHIPS as the
+   generator's sampling mode; the constant correction survives as the paper's
+   ablation.
+
+### 11.5 The data question, answered honestly
+
+Does more data merge the healthy windows? The measured answer is careful:
+abundant data lowers the late-training defect plateau, and at 32× data the
+joint defect reached its lowest test value of the whole campaign (3.48 against
+a bar of 3.0) — a joint-viable window is PROXIMATE but not demonstrated. Two
+honesty events shaped this verdict: the built-in seed replication revealed
+that our single-seed baseline had been the WORST of five seeds (seed variance
+comparable to the data effect — retiring the headline ratios), and the scoring
+code's first version was caught implementing a looser rule than pre-stated,
+and corrected BEFORE adjudication. Meanwhile the one decision-grade data
+result is a design directive: INDEPENDENT SIMULATIONS beat multiple
+realizations per condition as the currency of joint structure (measured at
+1.4×) — which fixes the data strategy for the fast-simulation application of
+§8: buy independent initial conditions first.
+
+### 11.6 What remains, and what this epilogue means
+
+One residual survives everything: on the real field (not the sandbox), peak
+SPACINGS carry a small, parent-consistent signal (T≈4) that outlived the
+variance-head removal, the constant correction, and exact symmetrization. It
+is the project's one genuinely unexplained statistic — the named frontier.
+
+The meta-lesson of the epilogue mirrors the whole project: the audit found a
+defect nobody suspected, in coordinates nobody was watching, hidden by an
+instrument artifact, harvested by our own selection rule — and the cure with
+the best guarantees was not a bigger model or more data but a SYMMETRY
+RESTORED EXACTLY. Validation machinery that is smarter than the generator is
+not overhead; it is where the discoveries come from.
