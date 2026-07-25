@@ -1,0 +1,32 @@
+jax devices: [CudaDevice(id=0)]
+E0725 12:53:22.015415 1611091 ptx_compiler_helpers.cc:154] *** WARNING *** Invoking ptxas with version 12.6.77, which corresponds to a CUDA version <=12.6.2. CUDA versions 12.x.y up to and including 12.6.2 miscompile certain edge cases around clamping.
+Please upgrade to CUDA 12.6.3 or newer.
+[12:54:58] n1s1: val curve done (pick=5000)
+[12:58:15] n1s1: F2-mode test e2e at pick 5000 done
+[12:59:27] n8: val curve done (pick=10000)
+[13:00:35] n8: F2-mode test e2e at pick 10000 done
+W0725 13:00:50.212799 1611091 bfc_allocator.cc:502] Allocator (GPU_0_bfc) ran out of memory trying to allocate 5.03GiB (rounded to 5402263552)requested by op 
+If the cause is memory fragmentation maybe the environment variable 'TF_GPU_ALLOCATOR=cuda_malloc_async' will improve the situation. 
+Current allocation summary follows.
+Current allocation summary follows.
+W0725 13:00:50.213000 1611091 bfc_allocator.cc:513] *********************************************************************_______________________________
+E0725 13:00:50.213024 1611091 pjrt_stream_executor_client.cc:2091] Execution of replica 0 failed: RESOURCE_EXHAUSTED: Out of memory while trying to allocate 5.03GiB. [tf-allocator-allocation-error='']
+Traceback (most recent call last):
+  File "/home/tersenov/software/scale-extrapolation/scripts_p2/pcure_curves.py", line 69, in <module>
+    std = std_from(train)
+          ^^^^^^^^^^^^^^^
+  File "/home/tersenov/software/scale-extrapolation/scripts_p2/pcure_curves.py", line 54, in std_from
+    _, std_by_j = field_to_octaves(d4_augment(train), [2, 3, 4])
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tersenov/software/scale-extrapolation/wfm/dataset.py", line 46, in field_to_octaves
+    fields = normalize_tiles(tiles)
+             ^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tersenov/software/scale-extrapolation/wfm/dataset.py", line 22, in normalize_tiles
+    return (t - m) / s
+           ~~~~~~^~~~~
+  File "/home/tersenov/wl-challenge-env/lib/python3.11/site-packages/jax/_src/numpy/array_methods.py", line 609, in deferring_binary_op
+    return binary_op(*args)
+           ^^^^^^^^^^^^^^^^
+jax.errors.JaxRuntimeError: RESOURCE_EXHAUSTED: Out of memory while trying to allocate 5.03GiB.
+--------------------
+For simplicity, JAX has removed its internal frames from the traceback of the following exception. Set JAX_TRACEBACK_FILTERING=off to include these.

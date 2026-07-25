@@ -304,3 +304,10 @@ This is the load-bearing run and wants a full H100 (`--gpus-per-node=1`, ≤2:59
   unmodified runner (execution reading in the F2 readout append). Outputs
   arms_pcure_<arm>.npz + pcure_selection_<arm>.json + dense ckpts. Logged
   pre-submission.
+- 17436881 (n32) FAILED: OOM on the 20GB MIG slice (d4_augment of 10304 tiles
+  on device). Resubmitting on a full H100 (<=3h keeps b1) — the one gate
+  resubmission for this arm.
+- 17437389 (n32 full-H100 resubmit) COMPLETED 20:18. pcure_curves.slurm:
+  MIG, 90 min cap, val T_coef curves + F2-mode texture, all four arms.
+- 17437678 (curves) FAILED: same n32 d4_augment OOM on MIG; resubmitting on a
+  full H100 (the 17437389 pattern).
