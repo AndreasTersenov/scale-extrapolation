@@ -285,3 +285,5 @@ This is the load-bearing run and wants a full H100 (`--gpus-per-node=1`, ≤2:59
   Val e2e: sandbox arm A all 40 ckpts, arm B 2500-stride, gowerstreet A@16000;
   hc channel means at committed picks; equivalence gate inline. Outputs
   fj_val_gen.npz + fj_val_hc.json. Logged pre-submission.
+- scripts_p2/fj_sample_phase2.slurm: MIG, 30 min cap, phase 2 (corrected test
+  gens + joint-pick gens + gowerstreet echo). Logged pre-submission.
