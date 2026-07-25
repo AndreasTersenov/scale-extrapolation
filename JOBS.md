@@ -287,3 +287,7 @@ This is the load-bearing run and wants a full H100 (`--gpus-per-node=1`, ≤2:59
   fj_val_gen.npz + fj_val_hc.json. Logged pre-submission.
 - scripts_p2/fj_sample_phase2.slurm: MIG, 30 min cap, phase 2 (corrected test
   gens + joint-pick gens + gowerstreet echo). Logged pre-submission.
+
+## 2026-07-25 — Arm F2 sample (R33; prereg 2026-07-25-f2-groupavg)
+- scripts_p2/f2_sample.slurm: MIG, 30 min cap, inference only. Group-averaged
+  e2e+hc at committed picks + gowerstreet echo. Logged pre-submission.
