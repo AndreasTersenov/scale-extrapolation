@@ -279,3 +279,9 @@ This is the load-bearing run and wants a full H100 (`--gpus-per-node=1`, ≤2:59
   (e2e from committed ckpt_c1t_sandbox dense checkpoints, arms A+B, steps
   2500..20000 by 2500, 32 test tiles). Output results_p2/parity_ckpt_gen.npz +
   job log. Logged pre-submission.
+
+## 2026-07-25 — Arms F/J sample phase 1 (R32 GO)
+- scripts_p2/fj_sample_phase1.slurm: MIG h100_20gb, 59 min cap, inference only.
+  Val e2e: sandbox arm A all 40 ckpts, arm B 2500-stride, gowerstreet A@16000;
+  hc channel means at committed picks; equivalence gate inline. Outputs
+  fj_val_gen.npz + fj_val_hc.json. Logged pre-submission.

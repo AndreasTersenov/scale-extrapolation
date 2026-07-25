@@ -1,0 +1,10 @@
+jax devices: [CudaDevice(id=0)]
+E0725 06:34:10.587689  846609 ptx_compiler_helpers.cc:154] *** WARNING *** Invoking ptxas with version 12.6.77, which corresponds to a CUDA version <=12.6.2. CUDA versions 12.x.y up to and including 12.6.2 miscompile certain edge cases around clamping.
+Please upgrade to CUDA 12.6.3 or newer.
+[06:34:48] sandbox A @500: val e2e [32s]
+[06:34:56] sandbox A @1000: val e2e [8s]
+[06:35:05] sandbox A @1500: val e2e [8s]
+[06:35:13] sandbox A @2000: val e2e [9s]
+[06:35:22] sandbox A @2500: val e2e [8s]
+[06:35:30] sandbox A @3000: val e2e [8s]
+[06:35:38] sandbox A @3500: val e2e [8s]
