@@ -1,0 +1,111 @@
+{
+ "joint_pick": 17500,
+ "T_coef_oct1_test": 3.4807643813883042,
+ "defect_at_bar_band": false,
+ "marginals": {
+  "head-conditional": {
+   "2": {
+    "var_slope": {
+     "value": 1.0257430119999447,
+     "rel_err": 0.04160627823931581,
+     "bar": 0.1,
+     "pass": true,
+     "at_bar_band": false
+    },
+    "kurtosis": {
+     "value": 4.3273939541780075,
+     "rel_err": 0.11993012947028828,
+     "bar": 0.15,
+     "pass": true,
+     "at_bar_band": false
+    }
+   },
+   "3": {
+    "var_slope": {
+     "value": 0.8971928523015894,
+     "rel_err": 0.024146284789936637,
+     "bar": 0.1,
+     "pass": true,
+     "at_bar_band": false
+    },
+    "kurtosis": {
+     "value": 2.8118494076374914,
+     "rel_err": 0.17308926422896553,
+     "bar": 0.17540391779722037,
+     "pass": true,
+     "at_bar_band": true
+    }
+   },
+   "4": {
+    "var_slope": {
+     "value": 0.6499133023291123,
+     "rel_err": 0.13859114576988976,
+     "bar": 0.17252446372092772,
+     "pass": true,
+     "at_bar_band": false
+    },
+    "kurtosis": {
+     "value": 1.7549190199320739,
+     "rel_err": 0.16508190198223868,
+     "bar": 0.28356739229238437,
+     "pass": true,
+     "at_bar_band": false
+    }
+   }
+  },
+  "end-to-end": {
+   "2": {
+    "var_slope": {
+     "value": 1.0266449489730765,
+     "rel_err": 0.040763561572118676,
+     "bar": 0.1,
+     "pass": true,
+     "at_bar_band": false
+    },
+    "kurtosis": {
+     "value": 4.547511419155357,
+     "rel_err": 0.07516444579202905,
+     "bar": 0.25057425134745803,
+     "pass": true,
+     "at_bar_band": false
+    }
+   },
+   "3": {
+    "var_slope": {
+     "value": 0.8850318769030878,
+     "rel_err": 0.03737346665252327,
+     "bar": 0.1,
+     "pass": true,
+     "at_bar_band": false
+    },
+    "kurtosis": {
+     "value": 3.269104074904443,
+     "rel_err": 0.0386194763671253,
+     "bar": 0.33832307675479684,
+     "pass": true,
+     "at_bar_band": false
+    }
+   },
+   "4": {
+    "var_slope": {
+     "value": 0.6925073662570734,
+     "rel_err": 0.08213607141812793,
+     "bar": 0.1364868837164084,
+     "pass": true,
+     "at_bar_band": false
+    },
+    "kurtosis": {
+     "value": 1.805666579987932,
+     "rel_err": 0.1409383057024975,
+     "bar": 0.26496955586425525,
+     "pass": true,
+     "at_bar_band": false
+    }
+   }
+  }
+ },
+ "marginals_all_pass": true,
+ "any_marginal_at_bar_band": true,
+ "failing": [],
+ "verdict": "NOT-CONFIRMED"
+}

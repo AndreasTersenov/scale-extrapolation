@@ -4,3 +4,98 @@ Please upgrade to CUDA 12.6.3 or newer.
 [14:05:58] config_hash=41db45af62 devices=[CudaDevice(id=0)]
 [14:05:58] config={"field": "sandbox", "train_octaves": [2, 3, 4], "gen_from": 4, "channels": [32, 64, 128], "cond_mode": "film", "steps": 20000, "ckpt_every": 500, "batch": 32, "lr": 0.001, "n_heldout": 64, "sample_steps": 80, "sel_K": 4, "sel_octave": 2, "data": "/home/tersenov/software/scale-extrapolation/data_cache/tiles_sandbox.npz", "coords_file": "/home/tersenov/software/scale-extrapolation/data_cache/running_couplings_sandbox.json", "truth": "/home/tersenov/software/scale-extrapolation/results_p2/sandbox_truth_normconv.json", "out": "/home/tersenov/software/scale-extrapolation/results_p2/arms_pcure_n1s3.npz", "sel_out": "/home/tersenov/software/scale-extrapolation/results_p2/pcure_selection_n1s3.json", "ckpt_dir": "/home/tersenov/software/scale-extrapolation/data_cache/ckpt_pcure_n1s3", "seed": 3}
 [14:05:59] sandbox: 322 train / 32 val / 32 test; selection reference oct2 vs=1.070 kurt=4.917
+[14:08:50] arm A: trained, loss 2.521->1.0580
+[14:09:02] arm A sel @500: vs=0.545 kurt=6.03 score=4.910
+[14:09:10] arm A sel @1000: vs=0.865 kurt=7.45 score=3.431
+[14:09:19] arm A sel @1500: vs=0.945 kurt=4.19 score=1.170
+[14:09:27] arm A sel @2000: vs=0.950 kurt=3.43 score=2.020
+[14:09:35] arm A sel @2500: vs=0.960 kurt=3.38 score=2.082
+[14:09:44] arm A sel @3000: vs=0.991 kurt=3.88 score=1.411
+[14:09:52] arm A sel @3500: vs=1.003 kurt=4.11 score=1.092
+[14:10:01] arm A sel @4000: vs=1.040 kurt=4.32 score=0.804
+[14:10:09] arm A sel @4500: vs=1.020 kurt=4.36 score=0.751
+[14:10:17] arm A sel @5000: vs=0.986 kurt=3.71 score=1.642
+[14:10:26] arm A sel @5500: vs=1.006 kurt=3.92 score=1.353
+[14:10:34] arm A sel @6000: vs=1.000 kurt=3.96 score=1.301
+[14:10:42] arm A sel @6500: vs=0.974 kurt=3.93 score=1.336
+[14:10:51] arm A sel @7000: vs=1.017 kurt=4.09 score=1.121
+[14:10:59] arm A sel @7500: vs=0.992 kurt=3.86 score=1.436
+[14:11:07] arm A sel @8000: vs=0.995 kurt=4.08 score=1.141
+[14:11:16] arm A sel @8500: vs=1.001 kurt=3.96 score=1.295
+[14:11:24] arm A sel @9000: vs=1.045 kurt=4.32 score=0.808
+[14:11:32] arm A sel @9500: vs=1.002 kurt=3.94 score=1.329
+[14:11:41] arm A sel @10000: vs=1.034 kurt=4.42 score=0.678
+[14:11:49] arm A sel @10500: vs=0.974 kurt=3.88 score=1.406
+[14:11:58] arm A sel @11000: vs=1.032 kurt=4.43 score=0.654
+[14:12:06] arm A sel @11500: vs=1.025 kurt=4.09 score=1.119
+[14:12:14] arm A sel @12000: vs=1.021 kurt=4.21 score=0.958
+[14:12:23] arm A sel @12500: vs=1.015 kurt=4.09 score=1.125
+[14:12:31] arm A sel @13000: vs=1.020 kurt=4.36 score=0.760
+[14:12:40] arm A sel @13500: vs=1.023 kurt=4.21 score=0.959
+[14:12:48] arm A sel @14000: vs=1.016 kurt=4.20 score=0.972
+[14:12:56] arm A sel @14500: vs=1.029 kurt=4.16 score=1.032
+[14:13:04] arm A sel @15000: vs=1.028 kurt=4.10 score=1.109
+[14:13:13] arm A sel @15500: vs=1.013 kurt=4.12 score=1.081
+[14:13:21] arm A sel @16000: vs=1.018 kurt=4.16 score=1.030
+[14:13:30] arm A sel @16500: vs=1.013 kurt=3.90 score=1.378
+[14:13:38] arm A sel @17000: vs=1.018 kurt=4.05 score=1.182
+[14:13:47] arm A sel @17500: vs=1.024 kurt=4.21 score=0.960
+[14:13:55] arm A sel @18000: vs=1.014 kurt=3.95 score=1.312
+[14:14:03] arm A sel @18500: vs=1.012 kurt=4.00 score=1.249
+[14:14:11] arm A sel @19000: vs=1.025 kurt=4.15 score=1.046
+[14:14:20] arm A sel @19500: vs=1.021 kurt=4.01 score=1.236
+[14:14:28] arm A sel @20000: vs=1.014 kurt=4.11 score=1.094
+[14:14:28] arm A SELECTED checkpoint: step 11000 (score 0.654)
+[14:14:34] arm A TEST oct2 @sel: vs=1.025 kurt=4.28 q999=5.46
+[14:14:39] arm A TEST oct3 @sel: vs=0.871 kurt=2.97 q999=4.89
+[14:14:44] arm A TEST oct4 @sel: vs=0.757 kurt=2.26 q999=4.55
+[14:15:06] arm A TEST oct1 @sel: vs=1.053 kurt=4.33 q999=5.38
+[14:15:43] arm A: e2e recursion from selected ckpt done [584s]
+[14:18:16] arm B: trained, loss 2.798->1.0550
+[14:18:27] arm B sel @500: vs=0.512 kurt=5.61 score=5.219
+[14:18:38] arm B sel @1000: vs=0.817 kurt=7.01 score=2.832
+[14:18:49] arm B sel @1500: vs=1.031 kurt=4.72 score=0.370
+[14:18:59] arm B sel @2000: vs=0.935 kurt=3.56 score=1.841
+[14:19:10] arm B sel @2500: vs=0.973 kurt=3.74 score=1.601
+[14:19:21] arm B sel @3000: vs=1.060 kurt=4.56 score=0.480
+[14:19:32] arm B sel @3500: vs=1.024 kurt=4.27 score=0.872
+[14:19:43] arm B sel @4000: vs=1.076 kurt=4.76 score=0.212
+[14:19:53] arm B sel @4500: vs=0.975 kurt=4.16 score=1.032
+[14:20:04] arm B sel @5000: vs=0.994 kurt=4.03 score=1.196
+[14:20:14] arm B sel @5500: vs=1.002 kurt=3.98 score=1.268
+[14:20:26] arm B sel @6000: vs=1.020 kurt=4.28 score=0.858
+[14:20:36] arm B sel @6500: vs=1.018 kurt=4.45 score=0.634
+[14:20:47] arm B sel @7000: vs=1.020 kurt=4.27 score=0.877
+[14:20:58] arm B sel @7500: vs=1.004 kurt=4.02 score=1.217
+[14:21:08] arm B sel @8000: vs=1.053 kurt=4.64 score=0.382
+[14:21:19] arm B sel @8500: vs=1.022 kurt=4.12 score=1.081
+[14:21:31] arm B sel @9000: vs=1.006 kurt=4.07 score=1.151
+[14:21:41] arm B sel @9500: vs=1.007 kurt=4.18 score=1.001
+[14:21:52] arm B sel @10000: vs=1.043 kurt=4.59 score=0.437
+[14:22:03] arm B sel @10500: vs=1.017 kurt=4.41 score=0.682
+[14:22:13] arm B sel @11000: vs=1.058 kurt=4.73 score=0.255
+[14:22:24] arm B sel @11500: vs=1.035 kurt=4.31 score=0.829
+[14:22:34] arm B sel @12000: vs=1.018 kurt=4.32 score=0.813
+[14:22:46] arm B sel @12500: vs=1.025 kurt=4.25 score=0.909
+[14:22:57] arm B sel @13000: vs=1.053 kurt=4.63 score=0.395
+[14:23:07] arm B sel @13500: vs=1.022 kurt=4.20 score=0.974
+[14:23:18] arm B sel @14000: vs=1.030 kurt=4.29 score=0.848
+[14:23:28] arm B sel @14500: vs=1.047 kurt=4.40 score=0.702
+[14:23:39] arm B sel @15000: vs=1.037 kurt=4.23 score=0.928
+[14:23:51] arm B sel @15500: vs=1.022 kurt=4.26 score=0.896
+[14:24:01] arm B sel @16000: vs=1.028 kurt=4.26 score=0.893
+[14:24:12] arm B sel @16500: vs=1.027 kurt=4.07 score=1.148
+[14:24:22] arm B sel @17000: vs=1.021 kurt=4.10 score=1.101
+[14:24:33] arm B sel @17500: vs=1.020 kurt=4.11 score=1.098
+[14:24:44] arm B sel @18000: vs=1.023 kurt=4.03 score=1.204
+[14:24:54] arm B sel @18500: vs=1.017 kurt=4.15 score=1.046
+[14:25:06] arm B sel @19000: vs=1.027 kurt=4.20 score=0.972
+[14:25:17] arm B sel @19500: vs=1.022 kurt=4.06 score=1.163
+[14:25:27] arm B sel @20000: vs=1.018 kurt=4.11 score=1.096
+[14:25:27] arm B SELECTED checkpoint: step 4000 (score 0.212)
+[14:25:33] arm B TEST oct2 @sel: vs=1.078 kurt=4.86 q999=5.66
+[14:25:37] arm B TEST oct3 @sel: vs=0.899 kurt=3.26 q999=4.86
+[14:25:40] arm B TEST oct4 @sel: vs=0.764 kurt=2.28 q999=4.43
+[14:25:57] arm B TEST oct1 @sel: vs=1.107 kurt=5.35 q999=5.70
+[14:26:37] arm B: e2e recursion from selected ckpt done [1239s]
+[14:26:37] wrote /home/tersenov/software/scale-extrapolation/results_p2/arms_pcure_n1s3.npz and /home/tersenov/software/scale-extrapolation/results_p2/pcure_selection_n1s3.json in 1239s config_hash=41db45af62
