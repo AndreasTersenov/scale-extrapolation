@@ -1,3 +1,51 @@
 jax devices: [CudaDevice(id=0)]
 E0725 07:37:10.444066 1278892 ptx_compiler_helpers.cc:154] *** WARNING *** Invoking ptxas with version 12.6.77, which corresponds to a CUDA version <=12.6.2. CUDA versions 12.x.y up to and including 12.6.2 miscompile certain edge cases around clamping.
 Please upgrade to CUDA 12.6.3 or newer.
+[07:38:03] identity gate: exact (0.0)
+[07:43:17] F2 sandbox A@7500: group-averaged e2e+hc done
+Traceback (most recent call last):
+  File "/home/tersenov/software/scale-extrapolation/scripts_p2/f2_sample.py", line 128, in <module>
+    gen = gen_groupavg(model.apply, params, coarse4, 4,
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tersenov/software/scale-extrapolation/scripts_p2/f2_sample.py", line 91, in gen_groupavg
+    coarse = assemble_group_assigned(coarse, model_fn, assign)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tersenov/software/scale-extrapolation/scripts_p2/f2_group.py", line 58, in assemble_group_assigned
+    sub = assemble_in_frame(coarse[sel], model_fn, g)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tersenov/software/scale-extrapolation/scripts_p2/f2_group.py", line 39, in assemble_in_frame
+    det = model_fn(c_g)
+          ^^^^^^^^^^^^^
+  File "/home/tersenov/software/scale-extrapolation/scripts_p2/f2_sample.py", line 83, in model_fn
+    det_n = sample_tbase(apply_fn, params, _k, c_g, 3, n_steps=80,
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tersenov/software/scale-extrapolation/arms_p2/c1t/flow.py", line 84, in sample_tbase
+    x1, _ = jax.lax.scan(heun, x0, ts)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tersenov/software/scale-extrapolation/arms_p2/c1t/flow.py", line 80, in heun
+    v1 = vf(t, x)
+         ^^^^^^^^
+  File "/home/tersenov/software/scale-extrapolation/arms_p2/c1t/flow.py", line 77, in vf
+    return apply_fn({"params": params}, x, jnp.full((B,), t), coarse, cond_vec)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tersenov/software/scale-extrapolation/wfm/model.py", line 78, in __call__
+    h = inject(h, ch)
+        ^^^^^^^^^^^^^
+  File "/home/tersenov/software/scale-extrapolation/wfm/model.py", line 71, in inject
+    h = h * (1.0 + g[:, None, None, :]) + b[:, None, None, :]
+        ~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  File "/home/tersenov/wl-challenge-env/lib/python3.11/site-packages/jax/_src/numpy/array_methods.py", line 1146, in op
+    return getattr(self.aval, f"_{name}")(self, *args)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tersenov/wl-challenge-env/lib/python3.11/site-packages/jax/_src/numpy/array_methods.py", line 609, in deferring_binary_op
+    return binary_op(*args)
+           ^^^^^^^^^^^^^^^^
+  File "/home/tersenov/wl-challenge-env/lib/python3.11/site-packages/jax/_src/numpy/ufunc_api.py", line 182, in __call__
+    return call(*args)
+           ^^^^^^^^^^^
+  File "/home/tersenov/wl-challenge-env/lib/python3.11/site-packages/jax/_src/numpy/ufuncs.py", line 1281, in multiply
+    return lax.mul(x, y) if x.dtype != bool else lax.bitwise_and(x, y)
+           ^^^^^^^^^^^^^
+TypeError: mul got incompatible shapes for broadcasting: (5, 8, 8, 32), (32, 1, 1, 32).
+--------------------
+For simplicity, JAX has removed its internal frames from the traceback of the following exception. Set JAX_TRACEBACK_FILTERING=off to include these.

@@ -77,11 +77,15 @@ def gen_groupavg(apply_fn, params, coarse, j_start, key, std, grng,
                  cond_fn=None, identity_only=False):
     for j in range(j_start, 0, -1):
         key, k = jax.random.split(key)
-        cond = None if cond_fn is None else cond_fn(j)
 
-        def model_fn(c_g, _k=k, _cond=cond, _s=std[j]):
+        def model_fn(c_g, _k=k, _j=j, _s=std[j]):
+            # cond sized to the per-group SUBSET (the full-batch closure broke
+            # arm B's first run — job 17424070, fixed here): the vector is the
+            # same for every field, so broadcasting to c_g's batch is exact.
+            cond = None if cond_fn is None else jnp.broadcast_to(
+                cond_fn(_j)[:1], (c_g.shape[0], cond_fn(_j).shape[1]))
             det_n = sample_tbase(apply_fn, params, _k, c_g, 3, n_steps=80,
-                                 cond_vec=_cond)
+                                 cond_vec=cond)
             return det_n * _s
 
         if identity_only:
@@ -133,13 +137,13 @@ for arm in ("A", "B"):
     hc = {}
     for j in (2, 3, 4):
         det_real, coarse = haar.octave_pair(test_n, j)
-        cv = None if arm == "A" else jnp.broadcast_to(
-            jnp.asarray(coords[j], jnp.float32), (coarse.shape[0], 2))
         key, k = jax.random.split(key)
 
-        def model_fn(c_g, _k=k, _cv=cv):
+        def model_fn(c_g, _k=k, _j=j, _arm=arm):
+            cv = None if _arm == "A" else jnp.broadcast_to(
+                jnp.asarray(coords[_j], jnp.float32), (c_g.shape[0], 2))
             return sample_tbase(model.apply, params, _k, c_g, 3, n_steps=80,
-                                cond_vec=_cv)
+                                cond_vec=cv)
 
         assign = grng.integers(0, len(D4_ELEMENTS), coarse.shape[0])
         f = assemble_group_assigned(coarse, model_fn, assign)

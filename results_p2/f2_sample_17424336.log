@@ -1,0 +1,8 @@
+jax devices: [CudaDevice(id=0)]
+E0725 07:45:44.396334 1264040 ptx_compiler_helpers.cc:154] *** WARNING *** Invoking ptxas with version 12.6.77, which corresponds to a CUDA version <=12.6.2. CUDA versions 12.x.y up to and including 12.6.2 miscompile certain edge cases around clamping.
+Please upgrade to CUDA 12.6.3 or newer.
+[07:46:37] identity gate: exact (0.0)
+[07:51:45] F2 sandbox A@7500: group-averaged e2e+hc done
+[07:55:46] F2 sandbox B@2500: group-averaged e2e+hc done
+[07:57:23] F2 gowerstreet A@16000: group-averaged e2e done
+[07:57:23] F2 SAMPLE done -> f2_test_gen.npz + f2_test_hc.json

@@ -291,3 +291,5 @@ This is the load-bearing run and wants a full H100 (`--gpus-per-node=1`, ≤2:59
 ## 2026-07-25 — Arm F2 sample (R33; prereg 2026-07-25-f2-groupavg)
 - scripts_p2/f2_sample.slurm: MIG, 30 min cap, inference only. Group-averaged
   e2e+hc at committed picks + gowerstreet echo. Logged pre-submission.
+- 17424070 FAILED at arm B (full-batch FiLM cond vs per-group subset; arm A +
+  identity gate clean); fix committed, resubmitting.
