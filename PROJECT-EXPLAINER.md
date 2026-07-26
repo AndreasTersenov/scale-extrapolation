@@ -486,101 +486,139 @@ excess is thereby cured" — the real-field echo measurement is load-bearing.
 
 ---
 
-## 11. Epilogue — what the audit found next: the lattice saga and the schedule
-*(appended 2026-07-25, after the closing week of experiments; same conventions —
+## 11. Epilogue — the lattice saga and the schedule
+*(appended 2026-07-25, integrated with the main text 2026-07-26; same conventions —
 no internal codenames, every number from a pre-registered committed measurement)*
 
 ### 11.1 The question we asked, and how it refused to be answered
 
-After the blind extrapolation test, one audit failure remained open: the
-generator slightly over-produces extreme peaks on the real field even though
-every marginal statistic is calibrated. We hypothesized this was the moment
-ladder's next rung — joint structure starving for data as variance and tails
-had — and designed a causal experiment to test it. The experiment's own
-discipline intervened twice before any training compute was spent. First, its
-instruments (statistics sensitive only to peak POSITIONS, not counts) had to
-prove they could see the known residual — and they could not: on the
-exact-truth sandbox, the residual is not positional at all. The experiment
-stopped at its own gate. Second, the gate's consolation instrument — built
-merely to catch grid artifacts as a confound — found something real: generated
-fields prefer to place their peaks at particular pixel PARITIES (odd-odd
-positions ~30% of the time versus the correct 25%). A checkerboard bias,
-invisible to power spectra, marginals, kurtosis, peak counts, and the starlet
-ℓ1 alike. A fourth tier of failure, discovered by the instrument nobody
-expected to matter.
+After the blind test of §5.5, one failure from §2.3's third tier remained open:
+the generator over-produces extreme peaks on the real field even though every
+tier-two (marginal) statistic is calibrated. We hypothesized this was the
+moment ladder of §5.4 reaching its next rung — joint structure starving for
+data as variance (§5.2) and tails (§5.4) had — and designed a causal
+experiment in the style of §4: instruments validated on the exact-truth
+sandbox first, pre-registered branches, bars from measured references. The
+experiment's own discipline intervened twice before any training compute was
+spent. First, its position-pure instruments had to demonstrate they could see
+the known residual — and they could not: on the sandbox, the residual is not
+positional at all. The experiment stopped at its own gate. Second, the gate's
+confound instrument — built merely to separate grid artifacts from genuine
+placement signal — found something real: generated fields prefer particular
+pixel PARITIES for their peaks (odd-odd positions at ~30% versus the correct
+25%, at up to $10\sigma$). A checkerboard bias invisible to the power
+spectrum, to every marginal statistic of §2.3, to peak counts, and to the
+starlet $\ell_1$ of §5.5 — a FOURTH tier of failure, discovered by the
+instrument nobody expected to matter.
 
-### 11.2 The mechanism hunt (zero training, all measurements)
+### 11.2 The mechanism hunt: a symmetry violated by the model that the data obeys
 
-Cheap forensic measurements localized the artifact completely. It lives in the
-wavelet detail coefficients as small violations of the field's discrete
-symmetry: the coefficient channels carry nonzero MEANS (the data's are zero by
-symmetry), plus a second, subtler layer — the horizontal and vertical channels
-are CORRELATED with each other, which isotropy forbids. Transplant surgery
-proved causality (swap only the finest octave's coefficients and the
-checkerboard follows). The defect predates the final model: it was always
-present in the mean pathway, and the old variance head's noise bath had HIDDEN
-it — the same instrument artifact that once faked an "information limit" had
-also been concealing a symmetry defect. And the decisive measurement: the
-defect is an optimization TRANSIENT. It peaks mid-training and fades on its
-own — but our checkpoint selection, tuned to marginal statistics, had picked
-the training moment where the defect is at its MAXIMUM.
+The fields of §2 are statistically invariant under the dihedral group
+$G = D_4$ (the four rotations and four reflections of the square): for every
+$g \in G$,
 
-### 11.3 The schedule: the campaign's sharpest generalization
+$$p(g \cdot x) = p(x), \qquad\text{hence}\qquad p(d \mid c) = p(g \cdot d \mid g \cdot c),$$
 
-This upgraded the moment ladder from an ordering to a SCHEDULE: different
-statistical properties become healthy at different training times — tails
-early, lattice symmetry late — and at modest data sizes the healthy windows
-need not overlap. We then demonstrated the bind mechanically: at the standard
-data size, NO single checkpoint satisfies both the tail bars and the symmetry
-bar; a selection rule tuned to one tier provably harvests another tier at its
-worst moment (both defect layers peak exactly at the marginally-optimal
-checkpoint, at every data size tested). Model selection is not bookkeeping;
-it is part of the model.
+and the wavelet detail channels $(d^H, d^V, d^D)$ of §2.1 transform among
+themselves under $g$ with definite signs (a reflection negates $d^H$ or $d^V$;
+a 90° rotation exchanges them). Two immediate consequences for the TRUE
+conditional law: every channel mean vanishes, and isotropy forbids
+cross-channel correlation,
 
-### 11.4 The cures, in ascending principledness
+$$\mathbb{E}\!\left[d^{k}\right] = 0 \;\; (k = H,V,D), \qquad
+\operatorname{Corr}\!\left(d^{H}, d^{V}\right) = 0 .$$
 
-1. *Subtract the offsets* (a per-channel constant, fitted on validation data):
-   free, costs no marginal calibration, halves the defect — and its residual
-   exposed the second (correlation) layer that no constant can fix.
-2. *Restore the symmetry exactly*: sample through a random element of the
-   field's symmetry group — transform the conditioning by a random
-   flip/rotation $g$, generate, transform back:
-   $d = g^{-1}\, f_\theta(g \cdot c)$. The sampling ensemble is then
-   equivariant BY CONSTRUCTION: every symmetry-violating statistic (channel
-   means, cross-channel correlation, pixel parity) is annihilated because some
-   group element flips its sign, while every symmetry-invariant statistic —
-   all the calibration bars — is provably untouched. Same cost per sample,
-   zero training. Verified clean (one component sat exactly at the detection
-   bar; a replication resolved it as noise). This sampler now SHIPS as the
-   generator's sampling mode; the constant correction survives as the paper's
-   ablation.
+The generated coefficients violate both: channel means at $z$ up to $-17$ at
+the finest octave, and $\operatorname{Corr}(d^H, d^V) = +7.5\sigma$ — and a
+transplant test proved causality (swapping only the finest octave's
+coefficients moves the output checkerboard). Note the subtlety this exposes
+about §5.2's cure: the symmetry augmentation makes the TRAINING DISTRIBUTION
+exactly $G$-invariant, but a network at a finite training step is under no
+obligation to be equivariant — data symmetry is an attractor of training, not
+a property of every checkpoint. Indeed the defect is an optimization
+TRANSIENT: the channel-mean trajectory $\mu(t)$ rises, peaks mid-training, and
+decays toward zero — and the checkpoint-selection rule of §2.2, tuned to
+marginal statistics, had been choosing $\hat{t}$ at the defect's PEAK, at
+every data size tested. (The defect also predates the final model: it was
+always present in the mean pathway, and the retired variance head's noise bath
+— the instrument artifact of §5.3 — had been concealing this too. Its second
+concealment.)
+
+### 11.3 The schedule: the moment ladder acquires a time axis
+
+Write $W_m(N) = \{\, t : |S_m(\theta_t) - S_m^\star| \le \varepsilon_m \,\}$
+for the "healthy window" of statistic $S_m$ — the training times $t$ at which
+the model (trained on $N$ effective parents, §5.1) holds $S_m$ within its bar.
+The moment ladder of §5.4 said which $S_m$ starve; the epilogue's finding is
+WHEN: tails are healthy EARLY ($W_{\text{tails}}$ opens and closes before the
+symmetry cleans), lattice symmetry is healthy LATE, and at the standard data
+size the windows are DISJOINT,
+
+$$W_{\text{tails}}(N_1) \,\cap\, W_{\text{sym}}(N_1) \;=\; \varnothing,$$
+
+demonstrated mechanically: the best joint checkpoint fails the tail bar at
+$-23.9\%$ against a $15\%$ bar. Worse, single-tier selection is actively
+adversarial to the other tiers: $\hat{t} = \arg\min_t \mathcal{L}_{\text{marginal}}$
+landed at $\arg\max_t \mu(t)$ for BOTH defect layers. Selection is part of the
+model. Abundant data widens the windows — at $32\times$ the joint defect
+reached its lowest test value of the campaign (3.48 vs the 3.0 bar):
+overlap is PROXIMATE but not demonstrated (§11.5).
+
+### 11.4 The cures, in ascending principledness — ending in a guarantee
+
+1. **Subtract the offsets.** A per-channel constant $\hat{\mu}$, estimated on
+   validation generations, removed at sampling: free, costs no marginal bar,
+   halves the defect — and its residual isolated the correlation layer, which
+   no constant can touch.
+2. **Restore the symmetry exactly.** Sample through a random group element:
+
+$$d \;=\; g^{-1}\!\cdot f_\theta\!\left(g \cdot c,\; z\right), \qquad g \sim \mathrm{Uniform}(D_4),$$
+
+   i.e. the sampling law becomes the group average
+   $p_{\text{sym}}(d \mid c) = \tfrac{1}{|G|}\sum_{g} g^{-1}\!\cdot p_\theta(\,\cdot \mid g\cdot c)$.
+   This carries a small theorem worth stating: any statistic $S$ that
+   transforms in a sign representation of $G$ — $S(g \cdot d) = \chi(g)\,S(d)$
+   with $\chi$ non-trivial, which is exactly the case for the channel means,
+   the cross-channel correlation, and the pixel-parity contrast — satisfies
+   $\mathbb{E}_{p_{\text{sym}}}[S] = 0$ identically, while every $G$-INVARIANT
+   statistic ($\chi \equiv 1$: all the calibration bars of §2.3) is exactly
+   preserved. Annihilation of the defects and safety of the calibration are
+   both guaranteed by symmetry, not hoped for. Zero training, same cost per
+   sample; verified clean (one component sat at the detection bar and resolved
+   as noise under replication). There is a pleasing bookend here: the SAME
+   group $G$ cured rung two by symmetrizing the DATA (§5.2) and cures tier
+   four by symmetrizing the SAMPLER — the project's founding doctrine (§3, put
+   measured structure into the construction rather than asking training to
+   find it) applied one final time.
 
 ### 11.5 The data question, answered honestly
 
-Does more data merge the healthy windows? The measured answer is careful:
-abundant data lowers the late-training defect plateau, and at 32× data the
-joint defect reached its lowest test value of the whole campaign (3.48 against
-a bar of 3.0) — a joint-viable window is PROXIMATE but not demonstrated. Two
-honesty events shaped this verdict: the built-in seed replication revealed
-that our single-seed baseline had been the WORST of five seeds (seed variance
-comparable to the data effect — retiring the headline ratios), and the scoring
-code's first version was caught implementing a looser rule than pre-stated,
-and corrected BEFORE adjudication. Meanwhile the one decision-grade data
-result is a design directive: INDEPENDENT SIMULATIONS beat multiple
-realizations per condition as the currency of joint structure (measured at
-1.4×) — which fixes the data strategy for the fast-simulation application of
-§8: buy independent initial conditions first.
+Does data merge the windows? Measured carefully: data lowers the late defect
+plateau, and at $32\times$ the joint defect reached 3.48 against the 3.0 bar —
+the campaign's lowest, a window PROXIMATE but not demonstrated. Two safeguards
+shaped this verdict. The built-in seed replication revealed the single-seed
+baseline had been the WORST of five seeds (ensemble $11.1 \pm 3.4$, range
+$[6.9, 15.3]$) — seed variance comparable to the data effect, retiring the
+headline ratios (the paired, within-curve comparisons survive; cf. §10's
+recipe-vs-principle audit). And the scoring code's first version was caught
+implementing a looser rule than pre-stated — corrected BEFORE adjudication,
+both versions preserved. One data result is decision-grade and feeds §8
+directly: at matched total cost, INDEPENDENT initial conditions beat multiple
+realizations per condition by a factor $1.4$ as the currency of joint
+structure — the particle-mesh program of §8 should buy independent
+simulations first.
 
-### 11.6 What remains, and what this epilogue means
+### 11.6 What remains, and what the epilogue means
 
 One residual survives everything: on the real field (not the sandbox), peak
-SPACINGS carry a small, parent-consistent signal (T≈4) that outlived the
-variance-head removal, the constant correction, and exact symmetrization. It
-is the project's one genuinely unexplained statistic — the named frontier.
-
-The meta-lesson of the epilogue mirrors the whole project: the audit found a
-defect nobody suspected, in coordinates nobody was watching, hidden by an
-instrument artifact, harvested by our own selection rule — and the cure with
-the best guarantees was not a bigger model or more data but a SYMMETRY
-RESTORED EXACTLY. Validation machinery that is smarter than the generator is
-not overhead; it is where the discoveries come from.
+SPACINGS carry a small, parent-consistent signal ($T \approx 4$) that outlived
+the variance-head removal, the constant correction, and exact symmetrization —
+the project's one genuinely unexplained statistic, the named frontier for §7's
+next phase. And the epilogue's meta-lesson completes the answer to §1's second
+question (how would you ever know?): the audit found a defect nobody
+suspected, in coordinates nobody was watching, hidden by an instrument
+artifact (§5.3), harvested by our own selection rule (§11.3) — and the cure
+with the best properties was neither a bigger model nor more data but a
+symmetry restored exactly (§11.4). Validation machinery at least as
+sophisticated as the generator is not overhead; it is where the discoveries
+come from.
