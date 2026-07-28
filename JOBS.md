@@ -327,3 +327,6 @@ This is the load-bearing run and wants a full H100 (`--gpus-per-node=1`, ≤2:59
   Outputs stage0_p3_gen.npz + stage0_p3_sample.json. One resubmission license
   (infra gate). Logged pre-submission.
 - 17621159 SUBMITTED (MIG b1).
+- 17621159 FAILED at G2 (threshold mis-design, disclosed in the readout
+  execution note; corrected criterion pre-stated blind at 0ea7a0a).
+- 17622970 RESUBMITTED (the one licensed infra resubmission).

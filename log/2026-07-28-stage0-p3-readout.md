@@ -43,7 +43,7 @@ per-field amplitude-ratio mean within 5e-3 of 1 (same std chain) AND rel
 max-abs <= 5e-2 (sanity ceiling); all three asserted, all recorded. A
 failure of the corrected criterion is a real substrate-chain mismatch ->
 STOP, gates branch. This consumes the prereg's ONE infra resubmission.
-Resubmitted job: PENDING-ID.
+Resubmitted job: 17622970.
 
 ## Adjudication (mechanical; the prereg branch table + A1; references
 ## +13.13%±3.10 @ν2.5, +14.62%±3.08 @ν3.0, read at runtime from
