@@ -1,0 +1,11 @@
+jax devices: [CudaDevice(id=0)]
+E0728 12:33:59.337074 2847667 ptx_compiler_helpers.cc:154] *** WARNING *** Invoking ptxas with version 12.6.77, which corresponds to a CUDA version <=12.6.2. CUDA versions 12.x.y up to and including 12.6.2 miscompile certain edge cases around clamping.
+Please upgrade to CUDA 12.6.3 or newer.
+[12:33:59] picks asserted against c1t_selection_stageD.json: {'A': 9000, 'B': 7500}
+[12:34:04] substrate: 266 train / 32 test; std={1: 0.777815, 2: 1.186671, 3: 1.810439, 4: 2.762088}
+[12:34:37] G2 diagnostics: rel_maxabs=1.019e-02 corr_min=1.000000 ratio_mean=1.000003 ratio_maxdev=1.011e-05
+[12:34:37] G2 substrate-chain gate: PASS (corrected criterion, disclosed)
+[12:34:47] G1 identity gate: exact (0.0)
+[12:38:05] F2 stage-D arm A@9000: group-averaged e2e done
+[12:40:48] F2 stage-D arm B@7500: group-averaged e2e done
+[12:40:48] Stage-0 SAMPLE done -> stage0_p3_gen.npz + stage0_p3_sample.json
