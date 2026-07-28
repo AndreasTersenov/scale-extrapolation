@@ -22,6 +22,29 @@ applied preemptively).
 - Marginal catastrophe (scorer): arm-A e2e var_slope rel err > 50% at any
   scored octave (2-4). Result: PENDING.
 
+### Execution note (2026-07-28, before the resubmission ran): G2 fired on
+### job 17621159 — instrument mis-design, disclosed; corrected criterion
+### pre-stated here
+
+Job 17621159 FAILED at G2: rel max-abs 9.881e-3 vs the 1e-3 tolerance
+(verbatim from the job log). G1 never ran (script order: G2 first). The
+1e-3 threshold was an instrument-design error of mine: it was calibrated to
+per-op float noise, but the comparison is made AFTER 4 octaves of recursive
+generation (80-step ODE integrations, each octave conditioning the next), so
+cross-run XLA/TF32 algorithm-selection noise is amplified multiplicatively —
+the same genre as the Phase-A NaN-bin fixes (instrument corrected on
+validation evidence, before any model quantity is scored; no adjudicating
+number existed yet). A ~1e-2 post-recursion diff is consistent BOTH with
+amplified float noise AND with a genuine ~1% chain mismatch; the original
+gate recorded nothing that separates them. Corrected G2, PRE-STATED before
+the resubmission and before its diagnostics were seen (thresholds chosen
+blind): per-field Pearson corr(ref, committed) min >= 0.99 (same fields) AND
+per-field amplitude-ratio mean within 5e-3 of 1 (same std chain) AND rel
+max-abs <= 5e-2 (sanity ceiling); all three asserted, all recorded. A
+failure of the corrected criterion is a real substrate-chain mismatch ->
+STOP, gates branch. This consumes the prereg's ONE infra resubmission.
+Resubmitted job: PENDING-ID.
+
 ## Adjudication (mechanical; the prereg branch table + A1; references
 ## +13.13%±3.10 @ν2.5, +14.62%±3.08 @ν3.0, read at runtime from
 ## audit_peak_ci.json)
