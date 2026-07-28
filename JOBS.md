@@ -316,3 +316,13 @@ This is the load-bearing run and wants a full H100 (`--gpus-per-node=1`, ≤2:59
 - pcure_confirm.slurm: full H100, 30 min, n32@joint-pick test e2e+hc.
 - arms_pcure_D.slurm ARM=n1s2/n1s3/n1s4: MIG, seed mini-ensemble (option b,
   taken). All logged pre-submission.
+
+## 2026-07-28 — Phase-3 Stage-0 sample (prereg 62db5f0 APPROVED + A1, reconvene
+## review log/2026-07-28-reconvene-stage0-review.md; cleared to submit)
+- scripts_p2/stage0_p3_sample.slurm: MIG h100_20gb, 59 min cap (b1 pool),
+  zero training. F2 group-averaged e2e from committed ckpt_stageD (A@9000
+  adjudicating, B@7500 descriptive; picks asserted at runtime) on the frozen
+  Stage-D test tiles. Gates pre-stated in the script docstring: G1 identity
+  (exact, binding) + G2 substrate-chain (rel <= 1e-3 vs committed gen_A).
+  Outputs stage0_p3_gen.npz + stage0_p3_sample.json. One resubmission license
+  (infra gate). Logged pre-submission.
