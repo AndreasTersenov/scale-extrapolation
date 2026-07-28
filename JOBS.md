@@ -326,3 +326,4 @@ This is the load-bearing run and wants a full H100 (`--gpus-per-node=1`, ≤2:59
   (exact, binding) + G2 substrate-chain (rel <= 1e-3 vs committed gen_A).
   Outputs stage0_p3_gen.npz + stage0_p3_sample.json. One resubmission license
   (infra gate). Logged pre-submission.
+- 17621159 SUBMITTED (MIG b1).
