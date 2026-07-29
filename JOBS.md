@@ -338,3 +338,18 @@ This is the load-bearing run and wants a full H100 (`--gpus-per-node=1`, ≤2:59
   Expected: gate PASS, two 32-map stacks -> stage1_p3_replicates.npz.
   One resubmission license (infra). Logged pre-submission.
 - 17809642 SUBMITTED.
+
+## 2026-07-29 — N1 diagnostic budget (RIDER §2; GATE-N1 NOT-CONFIRMED path;
+## all CPU on committed artifacts, 0 GPU-h against the 1h diagnostic cap)
+- D1 (intent: shape of the oct1 whiteness defect — full annular spectrum +
+  absolute band powers real vs gen; expectation: gen deficit concentrated at
+  low plane-k, high-k matching or excess). Designs the narrowed lever.
+- D2 (intent: cross-scale detail-energy coupling K_12/K_23, NEW estimator
+  tests-first; expectation: K_real > K_gen at the fine pair — the
+  composition-effect hypothesis behind the transplant sign flip).
+- D3 (intent: sandbox contrast — C octaves 1-3 on committed sandbox legs
+  where peak counts show DEFICITS; expectation 50/50: whiteness present with
+  deficit would BREAK the whiteness->excess causal chain).
+- D4 (intent: replicate stability — C_oct1 + peak excess on rep1/rep2 when
+  job 17809642 lands; expectation: both within 2SE of committed, P=80 per
+  the prereg line).
