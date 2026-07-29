@@ -353,3 +353,4 @@ This is the load-bearing run and wants a full H100 (`--gpus-per-node=1`, ≤2:59
 - D4 (intent: replicate stability — C_oct1 + peak excess on rep1/rep2 when
   job 17809642 lands; expectation: both within 2SE of committed, P=80 per
   the prereg line).
+- 17809642 COMPLETED 6:50 (replay gate PASS corr 0.99999999/ratio 1.000000; rep1/rep2 landed).
