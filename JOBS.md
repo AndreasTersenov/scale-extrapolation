@@ -330,3 +330,11 @@ This is the load-bearing run and wants a full H100 (`--gpus-per-node=1`, ≤2:59
 - 17621159 FAILED at G2 (threshold mis-design, disclosed in the readout
   execution note; corrected criterion pre-stated blind at 0ea7a0a).
 - 17622970 RESUBMITTED (the one licensed infra resubmission).
+
+## 2026-07-29 — NIGHT-ORDERS-2 N1 probe 5 (prereg 5e955b4, pre-run commit)
+- scripts_p2/stage1_p3_replicates.slurm: MIG, 40 min cap, zero training.
+  Replay gate (key 2400 stream must reproduce committed F2_gowA_e2e under
+  the corrected-G2 criterion, asserted) + 2 fresh F2 streams (keys 2501/2502).
+  Expected: gate PASS, two 32-map stacks -> stage1_p3_replicates.npz.
+  One resubmission license (infra). Logged pre-submission.
+- 17809642 SUBMITTED.

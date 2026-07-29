@@ -95,3 +95,17 @@ baseline ≈ 1, SE ~√2). Bands unchanged from the prereg. Lesson recorded for
 the instrument ledger: coloring statements about detail coefficients must be
 made IN detail space; field-space spectral intuition inverts under the
 wavelet transform at fine octaves.
+
+## GATE-N1 VERDICT (mechanical, appended at readout; verbatim from
+## results_p2/stage1_p3_probes.json)
+
+**NOT-CONFIRMED.** Trained leg, octaves {1,2,3}: clear octaves = {1} only
+(oct1: C_real 0.7864±0.0100 vs C_gen 0.7237±0.0072, z=+5.09, margin above
+the 3σ line and outside the half-SE band; oct2: z=+1.35; oct3: z=−1.00,
+wrong sign). The rule requires ≥2 clear octaves → NOT-CONFIRMED; no at-bar
+octave on the trained leg (edge continuity leg: oct1 z=+5.38 clear, oct2
+z=+2.81 AT-BAR, oct3 z=+0.15). Per the orders: NO TRAINING TONIGHT; the
+diagnostic budget goes to the mechanism; alternative-lever preregs are
+DRAFTED not run. Registered lines: executor P(CONFIRMED)=55 and reconvene
+P(CONFIRMED)=60 both LOSE — the premise is measured PRESENT but
+ONE-OCTAVE-ONLY (oct1, both legs, ~5σ), absent at octaves 2–3.
