@@ -78,3 +78,20 @@ data touches it; probes 2–4 use frozen instruments only. All probe outputs →
 results_p2/stage1_p3_*.json. Gate verdict appended to this log with the
 mechanical rule applied verbatim; then N2 (CONFIRMED) or the
 diagnosis-and-report path (NOT CONFIRMED), per the orders. R12 throughout.
+
+## Validation note (appended BEFORE any real data was touched)
+
+The first discrimination test used power-law-colored FIELDS and FAILED:
+level-1 Haar details of a red field measured C = 0.890 vs white 1.003 — the
+Haar high-pass response (~k²) cancels a P~k⁻² field spectrum and decimation
+aliases near-Nyquist power into low plane-k, so "colored field ⇒ colored
+details" is FALSE at fine octaves. Since the gate compares real-vs-generated
+DETAIL planes directly (and the generative mechanism draws details from the
+base directly — the N2 lever colors the base, i.e. detail space), the
+validation synthetic was corrected to detail-space coloring: fields built by
+inverse DWT from planted white vs |k|⁻¹-colored detail planes. All four
+tests pass (discrimination z > 10 at octaves 1–3, D4 invariance, white
+baseline ≈ 1, SE ~√2). Bands unchanged from the prereg. Lesson recorded for
+the instrument ledger: coloring statements about detail coefficients must be
+made IN detail space; field-space spectral intuition inverts under the
+wavelet transform at fine octaves.
