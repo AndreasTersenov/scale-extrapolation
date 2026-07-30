@@ -364,3 +364,9 @@ This is the load-bearing run and wants a full H100 (`--gpus-per-node=1`, ≤2:59
 - 17939621 COMPLETED (replay gate PASS corr 0.99999999; CANARY PASS — var_slope 4.7-7.5%; context note: oct2 kurtosis 17.3% vs 15.5% context bar, outside #11 band, recorded for the readout).
 - l1p_main.slurm: MIG 45 min, gow replay + 3 adj + ablation + edge streams.
 - 17941294 SUBMITTED.
+
+## 2026-07-30 — L1'' (R40 pre-cleared; prereg with committed P-T)
+- l1pp_canary.slurm: MIG 30 min. Replay gate + deconvolved canary stream.
+  Expected: gate PASS; kill check on CPU before main; watched oct2 kurtosis.
+- l1pp_main.slurm (after CANARY PASS): replay gate + 3 adj deconvolved +
+  oracle ablation. Expected: gate PASS, 4 stacks. One resubmission each.
