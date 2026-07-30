@@ -354,3 +354,9 @@ This is the load-bearing run and wants a full H100 (`--gpus-per-node=1`, ≤2:59
   job 17809642 lands; expectation: both within 2SE of committed, P=80 per
   the prereg line).
 - 17809642 COMPLETED 6:50 (replay gate PASS corr 0.99999999/ratio 1.000000; rep1/rep2 landed).
+
+## 2026-07-30 — L1' execution (R39 approved; pre-statement 67d7304)
+- l1p_canary.slurm: MIG 30 min, zero training. Replay gate (white base ==
+  committed F2_A_e2e stream, asserted) + colored-oct1 canary stream.
+  Expected: gate PASS, canary npz lands; kill criterion scored on CPU before
+  any gowerstreet submission. One resubmission license (infra).
