@@ -1,0 +1,6 @@
+jax devices: [CudaDevice(id=0)]
+E0730 18:36:01.655216 1028658 ptx_compiler_helpers.cc:154] *** WARNING *** Invoking ptxas with version 12.6.77, which corresponds to a CUDA version <=12.6.2. CUDA versions 12.x.y up to and including 12.6.2 miscompile certain edge cases around clamping.
+Please upgrade to CUDA 12.6.3 or newer.
+[18:39:13] stage-D replay gate: {'corr_min': 0.9999999956222154, 'ratio_mean': 1.0000006583369854, 'rel_maxabs': 0.003933501627452358}
+[18:39:13] stage-D replay gate: PASS
+[18:41:06] edge deconvolved stream done

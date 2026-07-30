@@ -377,3 +377,4 @@ This is the load-bearing run and wants a full H100 (`--gpus-per-node=1`, ≤2:59
 ## 2026-07-30 — R41 decision package (prereg committed)
 - l1pp_decision_edge.slurm: MIG 25 min, the one negligible-GPU stream
   (deconvolved edge, per-checkpoint deployment recipe, replay gate).
+- 17961764 SUBMITTED.
