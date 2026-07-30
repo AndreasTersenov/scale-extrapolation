@@ -360,3 +360,7 @@ This is the load-bearing run and wants a full H100 (`--gpus-per-node=1`, ≤2:59
   committed F2_A_e2e stream, asserted) + colored-oct1 canary stream.
   Expected: gate PASS, canary npz lands; kill criterion scored on CPU before
   any gowerstreet submission. One resubmission license (infra).
+- 17939621 SUBMITTED.
+- 17939621 COMPLETED (replay gate PASS corr 0.99999999; CANARY PASS — var_slope 4.7-7.5%; context note: oct2 kurtosis 17.3% vs 15.5% context bar, outside #11 band, recorded for the readout).
+- l1p_main.slurm: MIG 45 min, gow replay + 3 adj + ablation + edge streams.
+- 17941294 SUBMITTED.

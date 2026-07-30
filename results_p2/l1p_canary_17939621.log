@@ -1,0 +1,6 @@
+jax devices: [CudaDevice(id=0)]
+E0730 12:03:40.399666 3533711 ptx_compiler_helpers.cc:154] *** WARNING *** Invoking ptxas with version 12.6.77, which corresponds to a CUDA version <=12.6.2. CUDA versions 12.x.y up to and including 12.6.2 miscompile certain edge cases around clamping.
+Please upgrade to CUDA 12.6.3 or newer.
+[12:06:59] replay gate: corr_min=0.99999999 ratio_mean=0.999999 rel=1.422e-03
+[12:06:59] replay gate: PASS
+[12:08:41] canary stream done -> l1p_canary_gen.npz

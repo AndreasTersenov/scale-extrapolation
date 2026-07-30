@@ -1,0 +1,18 @@
+{
+ "streams": {
+  "replay": [
+   2200,
+   20260728
+  ],
+  "canary": [
+   3301,
+   20260801
+  ]
+ },
+ "filter": "l1p sandbox oct2rescaled",
+ "replay_gate": {
+  "corr_min": 0.999999992684253,
+  "ratio_mean": 0.9999990713678735,
+  "rel_maxabs": 0.0014222813067130853
+ }
+}
