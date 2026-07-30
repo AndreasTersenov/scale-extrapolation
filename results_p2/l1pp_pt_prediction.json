@@ -1,0 +1,39 @@
+{
+ "convention": "instrument C on the ring model; band = 3*sqrt(MC^2 + 0.0049^2); MC = 4000 draws of ln T per ring",
+ "T_hat_range": [
+  0.7195420333720441,
+  1.1975867445386459
+ ],
+ "adj": {
+  "C_pred": 0.7555502304980443,
+  "sigma_mc": 0.01108973669252692,
+  "band_3sigma": 0.036372109358493374,
+  "interval": [
+   0.7191781211395509,
+   0.7919223398565376
+  ],
+  "base_C_instrument": 0.9953701847772114,
+  "cal_history": [
+   0.015069276112303734
+  ]
+ },
+ "oracle": {
+  "C_pred": 0.7819104293891688,
+  "sigma_mc": 0.011715254523127204,
+  "band_3sigma": 0.03809612443379079,
+  "interval": [
+   0.743814304955378,
+   0.8200065538229595
+  ],
+  "base_C_instrument": 1.0288436462107433,
+  "cal_history": [
+   0.01300876547319399
+  ]
+ },
+ "canary_note": {
+  "T_source": "committed F2_A_e2e (white-base) maps",
+  "cal_history": [
+   0.026523993613764875
+  ]
+ }
+}
