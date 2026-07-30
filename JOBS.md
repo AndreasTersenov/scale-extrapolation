@@ -370,3 +370,6 @@ This is the load-bearing run and wants a full H100 (`--gpus-per-node=1`, ≤2:59
   Expected: gate PASS; kill check on CPU before main; watched oct2 kurtosis.
 - l1pp_main.slurm (after CANARY PASS): replay gate + 3 adj deconvolved +
   oracle ablation. Expected: gate PASS, 4 stacks. One resubmission each.
+- 17951572 SUBMITTED (canary).
+- 17951572 COMPLETED (replay PASS; CANARY PASS all bars — watched oct2 kurtosis 13.8% vs bar 17.9%, improved from L1-prime's 17.3%).
+- 17952979 SUBMITTED (main).

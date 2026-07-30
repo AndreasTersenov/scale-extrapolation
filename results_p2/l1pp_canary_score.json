@@ -1,0 +1,52 @@
+{
+ "rows": {
+  "2": {
+   "var_slope": {
+    "rel_err": 0.055265782870517706,
+    "bar": 0.1,
+    "pass": true
+   },
+   "kurtosis": {
+    "rel_err": 0.1378411524964618,
+    "bar": 0.1791923571095625,
+    "pass": true
+   }
+  },
+  "3": {
+   "var_slope": {
+    "rel_err": 0.06162101163942591,
+    "bar": 0.1,
+    "pass": true
+   },
+   "kurtosis": {
+    "rel_err": 0.18452170209339452,
+    "bar": 0.293871705877983,
+    "pass": true
+   }
+  },
+  "4": {
+   "var_slope": {
+    "rel_err": 0.1293961988108281,
+    "bar": 0.13881609231654785,
+    "pass": true
+   },
+   "kurtosis": {
+    "rel_err": 0.20854396591633997,
+    "bar": 0.30765082831385254,
+    "pass": true
+   }
+  }
+ },
+ "kill": [],
+ "verdict": "CANARY PASS",
+ "watched_oct2_kurtosis": {
+  "rel_err": 0.1378411524964618,
+  "bar": 0.1791923571095625,
+  "pass": true
+ },
+ "replay_gate": {
+  "corr_min": 0.9999999891559507,
+  "ratio_mean": 0.9999993515276755,
+  "rel_maxabs": 0.00173588543656663
+ }
+}
