@@ -91,3 +91,65 @@ IMPROVED, not lower.
 Canary job → CPU kill check → main job (3 adj + oracle) → starlet leg →
 score in the binding order → readout appended here → **STOP for reconvene
 adjudication.** Budget ≲0.1 H100-h (two MIG jobs ≈0.05 expected).
+
+---
+
+## READOUT (appended; verbatim from l1pp_* artifacts)
+
+1. **Canary: PASS, all six bars** (var_slope 5.5/6.2/12.9%). The watched
+   oct2 kurtosis IMPROVED under the deconvolved base: 13.8% vs bar 17.9%
+   (L1′ context miss was 17.3% vs 15.5%).
+2. **Identity gates: both PASS** (canary corr_min 0.99999999 / rel
+   1.74e-3; main corr_min 0.99999999 / rel 6.14e-3).
+3. **P-T (scored first): LANDS.** C_pooled = 0.7414 ± 0.0048, inside the
+   committed interval [0.7192, 0.7919] (prediction 0.7556). The
+   REGISTERED DIRECTIONAL LINE ALSO FIRES: C − baseline = +0.0177 =
+   +3.6σ_instr — real movement toward real, in the predicted direction.
+   Per-stream: 0.7405 / 0.7234 / 0.7609 (stream scatter ~0.019 — larger
+   than the instrument SE; generation-stream variance in C is real;
+   pooled adjudicates). **Oracle ablation: C = 0.7815 ± 0.0103 vs its
+   committed prediction 0.7819 — 0.04σ.** The multiplicative transfer
+   model survives its third input point and lands the oracle deconvolution
+   ON the real value (0.7864, ~0.5σ). The system identification of R40 is
+   quantitatively VALIDATED. Line scorecard: P(P-T) rec 70 / exec 65 —
+   both HIT; directional 60 — HIT.
+4. **Peaks vs A3: NULL again.** Pooled +13.82%±2.92 (ν2.5, Δ = 0.34) /
+   +13.66%±2.68 (ν3.0, Δ = −0.31). Streams +10.58/+16.24/+14.64 (ν2.5).
+   **Oracle stream: +15.75%±3.30 / +12.91%±2.98 — coloring restored to the
+   real value, excess UNCHANGED.** ν=1 pooled +19.92% (#10). No at-bar, no
+   flip.
+5. **Must-not-regress: NO regression.** No catastrophe; parity_T 1.70;
+   starlet trained leg PASS (leg 10); identity PASS. WATCHED, descriptive,
+   not interpreted (R40): nn_T = 2.90 — first sub-3 reading on
+   adjudicating trained-leg streams; the across-coloring sequence is
+   4.045 (white) → 3.33 (wrong-direction) → 2.90 (corrected), reported as
+   numbers only. coef_T_oct1 = 2.69.
+6. **BRANCH (mechanical): N-NULL-PT-CONFIRMED.** Peak-weight scorecard:
+   reconvene modal IMPROVED 38 → MISS; executor modal NULL 45 → HIT (the
+   registered L1′-dose-response reasoning predicted exactly this).
+
+### The finding (verdict-grade, stated plainly)
+
+Three coloring doses now bracket the question: C_gen ∈ {0.603, 0.724,
+0.741–0.782} all produce the SAME ~+14–15% peak excess (nine streams
+across L1′/L1″ within ±2 SE of each other; the oracle stream at
+real-value coloring included). **The oct-1 peak excess on the real field
+is INDEPENDENT of the oct-1 detail power spectrum at fixed weights.**
+M-GRAIN's spectral form is refuted as the peak mechanism; the pixel-scale
+surplus (0.5-px smoothing kill, N1) must live in the PHASE/higher-order
+structure of the generated fine details, which no base-spectrum lever
+reaches through these weights. The inference-only spectral lever family is
+EXHAUSTED for the peak tier — and, separately, it is now a validated,
+deployment-available CALIBRATION TOOL for the coloring/whiteness defect
+itself (P-T + oracle: the practitioner can set C to target without
+retraining). Both facts are paper material: the first scopes the peak
+tier's mechanism to training-side structure (the L2 family, or a declared
+boundary); the second is the audit-guided-design exhibit completed.
+
+### Execution accounting
+
+Two MIG jobs (17951572 canary ~8 min, 17952979 main ~11 min) ≈ 0.05
+H100-h; order-set spend ≈ 0.11 of ~4; zero training; suites green; the
+P-T-before-peaks order enforced structurally (l1pp_pt.json written first).
+
+**STOP — reconvene adjudication.**
