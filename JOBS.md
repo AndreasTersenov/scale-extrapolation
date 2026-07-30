@@ -373,3 +373,7 @@ This is the load-bearing run and wants a full H100 (`--gpus-per-node=1`, ≤2:59
 - 17951572 SUBMITTED (canary).
 - 17951572 COMPLETED (replay PASS; CANARY PASS all bars — watched oct2 kurtosis 13.8% vs bar 17.9%, improved from L1-prime's 17.3%).
 - 17952979 SUBMITTED (main).
+
+## 2026-07-30 — R41 decision package (prereg committed)
+- l1pp_decision_edge.slurm: MIG 25 min, the one negligible-GPU stream
+  (deconvolved edge, per-checkpoint deployment recipe, replay gate).
