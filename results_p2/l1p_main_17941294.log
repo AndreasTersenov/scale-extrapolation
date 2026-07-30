@@ -1,0 +1,11 @@
+jax devices: [CudaDevice(id=0)]
+E0730 12:14:39.117986 3808529 ptx_compiler_helpers.cc:154] *** WARNING *** Invoking ptxas with version 12.6.77, which corresponds to a CUDA version <=12.6.2. CUDA versions 12.x.y up to and including 12.6.2 miscompile certain edge cases around clamping.
+Please upgrade to CUDA 12.6.3 or newer.
+[12:17:59] gow replay gate: corr_min=0.99999999 ratio_mean=1.000000 rel=6.725e-03
+[12:17:59] gow replay gate: PASS
+[12:19:56] gow adj1: done
+[12:21:09] gow adj2: done
+[12:22:28] gow adj3: done
+[12:23:46] gow ablation_oct1meas: done
+[12:24:57] edge continuity stream: done
+[12:24:57] L1' main sample done -> l1p_main_gen.npz

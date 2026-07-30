@@ -74,3 +74,75 @@ deployment filter).
 Canary → (pass) → one gowerstreet+edge job → score in the order above →
 readout appended here → **STOP for reconvene adjudication.** Budget ≲0.4
 H100-h; two MIG jobs expected ≈0.06.
+
+---
+
+## READOUT (appended; every number verbatim from l1p_* artifacts)
+
+1. **Canary: PASS** (kill did not fire; var_slope rel 7.5/4.7/7.2% at
+   octaves 2/3/4). Context note, recorded: oct2 kurtosis rel 17.3% vs its
+   15.5% context bar (outside the #11 band; the committed white-base F2
+   sandbox leg passed it) — the colored base slightly inflates sandbox oct2
+   kurtosis error. Context only; not a branch quantity.
+2. **Identity gates: both PASS** under the replay criterion — sandbox
+   corr_min 0.99999999 / ratio 0.999999 / rel 1.42e-3; gowerstreet
+   corr_min 0.99999999 / ratio 1.000000 / rel 6.73e-3.
+3. **A2 (scored first, per the binding order): NO-TRANSFER — INVERTED.**
+   C_pooled = 0.6030 ± 0.0049: not only below the 0.7551 transfer
+   threshold, but **24.8σ BELOW the white-base baseline 0.7237**. Per
+   stream: 0.6189/0.6056/0.5845; ablation (oct1-measured oracle filter):
+   0.6295 — also inverted. Registered line P(TRANSFER)=55 LOSES, and in an
+   unlisted direction (the record's recurring lesson).
+4. **Peaks vs A3: NULL, cleanly.** Pooled (96 maps) ν2.5 +15.19%±2.93 vs
+   reference +15.290% → Δ = 0.02σ; ν3.0 +13.67%±2.64 vs +12.474% →
+   Δ = −0.31σ. Per-stream +16.13/+13.86/+15.57 (ν2.5); ablation +15.62;
+   edge continuity +15.14/+15.95 (vs committed white-base stage-D F2
+   +12.45/+12.94 — directionally worse, descriptive); ν=1 pooled +21.11%
+   (#10, never headlined). No at-bar entry, no flip.
+5. **Must-not-regress: NO regression.** No marginal catastrophe;
+   parity_T = 1.27; starlet-ℓ1 trained + edge legs PASS (frozen scorer,
+   legs 8/9); identity gates PASS. WATCHED: nn_T = 3.33 (committed
+   white-base streams: 4.045 — same instrument, different streams;
+   descriptive). coef_T_oct1 = 2.35.
+6. **BRANCH (mechanical): N-NULL-WITHOUT-TRANSFER** (weights rec/exec
+   35/30 on NULL, A2-split). Registered lines: ablation-C-larger 75 → HIT
+   (0.6295 > all three adjudicating streams); nn-conditional void (no
+   transfer).
+
+### DESCRIPTIVE addendum (labeled; outside the branch table):
+### the two-point transfer analysis (l1p_transfer_analysis.json)
+
+The night's two input spectra (white C=1.0; colored C≈0.74) give a
+two-point measurement of the flow's oct-1 spectral action. Per-ring
+transfer T(k) = S_out/S_in is CONSISTENT across the two inputs to ~3%
+(T_col/T_white median 0.981, IQR [0.967, 1.029]): the extrapolating flow
+acts as a nearly input-independent multiplicative filter, T(k) rising
+0.66 → 1.06 from k=2 to k=30 — a blue-tilting transfer. Consequences:
+(i) the whiteness defect IS the transfer function of weight-tied
+extrapolation on this field (with a white base, output = T·white); (ii)
+L1's filter TARGET was mis-specified — we colored the base toward the
+real-detail spectrum when cancellation requires pre-emphasis AGAINST the
+transfer: the deconvolved base target S_real/T has C = 1.10, red of white,
+the OPPOSITE side from the filter we ran (0.74); the multiplicative model
+predicts the observed inversion (predicted colored-out C 0.527 vs measured
+0.589, ring convention). (iii) **The pre-stated MEANING of
+NULL-WITHOUT-TRANSFER ("the flow does not carry base spectra into
+details") is contradicted by the measured mechanism** — the flow carries
+them at ~unit ring-wise fidelity; the literal A2 rule (moved TOWARD real
+at 3σ) correctly read NO because the carried spectrum was aimed at the
+wrong target. The branch verdict stands as the mechanical outcome; its
+attached meaning needs reconvene amendment before L2 is declared the live
+lever — a measured-deconvolution L1″ (inference-only, base filter =
+S_real/T from the committed two-point measurement, ~0.03 H100-h) is the
+cheap falsifiable next move, with the two-point consistency as its
+registered premise. DRAFT ONLY — nothing further runs tonight.
+
+### Execution accounting
+
+Two MIG jobs (17939621 canary 8 min; 17941294 main 18 min) ≈ 0.06 H100-h
+of the ≲0.4 budget; zero training; both test suites green; the A2-before-
+peaks order enforced structurally (l1p_a2.json written before any peak
+number was computed).
+
+**STOP — reconvene adjudication of the readout, the meaning amendment, and
+the L1″ draft.**
