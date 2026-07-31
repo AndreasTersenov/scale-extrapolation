@@ -398,3 +398,5 @@ This is the load-bearing run and wants a full H100 (`--gpus-per-node=1`, ≤2:59
 - stage3_blind_train.slurm: THE one blind training (seed 7, {3,4}, arm A).
 - 17987660 SUBMITTED (blind training).
 - 17987316/17 COMPLETED (picks: seed1 @3500, seed2 @5500 — vs seed0 @16000; the picks-differ line fires). 17987664/17987665 SUBMITTED (seed white phases).
+- 17987821 (blind white), 17987822/17987823 (seed finals) SUBMITTED.
+- 17988003 SUBMITTED (blind final — the one-shot's streams).

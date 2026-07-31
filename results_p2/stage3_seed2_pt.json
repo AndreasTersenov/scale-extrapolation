@@ -1,0 +1,13 @@
+{
+ "C_pred": 0.7555502304980443,
+ "sigma_mc": 0.011015806623051927,
+ "band_3sigma": 0.03616935111400635,
+ "interval": [
+  0.7193808793840379,
+  0.7917195816120506
+ ],
+ "cal_history": [
+  0.01880179022068804
+ ],
+ "note": "sigma_lnT transferred from committed L1'' spread (prereg)"
+}
