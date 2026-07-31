@@ -62,6 +62,30 @@ method paper, with the phase-domain instrument as its natural first step.
 This also lands better than PLAN-phase3's own written fallback: peaks pass
 WITH a declared resolution, not not-at-all.
 
-**Reconvene:** (slot — to be added at review.)
+**Reconvene: Option A, concurring** (added at review, 2026-07-31; package
+verified — sweep crossings, 0.5-px pass pattern, panels, nn stream-scatter
+all re-checked against artifacts; the probe-2 pooling bug's in-script
+disclosure audited: caught pre-commit by its own inconsistent output,
+corrected logic sound). Four reasons, one caveat:
+(1) the mode-2 goal — "a method you can use for higher-order-statistics
+mocks" — is met honestly by A: the field computes peak statistics on
+smoothed maps, the declared domain covers that practice, and the boundary
+comes with a located mechanism and the record's third clean dissociation,
+not a shrug. (2) Option B attacks a sub-half-pixel artifact with NO
+committed instrument and NO measured dose-response — the exact
+mechanism-hope pattern the R41 calibration note warns against; it remains
+available as post-paper follow-up with the phase-domain instrument as its
+natural first step. (3) The deconvolved base is the right final config on
+the evidence: it is the ONLY config with a coherent declared resolution at
+both legs (edge crossing 0.28 → 0.49 px), and it carries the validated
+calibration arc as its story. (4) Probe 1's deflation of the spacing
+frontier (committed T≈4 was a stream MAXIMUM; white-stream mean 3.15 ±
+0.95, config differences within scatter — the max-vs-mean confound's third
+appearance, now at stream level) removes the strongest residual-mystery
+motivation for B; the paper's spacing row will be restated on pooled
+multi-stream measurements. CAVEAT, stated plainly: the declared-resolution
+pass rests on a 5-point grid at n=32–96 maps; Stage 3's pre-registered
+one-shot blind re-run (with smoothed-peak entries) is the real test, and
+if it fails, the fallback is PLAN-phase3's written scope shrink.
 
 **Andreas decides.** Budget state: phase spend ≈ 0.56 of 10 H100-h.
