@@ -1,55 +1,60 @@
 # §6 — Discussion
 
-## 6.1 The open tier: joint/morphological structure (R27 wording)
+## 6.1 What ships and for whom [WRITE — the method-first close]
 
-- What is measured vs what is not (verbatim R27 distinction): peak-count
-  excess at fixed marginal calibration is measured; literal placement
-  (environment-conditioned rates, peak clustering) is untested.
-- The sign-flip finding (promoted by R27): the residual is
-  field-structure-dependent — the exact-truth sandbox shows a significant
-  DEFICIT (arm A −9.4%±1.7% at ν=3 on 64 fresh fields, split-half nulls
-  clean) where the real field shows an EXCESS. <!-- src: audit_peak_ci.json -->
-- The placement experiment as REGISTERED future work (cite the committed
-  prereg): H-data (next moment-ladder rung; parents the currency) vs H-arch
-  (model-class ceiling) vs H-selection (the cage optimizes marginals);
-  the transfer clause stated verbatim: a data-cure verdict on the sandbox
-  licenses "joint structure is data-limited in this model class," never
-  "more parents cure the real-field excess."
-- If it lands before submission it becomes a results subsection either way
-  (SPEC addendum item 3).
+The usable deliverables restated in deployment terms: the generator with
+its declared domain (§2.5); the F2 sampler and the deconvolution
+calibration as drop-in components for ANY wavelet-cascade emulator; the
+audit protocol + untouched-judge practice as the validation template. The
+tiered use cases (explainer §7, honestly): covariance mocks with the audit
+as error budget; pipeline stress-testing; priors in inverse problems. The
+"not yet" list verbatim.
 
 ## 6.2 The data-investment thesis [WRITE]
 
-Parents are the currency (causal at two rungs + N_eff accounting); the
-principled agenda: paired/constrained conditional ensembles as training-set
-DESIGN (the currency arm of the placement experiment measures which axis
-binds); explainer §10's principled-vs-recipe audit quoted for the selection
-cage's status.
+Parents are the currency (causal at two rungs + N_eff accounting +
+CUR-PARENTS: independent ICs beat constrained conditional ensembles at
+matched picks <!-- src: pcure ledger -->); paired/constrained conditional
+ensembles as training-set DESIGN; the principled-vs-recipe audit of the
+fixes (explainer §10) quoted for the selection cage's status — now with
+the R43 finding-3 resolution: the cage is promoted from recipe to method
+component, priced by the printed seed spread.
 
-## 6.3 Where the economics bind: the road to PM super-resolution [WRITE from
-explainer §8 — one paragraph, prospectus-grade]
+## 6.3 Open directions, each with its measured starting point
 
-Domain translation + resolution extension; paired initial conditions as the
-data design; θ-conditioning and posterior-level acceptance tests as the two
-honest gaps; the audit transfers unchanged and is the missing ingredient in
-the existing literature. Multi-octave and 3D/hydro stated as unvalidated.
+- Native-resolution texture (Option B, parked post-paper): the first step
+  is a committed phase-domain instrument — no committed instrument yet
+  measures the located mechanism; the L2 loss-side family waits on it.
+  <!-- src: R41/R43 -->
+- Selection: late-window / matched-step rules as the candidate cure for
+  the seed-conditionality (drafted, not run).
+- The Minkowski gap: morphology-targeted training or post-hoc calibration,
+  starting from WHICH functional/threshold entries carry the 6.35
+  (descriptive decomposition is one afternoon of committed-artifact work).
+- Literal placement instruments (the registered placement experiment);
+  multi-octave; 3D/hydro where the economics bind — the PM prospectus
+  paragraph (explainer §8): domain translation + θ-conditioning +
+  posterior-level acceptance tests; the audit transfers unchanged.
+  <!-- cite: Remy 2201.05561 lineage in the H-arch fallback sentence -->
 
-## 6.4 What this is useful for now [WRITE from explainer §7 — tiered
-honestly: covariance mocks with the audit as error budget; pipeline
-stress-testing; priors in inverse problems; the audit exported. "Not yet"
-list verbatim.]
+## 6.4 Pre-registered science with agents (the calibration record)
+## [WRITE, short — a methods observation, not a headline]
+
+Every prediction on both sides scored across 43 rulings; the phase-3
+pattern stated plainly: reality selected a non-modal branch at four of five
+decision points; the systematically heavier pessimistic tails were closer
+at three, the measured-dose-response reasoning won the fourth. The record
+includes its own calibration data — why it can be trusted — and the
+standing lesson: a measured dose-response outweighs a mechanism-based
+expectation, even a well-motivated one. <!-- src: R43 scorecard; R41
+calibration note; appendix A.5 -->
 
 ## 6.5 Limitations (scope words, verbatim block)
 
 One octave validated; 2D gravity-only; one simulation family; one seed
-family; 266 training tiles / 30 parents on the real field; conditional-level
-margin at the edge razor-thin (0.1%); B's octave-4 over-tails; two-octave
-cost measured; joint/morphological tier open.
-
-## 6.6 Pre-registered science with agents (the calibration note) [WRITE,
-short — a methods observation, not a headline]
-
-Every prediction (both roles) scored; the measured under-confidence streak on
-constructive outcomes after the failure era (four consecutive), re-anchored
-by ruling; the record includes its own calibration data — why it can be
-trusted. <!-- src: R24; scorecard tables in the appendix -->
+family for the shipped configuration with the n=3 spread printed; 266
+training tiles / 30 parents; declared-resolution peak claim is
+selection-attached; blind-run marginals pass pre-registered bars but not
+bare floors (disclosed in §3.2); Minkowski morphology fails at both
+resolutions; native-resolution counts outside the domain; the
+joint-placement tier untested.

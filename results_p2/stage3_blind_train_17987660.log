@@ -1,0 +1,54 @@
+jax devices: [CudaDevice(id=0)]
+E0731 05:39:46.043269 4179648 ptx_compiler_helpers.cc:154] *** WARNING *** Invoking ptxas with version 12.6.77, which corresponds to a CUDA version <=12.6.2. CUDA versions 12.x.y up to and including 12.6.2 miscompile certain edge cases around clamping.
+Please upgrade to CUDA 12.6.3 or newer.
+[05:39:46] config_hash=49e554f5d4 devices=[CudaDevice(id=0)]
+[05:39:46] config={"field": "gowerstreet", "train_octaves": [3, 4], "gen_from": 4, "channels": [32, 64, 128], "cond_mode": "film", "steps": 20000, "ckpt_every": 500, "batch": 32, "lr": 0.001, "n_heldout": 64, "sample_steps": 80, "sel_K": 4, "sel_octave": 3, "data": "/home/tersenov/software/scale-extrapolation/data_cache/tiles_pnull.npz", "coords_file": "/home/tersenov/software/scale-extrapolation/data_cache/running_couplings_stageD.json", "truth": "/home/tersenov/software/scale-extrapolation/results_p2/gowerstreet_val_ref_oct3.json", "out": "/home/tersenov/software/scale-extrapolation/results_p2/stage3_blind_arms.npz", "sel_out": "/home/tersenov/software/scale-extrapolation/results_p2/stage3_blind_selection.json", "ckpt_dir": "/home/tersenov/software/scale-extrapolation/data_cache/ckpt_stage3_blind", "seed": 7, "arms": ["A"]}
+[05:39:46] gowerstreet: 266 train / 32 val / 32 test; selection reference oct3 vs=0.845 kurt=4.215
+[05:42:10] arm A: trained, loss 2.361->1.2060
+[05:42:21] arm A sel @500: vs=0.187 kurt=4.50 score=7.782
+[05:42:29] arm A sel @1000: vs=0.467 kurt=4.30 score=4.469
+[05:42:38] arm A sel @1500: vs=0.589 kurt=2.14 score=3.282
+[05:42:46] arm A sel @2000: vs=0.661 kurt=1.89 score=3.685
+[05:42:54] arm A sel @2500: vs=0.664 kurt=2.08 score=3.378
+[05:43:02] arm A sel @3000: vs=0.722 kurt=2.32 score=3.000
+[05:43:10] arm A sel @3500: vs=0.725 kurt=2.81 score=2.227
+[05:43:18] arm A sel @4000: vs=0.699 kurt=2.33 score=2.974
+[05:43:26] arm A sel @4500: vs=0.689 kurt=2.95 score=2.007
+[05:43:34] arm A sel @5000: vs=0.754 kurt=2.78 score=2.277
+[05:43:42] arm A sel @5500: vs=0.690 kurt=2.34 score=2.964
+[05:43:50] arm A sel @6000: vs=0.753 kurt=2.70 score=2.393
+[05:43:58] arm A sel @6500: vs=0.739 kurt=3.24 score=1.535
+[05:44:07] arm A sel @7000: vs=0.696 kurt=2.81 score=2.220
+[05:44:15] arm A sel @7500: vs=0.671 kurt=2.44 score=2.807
+[05:44:23] arm A sel @8000: vs=0.735 kurt=2.51 score=2.692
+[05:44:31] arm A sel @8500: vs=0.741 kurt=2.91 score=2.067
+[05:44:39] arm A sel @9000: vs=0.740 kurt=2.61 score=2.535
+[05:44:47] arm A sel @9500: vs=0.825 kurt=3.26 score=1.507
+[05:44:55] arm A sel @10000: vs=0.736 kurt=2.79 score=2.259
+[05:45:03] arm A sel @10500: vs=0.821 kurt=3.83 score=0.613
+[05:45:11] arm A sel @11000: vs=0.746 kurt=2.85 score=2.163
+[05:45:19] arm A sel @11500: vs=0.797 kurt=3.00 score=1.928
+[05:45:27] arm A sel @12000: vs=0.775 kurt=2.84 score=2.173
+[05:45:35] arm A sel @12500: vs=0.747 kurt=2.60 score=2.550
+[05:45:44] arm A sel @13000: vs=0.773 kurt=2.99 score=1.940
+[05:45:52] arm A sel @13500: vs=0.742 kurt=2.98 score=1.950
+[05:46:00] arm A sel @14000: vs=0.775 kurt=2.87 score=2.120
+[05:46:08] arm A sel @14500: vs=0.768 kurt=3.08 score=1.789
+[05:46:16] arm A sel @15000: vs=0.799 kurt=3.18 score=1.634
+[05:46:24] arm A sel @15500: vs=0.768 kurt=3.06 score=1.821
+[05:46:32] arm A sel @16000: vs=0.723 kurt=2.50 score=2.720
+[05:46:41] arm A sel @16500: vs=0.761 kurt=2.72 score=2.362
+[05:46:49] arm A sel @17000: vs=0.758 kurt=2.57 score=2.607
+[05:46:57] arm A sel @17500: vs=0.762 kurt=2.77 score=2.292
+[05:47:05] arm A sel @18000: vs=0.769 kurt=3.00 score=1.920
+[05:47:13] arm A sel @18500: vs=0.771 kurt=2.69 score=2.412
+[05:47:21] arm A sel @19000: vs=0.752 kurt=2.65 score=2.473
+[05:47:29] arm A sel @19500: vs=0.758 kurt=2.65 score=2.476
+[05:47:37] arm A sel @20000: vs=0.774 kurt=2.97 score=1.970
+[05:47:37] arm A SELECTED checkpoint: step 10500 (score 0.613)
+[05:47:48] arm A TEST oct2 @sel: vs=0.832 kurt=4.50 q999=5.32
+[05:47:51] arm A TEST oct3 @sel: vs=0.761 kurt=2.81 q999=4.90
+[05:47:56] arm A TEST oct4 @sel: vs=0.586 kurt=1.74 q999=4.62
+[05:48:18] arm A TEST oct1 @sel: vs=0.809 kurt=5.01 q999=5.48
+[05:48:55] arm A: e2e recursion from selected ckpt done [549s]
+[05:48:55] wrote /home/tersenov/software/scale-extrapolation/results_p2/stage3_blind_arms.npz and /home/tersenov/software/scale-extrapolation/results_p2/stage3_blind_selection.json in 549s config_hash=49e554f5d4

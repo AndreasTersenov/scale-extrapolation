@@ -1,30 +1,33 @@
-# TODO ledger — [WRITE] vs [HARDEN-FIG] (per SPEC process section)
+# TODO ledger — [WRITE] vs [HARDEN-FIG] (method-first skeleton, post-R43)
 
 ## [WRITE] (prose, after Andreas's structural sign-off)
-- W1 §1: 1.1 trust problem, 1.2 two questions (explainer §1/§10 sources).
-- W2 §2: 2.1 object (explainer §2–3), 2.5 implications paragraph.
-- W3 §3: 3.3 inverted-pilot paragraph, 3.4 downstream paragraph, 3.5 short.
-- W4 §4: framing sentence; 4.2 narrative; 4.4 ladder statement.
-- W5 §5: 5.1 protocol paragraph.
-- W6 §6: 6.2 data thesis, 6.3 PM prospectus, 6.4 usefulness, 6.6 note.
-- W7 Appendix: A.1 prereg table, A.5 scorecard table (compile from rulings).
+- W1 §1: 1.1 trust problem, 1.2 deliverables paragraph (explainer §1/§10).
+- W2 §2: 2.1 object, 2.4 calibration recipe in method voice.
+- W3 §3: 3.1 audit-in-one-paragraph, 3.5 calibration record.
+- W4 §4: 4.1 protocol paragraphs; 4.3 narrative; 4.4 schedule statement;
+  4.5 the L1→L1″ arc page (wrong-target step INCLUDED).
+- W5 §5: framing sentence; 5.2 thesis sentence.
+- W6 §6: 6.1 what-ships, 6.2 data thesis, 6.3 open directions, 6.4 note.
+- W7 Appendix: A.1 prereg table R1–R43, A.5 scorecard table.
 - W8 abstract + both §1 venue drafts (VENUE.md).
-- W9 citations: WC-RG lineage, data suites, AIFS/Pacchiardi additions
-  (periphery); verify every mandatory citation lands per CITATIONS.md.
+- W9 citations: verify every mandatory citation lands per CITATIONS.md;
+  ADD periphery: Minkowski-functional WL literature (V0/V1/V2 usage) for
+  §5.2; WC-RG lineage; data-suite citations.
 - W10 title pick + venue decision (ANDREAS).
 
-## [HARDEN-FIG] (cheap jobs, prereg-exempt re-rendering of committed numbers)
-- H1 peak-CI + per-parent panel figure from results_p2/audit_peak_ci.json
-  (F14); de-headline ν=1 in any peak panel (bar-ledger #10).
-- H2 nanmedian hardening + population-calibrated self-consistency bands
-  (standing chores, R20.1) — refresh F5 if numbers move (they should not;
-  any change is a STOP-and-report, not a silent regen — scripted-edit rule).
-- H3 relabel/composite passes: F1, F2, F5, F8, F9, F11, F15 (codename-free
-  labels; captions carry artifact pointers).
-- H4 repro backfill: committed builder recipe for tiles_pnull.npz (A.2).
+## [HARDEN-FIG] (cheap, prereg-exempt re-rendering of committed numbers)
+- H1 F14 peak-CI + per-parent panel (audit_peak_ci.json); ν=1 de-headline.
+- H2 F16 robustness-table render (stage3_a_table.json).
+- H3 F20 Minkowski entry decomposition (which V_i(ν) carry T=6.35) —
+  descriptive, committed artifacts only.
+- H4 relabel/composite passes: F1, F2, F5, F8, F9, F11, F15 captions.
+- H5 repro backfill: committed builder recipe for tiles_pnull.npz (A.2).
+- H6 nanmedian hardening + SC bands (standing chores R20.1); any number
+  movement is STOP-and-report, never silent regen.
 
 ## Blocked / decision-owned
-- B1 Andreas: structural sign-off on this skeleton (R29 STOP is here).
-- B2 Andreas: title + venue (VENUE.md).
-- B3 reconvene: placement-experiment prereg review (WP2 STOP; if its readout
-  lands before submission it becomes a §6.1 results subsection).
+- B1 Andreas: structural sign-off on THIS skeleton (the R43 STOP is here).
+- B2 Andreas: title + venue (VENUE.md; both intros drafted).
+- B3 post-paper (parked by R43, must not enter this paper's claims):
+  Option-B phase-domain instrument; late-window/matched-step selection;
+  the placement experiment.

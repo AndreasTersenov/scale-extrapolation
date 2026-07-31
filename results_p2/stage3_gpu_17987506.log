@@ -1,0 +1,7 @@
+jax devices: [CudaDevice(id=0)]
+E0731 05:29:40.756634 3766136 ptx_compiler_helpers.cc:154] *** WARNING *** Invoking ptxas with version 12.6.77, which corresponds to a CUDA version <=12.6.2. CUDA versions 12.x.y up to and including 12.6.2 miscompile certain edge cases around clamping.
+Please upgrade to CUDA 12.6.3 or newer.
+[05:33:05] dryrun final1: done
+[05:34:53] dryrun final2: done
+[05:36:15] dryrun final3: done
+[05:36:15] -> stage3_dryrun_final.npz
