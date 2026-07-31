@@ -378,3 +378,13 @@ This is the load-bearing run and wants a full H100 (`--gpus-per-node=1`, ≤2:59
 - l1pp_decision_edge.slurm: MIG 25 min, the one negligible-GPU stream
   (deconvolved edge, per-checkpoint deployment recipe, replay gate).
 - 17961764 SUBMITTED.
+
+## 2026-07-31 — Stage 3 (prereg af34d93; R42 APPROVED CONDITIONAL)
+- stage3_seed.slurm x2 (SEED=1,2): (a) seed-ensemble trainings, arm A only
+  (additive --arms flag, default unchanged, grep-verified), MIG 1:45 cap.
+  Expected: 20k-step runs + caged selections + dense ckpts. One
+  resubmission each (infra).
+- 17987316 (seed 1), 17987317 (seed 2) SUBMITTED.
+- A4 EXECUTED: stage3_mf_null.json committed; recomputed values MATCH the
+  prereg quotes EXACTLY (native 1.43/0.47/2.65; smoothed 1.48/0.55/2.87)
+  -> (b) PRE-CLEARED per R42; proceeding dry-run -> blind -> one-shot.

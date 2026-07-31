@@ -1,0 +1,225 @@
+{
+ "convention": "20 seeded 16v16 half-splits of the 32 stage-D real tiles; split rng default_rng(100+s).permutation(32); judge_T(n_boot=400, seed=500+s); smoothed domain = gaussian_filter(0.5) on both halves",
+ "domains": {
+  "native": {
+   "splits": [
+    {
+     "split_seed": 100,
+     "judge_seed": 500,
+     "T": 1.0586593652316316
+    },
+    {
+     "split_seed": 101,
+     "judge_seed": 501,
+     "T": 1.159563046842498
+    },
+    {
+     "split_seed": 102,
+     "judge_seed": 502,
+     "T": 0.8871431484596024
+    },
+    {
+     "split_seed": 103,
+     "judge_seed": 503,
+     "T": 1.4468028366417771
+    },
+    {
+     "split_seed": 104,
+     "judge_seed": 504,
+     "T": 1.1395337799159295
+    },
+    {
+     "split_seed": 105,
+     "judge_seed": 505,
+     "T": 1.5933239589248396
+    },
+    {
+     "split_seed": 106,
+     "judge_seed": 506,
+     "T": 1.8712648788238417
+    },
+    {
+     "split_seed": 107,
+     "judge_seed": 507,
+     "T": 1.2004284943656431
+    },
+    {
+     "split_seed": 108,
+     "judge_seed": 508,
+     "T": 2.649025541353309
+    },
+    {
+     "split_seed": 109,
+     "judge_seed": 509,
+     "T": 1.4453708729494885
+    },
+    {
+     "split_seed": 110,
+     "judge_seed": 510,
+     "T": 0.9722088594966519
+    },
+    {
+     "split_seed": 111,
+     "judge_seed": 511,
+     "T": 1.8756802217843829
+    },
+    {
+     "split_seed": 112,
+     "judge_seed": 512,
+     "T": 1.5106615177458391
+    },
+    {
+     "split_seed": 113,
+     "judge_seed": 513,
+     "T": 1.0795721512599215
+    },
+    {
+     "split_seed": 114,
+     "judge_seed": 514,
+     "T": 2.124219915411371
+    },
+    {
+     "split_seed": 115,
+     "judge_seed": 515,
+     "T": 1.689202490525423
+    },
+    {
+     "split_seed": 116,
+     "judge_seed": 516,
+     "T": 0.7760962137338513
+    },
+    {
+     "split_seed": 117,
+     "judge_seed": 517,
+     "T": 1.2015586629059616
+    },
+    {
+     "split_seed": 118,
+     "judge_seed": 518,
+     "T": 1.8224890488528487
+    },
+    {
+     "split_seed": 119,
+     "judge_seed": 519,
+     "T": 1.0709993724174534
+    }
+   ],
+   "mean": 1.43,
+   "sd": 0.47,
+   "max": 2.65,
+   "mean_raw": 1.4286902188821133,
+   "sd_raw": 0.4701643453602978,
+   "max_raw": 2.649025541353309
+  },
+  "smoothed": {
+   "splits": [
+    {
+     "split_seed": 100,
+     "judge_seed": 500,
+     "T": 0.7100720510434981
+    },
+    {
+     "split_seed": 101,
+     "judge_seed": 501,
+     "T": 1.4804857082961371
+    },
+    {
+     "split_seed": 102,
+     "judge_seed": 502,
+     "T": 2.1758154077489964
+    },
+    {
+     "split_seed": 103,
+     "judge_seed": 503,
+     "T": 1.3584686118679856
+    },
+    {
+     "split_seed": 104,
+     "judge_seed": 504,
+     "T": 1.0965011931441295
+    },
+    {
+     "split_seed": 105,
+     "judge_seed": 505,
+     "T": 1.2259564359099953
+    },
+    {
+     "split_seed": 106,
+     "judge_seed": 506,
+     "T": 1.784319005652312
+    },
+    {
+     "split_seed": 107,
+     "judge_seed": 507,
+     "T": 0.5099389231085767
+    },
+    {
+     "split_seed": 108,
+     "judge_seed": 508,
+     "T": 2.197184880544891
+    },
+    {
+     "split_seed": 109,
+     "judge_seed": 509,
+     "T": 1.3767478211532977
+    },
+    {
+     "split_seed": 110,
+     "judge_seed": 510,
+     "T": 0.7535131509209755
+    },
+    {
+     "split_seed": 111,
+     "judge_seed": 511,
+     "T": 2.0937694222880534
+    },
+    {
+     "split_seed": 112,
+     "judge_seed": 512,
+     "T": 1.533631983823905
+    },
+    {
+     "split_seed": 113,
+     "judge_seed": 513,
+     "T": 1.3280680871059112
+    },
+    {
+     "split_seed": 114,
+     "judge_seed": 514,
+     "T": 2.8749519395977647
+    },
+    {
+     "split_seed": 115,
+     "judge_seed": 515,
+     "T": 1.4023975376102804
+    },
+    {
+     "split_seed": 116,
+     "judge_seed": 516,
+     "T": 1.4470449080917211
+    },
+    {
+     "split_seed": 117,
+     "judge_seed": 517,
+     "T": 1.6042890847764852
+    },
+    {
+     "split_seed": 118,
+     "judge_seed": 518,
+     "T": 1.2535224688071867
+    },
+    {
+     "split_seed": 119,
+     "judge_seed": 519,
+     "T": 1.3438828493753237
+    }
+   ],
+   "mean": 1.48,
+   "sd": 0.55,
+   "max": 2.87,
+   "mean_raw": 1.4775280735433713,
+   "sd_raw": 0.553960466939959,
+   "max_raw": 2.8749519395977647
+  }
+ }
+}

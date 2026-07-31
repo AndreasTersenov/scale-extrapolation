@@ -114,6 +114,11 @@ def main():
     ap.add_argument("--ckpt-dir", default=os.path.join(REPO, "data_cache",
                                                        "ckpt_c1t_sandbox"))
     ap.add_argument("--seed", type=int, default=0)
+    ap.add_argument("--arms", nargs="+", default=["A", "B"],
+                    choices=["A", "B"],
+                    help="which arms to train (additive flag, 2026-07-31 "
+                         "stage 3: seed-ensemble legs train arm A only per "
+                         "the prereg; default unchanged)")
     args = ap.parse_args()
 
     cfg = vars(args).copy()
@@ -137,7 +142,7 @@ def main():
     ckpt_steps = list(range(args.ckpt_every, args.steps + 1, args.ckpt_every))
     results, out = {}, {"meta": cfg | {"config_hash": cfg_hash}}
     t0 = time.time()
-    for arm in ("A", "B"):
+    for arm in args.arms:
         def save_ckpt(step_i, st, loss_i, _arm=arm):
             path = os.path.join(args.ckpt_dir,
                                 f"arm{_arm}_{args.field}_s{step_i}.pkl")
