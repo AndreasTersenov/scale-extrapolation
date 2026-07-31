@@ -155,3 +155,72 @@ entries; commit+push per unit.
 
 **STOP — this prereg goes to reconvene review before ANYTHING runs; the
 (b) one-shot additionally runs only exactly once, after that review.**
+
+---
+
+## STAGE-3 READOUT (final adjudication package of the phase; every number
+## verbatim from committed artifacts; ALL calls provisional for the
+## reconvene)
+
+### (a) Robustness table: **R-SEED-FRAGILE** (stage3_a_table.json)
+
+| row | pick | C (band) | marginals | peaks@0.5px (ν2.5/ν3.0) | parity | starlet | nn (mean±sd) | row |
+|---|---|---|---|---|---|---|---|---|
+| seed0 SHIPPED* | 16000 | 0.7414 IN | PASS | −1.12%/−0.26% PASS | 1.70 | PASS | 2.58±0.44 | **PASS** |
+| seed1 | 3500 | 0.7628 IN | PASS | +3.63%/+6.54% FAIL | 2.47 | PASS | 3.23±0.56 | FAIL [declared_res_peaks] |
+| seed2 | 5500 | 0.7558 IN | PASS | +4.48%/+6.64% FAIL | 1.25 | PASS | 2.56±0.15 | FAIL [declared_res_peaks] |
+
+*survivorship labeled: seed0 is the campaign's pick; seeds 1–2 are the
+unbiased draws. The named failure is ONE entry, structured: fresh seeds
+carry +4–7% excess AT 0.5 px (their zero crossings sit beyond 0.5 px);
+their caged picks landed early (@3500/@5500 vs @16000 — the picks-differ
+line, 50/50 co-signed, fires). Everything else is SEED-ROBUST: calibration
+in-band 3/3 (the deconvolution method survives seed change), marginals
+3/3, starlet 3/3, parity 3/3, nn pooled 2.56–3.23 (consistent with the
+deflated frontier). Line scorecard: all-3-declared-res (rec 55 / exec 65)
+— both LOSE, reconvene less wrong; all-3-C-in-band (65/70) — both HIT.
+
+### (b) THE ONE-SHOT: **B3-PARTIAL**, failed entry = E3 only
+### (stage3_blind_verdict.json; seed 7, pick @10500, scored once, A5 order)
+
+- Gates: determinism exact; fit converged (1.6%). **P-T LANDS:** C =
+  0.7765±0.0046 in [0.7678, 0.8445] — the transfer-model calibration's
+  FIFTH consecutive validation, here on a fresh {3,4}-trained blind seed
+  with the two-octave-rescaled deployment-pure target.
+- **E1 edge marginals: PASS** (hc + e2e, Stage-D bars) — the founding
+  extrapolation bet re-confirmed on a third independent training.
+- **E2 smoothed peaks at the edge: PASS** — −1.14%/−4.00% at 0.5 px, CIs
+  include 0, panels not sign-consistent. (Line rec 65 / exec 70: both HIT.)
+- **E3 Minkowski, FIRST APPLICATION, declared resolution: FAIL** —
+  T_MF = 6.35 vs bar 3.5 (outside the ±0.25 band; no rerun — one-shot).
+  Native T_MF = 5.30 (descriptive; the native-echo line 75/75 HIT).
+  Line rec 62 / exec 70 — both on the wrong side; reconvene less wrong,
+  and the entry did exactly what an untouched tier is for.
+- **E4 starlet: PASS.** Supporting: parity_T 2.10, nn 2.85±0.20.
+- Quarantined dry-run (appendix): committed stage-D config read E2
+  −3.0/−3.0 FAIL, T_MF 8.08/7.20 — the fresh blind seed IMPROVED both.
+
+### The phase's final state, stated plainly
+
+The method ships with: marginals, starlet-ℓ1, parity, and spacing (pooled)
+robust across seeds AND at the blind edge; a validated, seed-robust,
+deployment-pure calibration recipe for the oct-1 coloring (5/5 P-T); and a
+declared-resolution peak claim that holds on the SHIPPED configuration and
+at the blind edge one-shot, but is NOT robust to training-seed replacement
+at trained scales (+4–7% at 0.5 px on fresh seeds) — the honest wording
+must carry seed-conditionality or a larger declared σ. The Minkowski
+morphology tier does not pass at either resolution (6.35/5.30) and enters
+the paper as the declared next boundary, continuous with the located
+pixel-scale phase-texture mechanism. Bar-ledger material: the untouched-
+judge design (frozen pre-lever, first-applied at the one-shot) caught what
+five designed-against tiers could not — the campaign's strongest argument
+for held-out validation tiers in generator audits.
+
+### Accounting
+
+Stage-3 GPU ≈ 1.2 H100-h (3 trainings + 9 sampling phases); phase total
+≈ 1.8 of 10. Zero mid-stage edits after the dry-run (A6 clean); A5 order
+enforced structurally in both scorers; suites green throughout.
+
+**STOP — the Stage-3 readout goes to the final reconvene adjudication of
+the phase.**
