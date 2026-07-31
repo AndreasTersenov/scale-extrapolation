@@ -38,9 +38,21 @@ located mechanism or a named open question, never a shrug.
   need a held-out judge for the same reason blind analyses need blinding —
   and this paper demonstrates the practice on its own generator, at its
   own headline table, and prints the failure.
-- Continuity: the morphology gap is continuous with the located pixel-
-  scale phase mechanism (§4.5) — stated as the natural next-boundary
-  hypothesis, NOT as a measured attribution.
+- The catch DECOMPOSED (A8 wording, binding — R45): the failure is a
+  DISTINCT located signature, not asserted-continuous with §5.1's
+  mechanism. T = 6.35 is carried by the Euler characteristic at ν ≈ 0 —
+  MID-LEVEL topology — with a +4.5σ boundary-length component and a sign
+  flip at ν = −1: the generated fields fragment into more connected
+  components (per-map χ(0) +240.3 vs real +193.4; tile exhibit 457
+  components/167 holes vs 438/193) and carry a hole deficit at the
+  half-level set. <!-- src: phase3_topology_decomp.json -->
+  The paper therefore states TWO located boundary signatures: (i)
+  pixel-scale phase texture (native-resolution peak counts, ν ≥ 2.5,
+  mechanism measured by the three dissociations, §5.1); (ii) mid-level
+  topology (χ/V2 at ν ≈ 0, surviving the declared-resolution smoothing,
+  found by the first-applied untouched judge). Their relationship is
+  OPEN — and this is the stronger statement: the judge found a defect the
+  peak tier could not have seen even in principle at its thresholds.
 - Appendix pointer: the quarantined dry-run showed the fresh blind seed
   IMPROVED both E2 and T_MF over the committed lineage (8.08 → 6.35) —
   the one-shot's marginal-and-peak pass is not a lucky seed (R43

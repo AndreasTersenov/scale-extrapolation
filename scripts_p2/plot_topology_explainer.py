@@ -10,7 +10,11 @@ Panel B/C: the ν=0 excursion set of one tile, real vs generated, with
          islands.
 Panel D: per-map χ(ν=0) distributions (32 real vs 96 generated maps).
 
-Writes results_p2/phase3_story_topology.png.
+Writes results_p2/phase3_story_topology.png and (A7, R45) the committed
+decomposition artifact results_p2/phase3_topology_decomp.json: the judge's
+18-entry z-vector (declared domain, the scorer's seed), dense per-ν
+z-curves for V0/V1/V2, χ curves with SE bands, the tile component/hole
+counts, and the per-map χ(0) populations.
 """
 from __future__ import annotations
 
@@ -29,7 +33,7 @@ sys.path.insert(0, REPO)
 sys.path.insert(0, os.path.join(REPO, "scripts_p2"))
 
 from audit_peak_ci import peaks_count
-from minkowski_judge import minkowski_vector
+from minkowski_judge import NUS, judge_T, minkowski_vector
 
 NU_GRID = tuple(np.arange(-3.0, 3.51, 0.25))
 N = len(NU_GRID)
@@ -129,3 +133,64 @@ fig.tight_layout()
 fig.savefig(os.path.join(RES, "phase3_story_topology.png"), dpi=150)
 print(f"wrote phase3_story_topology.png; chi0 real {chi0_r.mean():+.1f} "
       f"gen {chi0_g.mean():+.1f}; tile {tile}")
+
+# ---- A7 (R45): the committed decomposition artifact -------------------------
+import json  # noqa: E402
+
+T18, z18 = judge_T(gen, real, seed=20260845)
+labels18 = ([f"V0_nu{n:g}" for n in NUS] + [f"V1_nu{n:g}" for n in NUS]
+            + [f"V2_nu{n:g}" for n in NUS])
+
+
+def all_curves(stack):
+    vecs = np.array([minkowski_vector(f, NU_GRID) for f in stack])
+    return vecs  # (n_maps, 3N)
+
+
+vr, vg = all_curves(real), all_curves(gen)
+mr, sr = vr.mean(0), vr.std(0, ddof=1) / np.sqrt(len(real))
+mg, sg = vg.mean(0), vg.std(0, ddof=1) / np.sqrt(len(gen))
+z_dense = (mg - mr) / np.hypot(sr, sg)
+lab_r, ncomp_r, holes_r = components_and_holes(rt > 0)
+lab_g, ncomp_g, holes_g = components_and_holes(gt > 0)
+sc = float(real[0].size)
+decomp = {
+    "convention": "declared-resolution domain (both stacks smoothed 0.5px);"
+                  " judge z18 at the scorer's seed 20260845; dense curves"
+                  " on nu grid -3..3.5 step 0.25; chi in per-map counts"
+                  " (x map size); components/holes 4-connectivity, holes ="
+                  " interior complement components",
+    "judge_T": float(T18),
+    "judge_z18": {k: float(v) for k, v in zip(labels18, z18)},
+    "nu_grid": list(NU_GRID),
+    "dense": {
+        "z": {"V0": z_dense[:N].tolist(), "V1": z_dense[N:2 * N].tolist(),
+              "V2": z_dense[2 * N:].tolist()},
+        "chi_real_mean": (mr[2 * N:] * sc).tolist(),
+        "chi_real_se": (sr[2 * N:] * sc).tolist(),
+        "chi_gen_mean": (mg[2 * N:] * sc).tolist(),
+        "chi_gen_se": (sg[2 * N:] * sc).tolist()},
+    "tile_exhibit": {"tile": tile,
+                     "real": {"components": int(ncomp_r),
+                              "holes": int(holes_r),
+                              "chi_approx": int(ncomp_r - holes_r)},
+                     "gen": {"components": int(ncomp_g),
+                             "holes": int(holes_g),
+                             "chi_approx": int(ncomp_g - holes_g)}},
+    "chi0_per_map": {"real": chi0_r.tolist(), "gen": chi0_g.tolist(),
+                     "real_mean": float(chi0_r.mean()),
+                     "gen_mean": float(chi0_g.mean())}}
+with open(os.path.join(RES, "phase3_topology_decomp.json"), "w") as f:
+    json.dump(decomp, f, indent=1)
+print("A7 verification against the quoted numbers:")
+print(f"  judge_T {T18:.4f} (quoted 6.35); "
+      f"V2_nu0 {decomp['judge_z18']['V2_nu0']:+.2f} (6.35); "
+      f"V1_nu0 {decomp['judge_z18']['V1_nu0']:+.2f} (4.5); "
+      f"V2_nu1 {decomp['judge_z18']['V2_nu1']:+.2f} (4.46); "
+      f"V2_nu-1 {decomp['judge_z18']['V2_nu-1']:+.2f} (-4.21)")
+print(f"  tile {tile}: real {ncomp_r}/{holes_r} chi{ncomp_r - holes_r:+d} "
+      f"(quoted 438/193 +245); gen {ncomp_g}/{holes_g} "
+      f"chi{ncomp_g - holes_g:+d} (quoted 457/167 +290)")
+print(f"  chi0 means {chi0_r.mean():+.1f}/{chi0_g.mean():+.1f} "
+      f"(quoted +193.4/+240.3)")
+print("wrote phase3_topology_decomp.json")
