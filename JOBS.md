@@ -388,3 +388,13 @@ This is the load-bearing run and wants a full H100 (`--gpus-per-node=1`, ≤2:59
 - A4 EXECUTED: stage3_mf_null.json committed; recomputed values MATCH the
   prereg quotes EXACTLY (native 1.43/0.47/2.65; smoothed 1.48/0.55/2.87)
   -> (b) PRE-CLEARED per R42; proceeding dry-run -> blind -> one-shot.
+- stage3_b_gpu.slurm (dry-run white + final phases): quarantined pipeline
+  validation on committed stage-D A@9000; expected: determinism gate PASS,
+  full chain completes; outputs stage3_dryrun_* (appendix only).
+- 17987392 SUBMITTED (dryrun white).
+- 17987506 SUBMITTED (dryrun final).
+- dry-run chain COMPLETE (determinism exact; cal 1.6%; all phases +
+  scorer ran; outputs QUARANTINED to appendix per prereg). A6 clean.
+- stage3_blind_train.slurm: THE one blind training (seed 7, {3,4}, arm A).
+- 17987660 SUBMITTED (blind training).
+- 17987316/17 COMPLETED (picks: seed1 @3500, seed2 @5500 — vs seed0 @16000; the picks-differ line fires). 17987664/17987665 SUBMITTED (seed white phases).

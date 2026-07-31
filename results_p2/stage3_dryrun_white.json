@@ -1,0 +1,7 @@
+{
+ "determinism_gate_maxabs": 0.0,
+ "ckpt": "data_cache/ckpt_stageD/armA_gowerstreet_s9000.pkl",
+ "train_oct_lo": 3,
+ "key": 4901,
+ "grng": 20260841
+}
