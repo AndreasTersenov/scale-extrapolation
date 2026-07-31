@@ -38,3 +38,12 @@ peak-count mechanism lives.
 
 No branch adjudication (all descriptive); no GPU spent; suites untouched
 (no estimator changes — plot scripts only).
+
+## Acceptance (appended at harvest of bfd6c5a)
+
+A7 VERIFIED: phase3_topology_decomp.json committed with the full
+decomposition; tile exhibit, per-map chi0 populations, and judge T
+spot-checked against the quoted numbers — exact. A8 VERIFIED: 05-boundaries
+now states the two located signatures with the relationship OPEN; diff
+scope = the ordered files only. R45 orders CLOSED. Open gates remain
+Andreas's three (structural read / venue / title).
