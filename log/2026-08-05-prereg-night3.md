@@ -60,7 +60,20 @@ Executor reasoning for 40 vs rec 60: the amplitude-alignment statistic
 (I instrument) read NORMAL on the primary trained leg (readout,
 f206219); orientation is a different axis and may still decohere, but
 the nearest measured neighbor came back quiet.
-Result: **PENDING**.
+Result (verbatim, night3_gate_t.json; A-N3-1 rule): **NOT FIRED** —
+primary trained leg A_real +0.1712±0.0128 vs A_gen +0.1355±0.0039,
+|real|−|gen| = +0.0357, **z = +2.67 < 3**. TIDAL DESCOPED tonight (the
+exec-40 side pays against rec 60). Descriptive corroboration: blind leg
+A_gen +0.1114±0.0036, z = +4.50 — orientation decoherence exists and
+TRACKS EXTRAPOLATION DEPTH (sub-bar at 1 extrapolated octave,
+above-bar at 2), joining BL/MF/frag on the depth axis. Both real
+stacks verified identical arrays (same 32 gowerstreet test tiles; the
+equal A_real values are by construction). Sign note: locking is
+POSITIVE (gradients lock to theta_c), the planted-synthetic negative
+convention did not occur in data; the |·| rule (A-N3-1) covers both.
+Mechanism note for the report: TIDAL's premise is real but sub-bar at
+deployment depth 1 — a candidate for a depth-2 campaign, drafted not
+run.
 
 ## AUG — design (RIDER v2 grant 3; the ×2 no-op theorem)
 
@@ -144,7 +157,7 @@ augmentation that never sees oct-1 likely can't either; the residual
 IMPROVED weight rides on the cage/dilution readings (AUG's denser role
 ladder could regularize selection). TIDAL column stated unconditionally
 but only spends if GATE-T fires.
-Results: AUG **PENDING** · TIDAL **PENDING/DESCOPED**.
+Results: AUG **PENDING** · TIDAL **DESCOPED** (GATE-T not fired, z 2.67).
 
 ## CASC — inference-only transfer probe (NO cascade training tonight)
 

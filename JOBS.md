@@ -426,3 +426,6 @@ This is the load-bearing run and wants a full H100 (`--gpus-per-node=1`, ≤2:59
 - stage3_b_gpu.slurm (O-CORRECTED white, tag oraclefix, oracle @16000, lo=1):
   intent: the oracle chain at the corrected-cage pick — decomposes O-NULL.
 - 18447906 SUBMITTED (oraclefix white).
+- CASC probe (MIG --wrap, 40 min): inference-only cascade-base transfer probe,
+  l1pp chain verbatim, KEYS 5711-13; intent: does base phase structure survive
+  fixed weights (rec 30 / exec 22).
