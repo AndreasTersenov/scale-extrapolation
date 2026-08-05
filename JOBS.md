@@ -400,3 +400,8 @@ This is the load-bearing run and wants a full H100 (`--gpus-per-node=1`, ≤2:59
 - 17987316/17 COMPLETED (picks: seed1 @3500, seed2 @5500 — vs seed0 @16000; the picks-differ line fires). 17987664/17987665 SUBMITTED (seed white phases).
 - 17987821 (blind white), 17987822/17987823 (seed finals) SUBMITTED.
 - 17988003 SUBMITTED (blind final — the one-shot's streams).
+
+## 2026-08-05 — Phase-3b topo diagnosis (R46; prereg committed)
+- topo_diag_hc.slurm: MIG 30 min, the licensed T1 hc generation (blind x3
+  + stage-D context x1, real coarse at every octave). Expected: determinism
+  gate PASS, 4 hc stacks. One resubmission (infra).
