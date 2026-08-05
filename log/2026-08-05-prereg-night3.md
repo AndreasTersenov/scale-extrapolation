@@ -216,6 +216,53 @@ Spent: 0.12 (R47 set, DL-1). Projected: canaries ~0.05; AUG trainings
 gated); chains 4–5 × ~0.05; CKPT-SWEEP ~0.10; CASC probe ~0.05. Total
 projected ≲ 1.3. Queue-stall rule: > 2h ⇒ park that leg.
 
+## AMENDMENT A-N3-1 — GATE-T rule sign (blind; committed before the
+## instrument touches any real or generated map)
+
+The validated instrument's sign convention: texture elongated ALONG the
+coarse eigenframe gives A_or < 0 (planted-coupled stack ≈ −0.90);
+decoherence gives A_or ≈ 0. The pre-stated difference form assumed
+positive locking. Corrected mechanical rule: GATE-T FIRES iff
+|A_or(real)| − |A_or(gen)| ≥ 3σ (combined bootstrap SE) on the PRIMARY
+trained leg — decoherence = loss of frame-locking MAGNITUDE. Signs of
+both stack means reported descriptively. Line weights unchanged
+(rec 60 / exec 40).
+
+## AMENDMENT A-N3-2 — the TRUTH-REFERENCE BUG (disclosure + pre-stated
+## corrected-cage recomputation; committed before reading any of it)
+
+Discovered during tonight's slurm audit, before any night-3 result was
+read: `run_c1t_arms.py --truth` defaults to the SANDBOX truth
+(sandbox_truth_normconv.json), and three gowerstreet trainings omitted
+the flag — **oct1fix_oracle_train.slurm (the O arm), stage3_seed.slurm
+(stage-3 seeds 1 and 2)**. Their selection cages therefore scored
+validation samples against the sandbox octave-2 reference (vs=1.0703,
+kurt=4.9171) instead of the gowerstreet one (vs=1.0672, kurt=7.2738;
+both quoted from the committed jsons). var_slope coincidentally matches
+(0.3% apart); the KURTOSIS target was wrong by −32%. Clean (explicit
+--truth): production seed 0, blind, stage-D, all sandbox legs. Log
+evidence: oct1fix_oracle_train_18438237.log prints "selection reference
+oct2 vs=1.070 kurt=4.917".
+Consequences flagged for the morning reconvene (no retraction tonight —
+that adjudication is theirs): (i) O-NULL's checkpoint (@5000) was chosen
+by a mis-referenced rule — the cage-harvesting reading of O-NULL now has
+a CONCRETE candidate mechanism; (ii) the stage-3 seed-fragility evidence
+(picks @3500/@5500 vs seed0 @16000) mixes seed variation with a
+different, broken selection rule. TEST-side numbers in those readouts
+were scored against correct references and stand as measurements; what
+is contaminated is WHICH checkpoint each leg shipped.
+Fix-forward: night3_aug_train.slurm passes --truth explicitly (done
+before any AUG submission).
+Pre-stated recomputation (mechanical, CPU, from the committed
+curve_val raw per-ckpt var_slope/kurtosis in the three selection
+jsons): re-score the frozen selection formula against the CORRECT
+gowerstreet reference. Registered expectations: corrected pick differs
+from the committed pick in ≥1 of the three legs — exec P 75; under the
+cage story the oracle's corrected pick shows better MF(dev) at the
+nearest CKPT-SWEEP grid step than @5000 — exec P 55 (the sweep is the
+arbiter; its pre-statements stand unchanged).
+Result: **PENDING**.
+
 ## Sequencing
 
 Prereg commit → N1 fan-out (5 subagents; files reviewed, suites green,
