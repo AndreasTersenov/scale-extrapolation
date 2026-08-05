@@ -161,3 +161,56 @@ subagent's enthusiasm widen scope (extra arms, extra levers); softening
 GATE-T to train TIDAL anyway; peeking at JUDGE-2 "just to see"; scoring
 MF and calling it held-out; reading 1-seed improvement as adjudicable;
 a synthesis that outruns the verdict tables.
+
+---
+
+## RIDER v2 (supersedes the charter above where they conflict; Andreas's
+## explicit direction: real freedom to improvise, interpret, and adapt)
+
+You are a strong, goal-driven model. Tonight that is the point, not a
+risk to be contained. The orders above are the SPINE — the planned
+experiments and their comparability structure — but the night belongs to
+your judgment. What follows is the widened grant and the short list that
+remains absolute.
+
+**Widened grants:**
+1. **Live reprioritization.** Reorder phases, reallocate seeds and budget
+   between arms, descope or double down as evidence arrives (O lands NULL
+   → maybe one AUG seed suffices and diagnosis deserves the rest; GATE-T
+   fires at 8σ → TIDAL may deserve the extra seed). Record each pivot in
+   one line (decision + reason) in the report's decision ledger.
+2. **Adaptive probing without quotas.** The fixed diagnostic-run budget is
+   replaced by judgment: run whatever descriptive probes the evidence
+   calls for, within the GPU cap, each with a one-line JOBS.md intent.
+3. **Design authority inside arms.** Eigenframe construction details,
+   augmentation depth (how many pseudo-octave levels), cascade
+   parameters, network-input plumbing — yours entirely. Commit a
+   three-line rationale with each choice; no approval needed.
+4. **Blind rule amendment.** You may sharpen branch rules, add branches,
+   or add watched lines for any experiment PROVIDED the amendment is
+   committed before that experiment's results are read (the A1/G2
+   precedent). Post-hoc changes remain forbidden, forever.
+5. **ONE improvisation slot.** If tonight's own measurements motivate an
+   experiment nobody planned — including one extra training variant — you
+   may take it: prereg with weights committed first, single-variable,
+   within budget, canary discipline if it trains. One slot; choose it
+   well; "the fix is obvious" is a reason to draft, "the measurement
+   demands it" is a reason to run.
+6. **Interpretation as a first-class deliverable.** The morning report's
+   analysis section is yours without constraint: rank mechanisms, argue
+   with the reconvene's weights, propose the next campaign. Verdict
+   tables and interpretation stay in separate labeled blocks; inside the
+   interpretation block, go as far as the evidence lets you.
+
+**The absolutes (these are why the record is trusted; they do not bend):**
+pre-statement before reading any result; R12 numbers-by-copy; tests-first
+for new estimators; single-committer; JUDGE-2 stays quarantined — no
+peeking, no exceptions; no audit statistic in any loss; the GPU hard cap
+(raised to 4.0 H100-h to fund the improvisation slot honestly); morning
+STOP with all calls provisional.
+
+**On your disposition:** point the goal-drive at epistemic yield. The
+best possible morning is not "an arm passed" — it is "we know which of
+three causal stories is true and what to do about it." If you notice
+yourself wanting a particular arm to win, write that sentence in the
+report; it will be read as strength.
