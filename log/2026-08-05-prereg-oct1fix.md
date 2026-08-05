@@ -87,3 +87,75 @@ Prereg commit → BL (CPU) → O training submission → I tests + instrument on
 committed maps (while O trains) → O sampling (white → fit → final) →
 O scoring → readout appended here → **STOP.**
 Results: BL PENDING · O PENDING · I PENDING.
+
+---
+
+## READOUT (appended; verbatim from oct1fix_bl.json, oct1fix_o_verdict.json,
+## oct1fix_instrument.json; jobs 18438237/18440865/18442069, gates exact)
+
+### BL — the extrapolation-depth ladder (both registered lines LOSE,
+### informatively)
+
+| stack | extrapolated octaves | T_MF (declared conv.) |
+|---|---|---|
+| blind full-band | 2 (oct 1+2) | 6.35 (committed E3) |
+| blind minus oct-1 | 1 | **4.15 FAIL** |
+| blind minus oct-1+2 (desc.) | 0 | **3.10 PASS** |
+| trained full-band (judge's first trained-leg reading, desc.) | 1 | 3.34 AT-BAR |
+| trained minus oct-1 | 0 | **3.13 PASS** |
+
+The rec 80 / exec 70 both-pass lines lose (blind BL fails), but the
+pattern is the finding: severity is monotone in the NUMBER of extrapolated
+octaves, and band-limited to the trained octaves BOTH legs pass the frozen
+judge — a crisp declared-domain statement available to the paper.
+
+### O — the oracle-at-oct-1 arm: **O-NULL** (neither target; no regression)
+
+Training {1,2,3,4}, everything verbatim, pick @5000 (score 0.981), timing
+verified against all single-arm runs. Gates exact; fit 1.8%; **C P-T
+LANDS — the calibration's SIXTH consecutive band hit** (0.7599 in
+[0.7445, 0.8193]). Marginals PASS at ALL FOUR octaves (octave 1 included —
+noted as newly trained); starlet PASS; parity 2.41; nn pooled 2.36±0.28.
+And the targets: **MF declared 5.63 (fail; native 6.57); native peaks
++22.77%±3.11 / +24.84%±2.84 vs half-targets 7.65/6.24%.** Both targets
+missed — and both are WORSE than the shipped extrapolating config on the
+same leg (3.34 at-bar; +14.5/+11.1%). I-instrument on the O maps:
+component/χ excess up to |z| = 3.7, alignment z = −2.8.
+Weight columns: rec O-NULL 20 / exec 17 — the non-modal branch fires
+AGAIN (both modals were O-FIXES 45); the #16 concentrated-mechanism note
+cut the WRONG WAY this time, logged for the calibration appendix.
+
+### The finding, stated plainly (interpretation labeled)
+
+Direct training on the finest octave, recipe otherwise verbatim, produces
+oct-1 texture that is MORE fragmented and MORE peak-heavy than weight-tied
+extrapolation into it — while its marginals at that octave PASS. Three
+readings, not separated by this arm (the branch's pre-stated meaning:
+an architecture/capacity finding, not a diagnosis failure): (i) the
+weight-tied UNet lacks capacity for finest-octave phase organization even
+with data; (ii) the caged selection (octave-2 marginal cage; pick @5000)
+harvests a bad-texture checkpoint — the schedule/seed-fragility story at a
+new octave; (iii) the 4-octave step-cycling dilutes oct-1 training. The
+extrapolation-depth ladder (BL) and the oracle NULL together relocate the
+mechanism: fragmentation is a FINEST-OCTAVE RENDERING property of this
+model class under this recipe, not an extrapolation artifact per se —
+extrapolation depth amplifies it (BL), but training through it does not
+remove it (O).
+
+### I — the instrument (tests-first, 4 green; first readings committed)
+
+Two texture modes, tracking depth: trained leg (1 extrap octave) = HOLE
+DEFICIT in the oct-1 contribution field (holes z −4.7/−4.4, alignment
+normal); blind leg (2) = COMPONENT EXCESS (z +7.8/+6.4, alignment −2.3);
+oracle (0, trained) = component/χ excess (max |z| 3.7, alignment −2.8).
+The corrector's target statistic exists and discriminates its
+phase-randomized null at z > 5 (validated).
+
+### Accounting
+
+GPU: oracle training 10:38 + white 3 min + finals 8 min ≈ 0.10 H100-h;
+BL/I CPU. Order-set total ≈ 0.12 of the ≤1 budget. Suites green.
+
+**STOP — reconvene adjudication (the next lever menu — selection-at-oct-1
+cage variant, capacity, texture-transfer corrector, or accept-the-boundary
+— is chosen there; nothing further runs).**

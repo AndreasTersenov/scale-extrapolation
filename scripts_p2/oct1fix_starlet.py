@@ -10,7 +10,7 @@ from scripts_p2.score_starlet_l1 import SCORED, adjudicate, measure_sets  # noqa
 
 REPO = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 RES = os.path.join(REPO, "results_p2")
-G = np.load(os.path.join(RES, "oct1fix_oracle_final.npz"))
+G = np.load(os.path.join(RES, "stage3_oracle_final.npz"))
 sets = {"real": np.asarray(np.load(os.path.join(
             RES, "arms_c1t_gowerstreet.npz"), allow_pickle=True)["real"],
             np.float64),

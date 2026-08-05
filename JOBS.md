@@ -415,3 +415,4 @@ This is the load-bearing run and wants a full H100 (`--gpus-per-node=1`, ≤2:59
 - 18438237 SUBMITTED.
 - 18438237 COMPLETED 10:38 (timing VERIFIED consistent: all single-arm 20k trainings run ~9-10 min; pick @5000 score 0.981).
 - 18440865 SUBMITTED (oracle white).
+- 18442069 SUBMITTED (oracle finals).

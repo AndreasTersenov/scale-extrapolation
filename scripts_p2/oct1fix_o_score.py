@@ -37,7 +37,7 @@ BARS = {"var_slope": 0.10, "kurtosis": 0.15}
 BAR_MF, BAND_MF = 3.5, 0.25
 K_REAL = 174
 
-GEN = np.load(os.path.join(RES, "oct1fix_oracle_final.npz"))
+GEN = np.load(os.path.join(RES, "stage3_oracle_final.npz"))
 streams = [[np.asarray(f, np.float64) for f in GEN[k]]
            for k in ("final1", "final2", "final3")]
 pooled = [f for s in streams for f in s]
