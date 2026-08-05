@@ -422,3 +422,7 @@ This is the load-bearing run and wants a full H100 (`--gpus-per-node=1`, ≤2:59
   24 e2e recursions, oracle/prod/blind x steps {2500..20000 step 2500};
   intent: separate cage-selection vs capacity vs dilution readings of O-NULL.
 - 18447330 SUBMITTED (ckpt sweep).
+- night3 CKPT-SWEEP COMPLETED 3:51 (cage signature FIRES; peaks ckpt-robust).
+- stage3_b_gpu.slurm (O-CORRECTED white, tag oraclefix, oracle @16000, lo=1):
+  intent: the oracle chain at the corrected-cage pick — decomposes O-NULL.
+- 18447906 SUBMITTED (oraclefix white).
