@@ -416,3 +416,9 @@ This is the load-bearing run and wants a full H100 (`--gpus-per-node=1`, ≤2:59
 - 18438237 COMPLETED 10:38 (timing VERIFIED consistent: all single-arm 20k trainings run ~9-10 min; pick @5000 score 0.981).
 - 18440865 SUBMITTED (oracle white).
 - 18442069 SUBMITTED (oracle finals).
+
+## 2026-08-05 — NIGHT-3 (prereg 1536859)
+- night3_ckpt_sweep.slurm: MIG 1:15, CKPT-SWEEP probe (grant-2, descriptive):
+  24 e2e recursions, oracle/prod/blind x steps {2500..20000 step 2500};
+  intent: separate cage-selection vs capacity vs dilution readings of O-NULL.
+- 18447330 SUBMITTED (ckpt sweep).
