@@ -406,3 +406,10 @@ This is the load-bearing run and wants a full H100 (`--gpus-per-node=1`, ≤2:59
   + stage-D context x1, real coarse at every octave). Expected: determinism
   gate PASS, 4 hc stacks. One resubmission (infra).
 - 18402965 SUBMITTED.
+
+## 2026-08-05 — R47 order set (prereg committed)
+- BL EXECUTED (CPU): trained full-band 3.34 at-bar / BL 3.13 pass; blind BL
+  4.15 FAIL (oct-2 extrapolated residual) / BL2 3.10 pass — defect tracks
+  EXTRAPOLATION DEPTH; both registered lines lose informatively.
+- oct1fix_oracle_train.slurm: MIG 2:45, the ONE oracle training {1,2,3,4}.
+- 18438237 SUBMITTED.

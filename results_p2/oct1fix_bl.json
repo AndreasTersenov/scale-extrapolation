@@ -1,0 +1,18 @@
+{
+ "full_band_trained_T": 3.342334724186184,
+ "legs": {
+  "trained": {
+   "T_bandlimited": 3.13268432892083,
+   "category": "pass"
+  },
+  "blind": {
+   "T_bandlimited": 4.151283666609451,
+   "category": "fail"
+  }
+ },
+ "line_both_pass": false,
+ "descriptive_bl2_blind": {
+  "T": 3.103503272230409,
+  "note": "zero d1+d2 both sides \u2014 removes ALL extrapolated octaves of the blind config"
+ }
+}
