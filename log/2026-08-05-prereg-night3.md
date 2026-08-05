@@ -1,0 +1,225 @@
+# 2026-08-05 — PREREG: NIGHT-ORDERS-3 texture campaign (committed BEFORE
+# any machinery lands, any gate is read, or any job launches; R12;
+# artifacts → results_p2/night3_*)
+
+Governing: NIGHT-ORDERS-3.md + RIDER v2; R46/R47. Absolutes carried:
+pre-statement before reading, R12 numbers-by-copy, tests-first,
+single-committer, JUDGE-2 quarantine (zero applications to real or
+generated stacks tonight), no audit statistic in any loss, GPU hard cap
+4.0 H100-h, morning STOP with all calls provisional.
+
+## N0 — harvest (already complete pre-orders)
+
+The R47 order set ran and read out before NIGHT-ORDERS-3 arrived
+(f206219): BL depth ladder, **O-NULL**, I instrument. Per N0's
+pre-delegated logic the interpretation frame is set: **O-NULL ⇒
+architecture-limit story favored; AUG runs anyway — the O/AUG pair
+separates data-availability from architecture.** O's three unseparated
+readings (capacity / cage-selection harvesting / step dilution) are
+tonight's diagnostic targets. Decision ledger begins:
+
+- DL-1: N0 skipped (already executed); its 0.12 H100-h counted against
+  tonight's 4.0 cap, conservatively.
+
+## MF status + JUDGE-2 (N1f)
+
+The Minkowski judge is RECLASSIFIED as a development metric (we now
+engineer against it). Every MF number tonight is labeled **MF(dev)**.
+JUDGE-2 = persistent-homology Betti curves b0(ν)/b1(ν) (per-field
+standardized superlevel sets; (4,8)-connectivity duality — components
+4-conn, holes via 8-conn complement minus border; ν grid −3..3 step 0.5;
+declared 0.5-px + native conventions; judge_T-style max|z| with tile
+bootstrap). Tests-first on synthetic GRFs ONLY; committed FROZEN;
+**applied to NO real or generated stack tonight** — its real split-half
+null/bar computation is deferred to the drafted blind-shot-2 prereg
+(the A4 pattern). Named temptation refused in advance: no "peeking to
+see if it agrees with MF".
+
+## GATE-T — orientation decoherence (mechanical; rec P(fire) = 60,
+## **exec 40**)
+
+Instrument (N1a, tests-first on synthetics): local-orientation alignment
+between oct-1 texture and the coarse eigenframe.
+u = oct-1 contribution field (frozen oct1_texture.bandlimit machinery);
+θ_u from the structure tensor of u (Fourier/periodic smoothing, exact D4
+commutation); θ_c + anisotropy from the Hessian eigenframe of
+bandlimit(f); A_or = Σ w_u w_c cos 2(θ_u−θ_c) / Σ w_u w_c ∈ [−1,1],
+D4-invariant by construction. Validation: oriented-vs-isotropic planted
+synthetics discriminate at z > 5; D4 invariance at machine precision; SE
+scaling ~√2. Smoothing scales are the builder's design periphery,
+documented in-code, fixed before any real data is touched.
+
+Rule (mechanical): GATE-T FIRES iff A_or(real) − A_or(gen) ≥ 3σ
+(combined bootstrap SE) on the PRIMARY leg = trained
+(l1pp_main_gen.npz adj1-3 pooled 96 vs arms_c1t_gowerstreet.npz real
+32). Blind leg (stage3_blind_final.npz pooled 96 vs arms_stageD.npz
+real) scored as descriptive corroboration only. NOT-FIRED ⇒ TIDAL
+descoped tonight (the null is a mechanism finding: texture is
+mis-organized in amplitude/topology but not orientation).
+Executor reasoning for 40 vs rec 60: the amplitude-alignment statistic
+(I instrument) read NORMAL on the primary trained leg (readout,
+f206219); orientation is a different axis and may still decohere, but
+the nearest measured neighbor came back quiet.
+Result: **PENDING**.
+
+## AUG — design (RIDER v2 grant 3; the ×2 no-op theorem)
+
+Registered BEFORE training, with an executable proof committed in-test:
+under the Haar pyramid, ×2 downsampled copies are EXACT duplicates of
+deeper original pairs — c_1(c_1(f)) = c_2(f) and d_1(c_1(f)) = d_2(f)
+identically (multilevel DWT nesting) — so the orders' literal ×2
+prescription adds only per-tile normalization jitter and would produce a
+FAKE null. The arm therefore implements the mechanism the orders name
+("trains ACROSS octave-role transitions") rather than the letter:
+**band-limited FRACTIONAL rescaled copies**, which are NOT Haar-nested
+and create genuinely new (coarse, detail) pairs at roles BETWEEN the
+original octaves:
+
+- g96 = fourier_resample(bandlimit(f), 128→96): role offset 0.415
+  octaves; trained at its octaves {1,2,3} (sizes 48/24/12, all ÷4).
+- g80 = fourier_resample(bandlimit(f), 128→80): offset 0.678; trained at
+  {1,2} (40/20; its oct-3 size 10 is not ÷4 — excluded, noted).
+- No-target-octave-leak BY CONSTRUCTION (copies are functions of
+  bandlimit(f) alone) and IN-TEST (replace d_1(f) with noise → copies
+  bit-identical). Composes with d4_augment (in-test). Caveat noted: the
+  copies' finest band carries the resampling truncation rolloff (the
+  degradation-model caveat, disclosed for interpretation).
+- Trainer: 8 (stack, octave) slots cycled round-robin; per-octave std
+  per (stack, octave) pool. **Steps 48000, ckpt-every 1000** — per-slot
+  parity with the production recipe (48k/8 = 6000 vs baseline 20k/3 ≈
+  6667); a 20k AUG run would undertrain every slot 2.7× and confound
+  any null with dilution. Deviation registered (grant 3).
+- Selection: unchanged rule, sel-octave 2 scored on the ORIGINAL stack's
+  validation fields (a trained octave; same split, same score formula).
+- e2e + final-config chain: IDENTICAL to baseline geometry (originals
+  only; copies are training-only); std convention = std_from(gtrain,
+  [2,3,4]) verbatim; fit target_octave 2 (the seed-leg deployment
+  target); F2 sampler unchanged. The single variable vs the committed
+  production model is the training distribution.
+- Seeds 11 and 12; arm A (no cond vector); sandbox canary first
+  (l1pp-canary-style dispersion check; kill: conditional-dispersion
+  deficit > 40% at ckpt ≥ 4k).
+
+## TIDAL — design (built regardless; trains iff GATE-T)
+
+Eigenframe conditioning: features H(c) = (tr, a1, a2) = (Hxx+Hyy,
+Hxx−Hyy, 2Hxy) of the Gaussian-smoothed (σ_H = 2 px, Fourier/periodic —
+exact D4 commutation) Hessian of the conditioning coarse, standardized
+per pool, CONCATENATED to the coarse channel (4-channel conditioning).
+D4-covariance PROVEN in-test at machine precision: tr invariant;
+(a1, a2) spin-2 (90° rotation → both negate; W-mirror → a1 fixed, a2
+negates). F2 guarantee survives structurally: the sampler computes
+features INSIDE the transformed frame — d = g⁻¹·model'(g·c) with
+model'(x) = model(x, H(x)) is exactly the F2 form; asserted in-test on
+the assembled sampler. Recipe otherwise verbatim (20k steps, octaves
+{2,3,4}, cage unchanged); seeds 21 and 22; own sandbox canary. Sampling
+via night3_tidal_white/final.py (same KEYS plumbing pattern).
+
+## Branch rules (per arm; mechanical order gates → REGRESSED → FIXES →
+## IMPROVED → NULL; ambiguity = negative; #11 bands)
+
+| branch | rule | AUG rec / **exec** | TIDAL rec / **exec** |
+|---|---|---|---|
+| X-FIXES | MF(dev) declared ≤ 3.5 AND both native ν2.5/3.0 excesses < half committed (7.645/6.237%); no regression | 15 / **8** | 12 / **8** |
+| X-IMPROVED | not FIXES; MF(dev) declared ≤ 2.24 AND max abs frag_z (ncomp+holes rows) ≤ 2.35; no regression | 40 / **30** | 33 / **32** |
+| X-NULL | neither; no regression | 30 / **47** | 35 / **40** |
+| X-REGRESSED | any must-not-regress failure | 5 / **5** | 10 / **10** |
+| gates | infra (one bug-repair resubmission per job); determinism; canary kill | 10 / **10** | 10 / **10** |
+
+IMPROVED operationalized (blind amendment, A1/G2 precedent): "≥2σ
+MF(dev) improvement" = declared T ≤ 3.34 − 2×0.55 = **2.24** (baseline =
+the trained-leg full-band reading, oct1fix_bl.json; σ = the committed
+split-half null sd, stage3_mf_null.json); "instrument corroborates" =
+max |frag z| over the ncomp and holes rows ≤ **2.35** (half the trained-
+leg baseline max 4.7, oct1fix_instrument.json). Both computed on the
+arm's pooled 96 finals vs gow real 32, declared convention.
+**Arm branch = the WORSE of the two seeds' categories** (R-SEED-FRAGILE;
+the 1-seed-improvement temptation refused in advance). Per-seed numbers
+all reported. Must-not-regress battery = oct1fix_o_score.py's, verbatim
+(marginals hc+e2e octaves 1–4, starlet leg, parity < 3, determinism);
+P-T coloring per chain is a WATCHED line, not a branch.
+Executor reasoning: O-NULL moves weight from FIXES/IMPROVED to NULL —
+if direct oct-1 training can't render clean texture, a role-transition
+augmentation that never sees oct-1 likely can't either; the residual
+IMPROVED weight rides on the cage/dilution readings (AUG's denser role
+ladder could regularize selection). TIDAL column stated unconditionally
+but only spends if GATE-T fires.
+Results: AUG **PENDING** · TIDAL **PENDING/DESCOPED**.
+
+## CASC — inference-only transfer probe (NO cascade training tonight)
+
+casc_base.py: log-normal-MRW-family modulated white seeds — ω a
+log-correlated GRF (P_ω ∝ k⁻² in 2D; intermittency λ tuned on
+synthetics by the builder, documented), M = exp(ω), ε = M·z with z
+white Gaussian (ε is exactly white in second order; multifractal in
+higher order), unit-variance normalized. Validation tests: whiteness
+(flat ring spectrum within tolerance), D4-in-law, seeded determinism,
+moment-scaling discrimination vs plain white at z > 5. Probe: ε
+replaces the white Gaussian INPUT of the committed copula path (same
+l1pp_filter.npz filt + z/x tables, same production ckpt, F2, oct-1
+base only), finals with KEYS below, vs the committed adj baseline.
+Scored (descriptive + one registered line): coloring C (watched),
+I-instrument frag/alignment deltas, MF(dev).
+Line: P(base phase structure measurably carried to output texture — any
+frag or alignment |Δz| ≥ 3 vs adj baseline, matched convention):
+rec 30 / **exec 22** (the transfer-function lesson cuts against:
+the flow's spectral action was input-independent; the ODE pulls toward
+the trained detail manifold; F2 averaging further decoheres seed
+orientation. A carried result would be the night's most actionable
+surprise).
+Result: **PENDING**.
+
+## CKPT-SWEEP — adaptive probe (grant 2; descriptive, adjudicates NO
+## branch; feeds the morning lever recommendation)
+
+e2e recursions (plain generate_recursive_tbase, the E3-comparable
+convention) from dense checkpoints of: ckpt_oct1fix_oracle (armA,
+{1,2,3,4}), ckpt_c1t_gowerstreet (armA production {2,3,4}),
+ckpt_stage3_blind (seed 7, {3,4}); steps {2500..20000 step 2500}; scored
+MF(dev) declared vs the matching real leg + frag profile + native peaks.
+Pre-statements (committed before reading):
+- Cage-selection reading TRUE ⇒ MF(dev) spread across ckpts > 2 with at
+  least one PASS-category ckpt in a dir whose SELECTED ckpt fails.
+- Capacity reading TRUE ⇒ flat-bad (all ckpts fail, spread ≲ 1).
+- Dilution reading TRUE ⇒ oracle dir improves with steps (late best).
+- Watched: rank correlation between the cage's selection score and
+  MF(dev) across ckpts (a Goodhart exhibit if anti-correlated).
+This probe is NOT the improvisation slot (no training). If it finds a
+pass-category checkpoint, the morning deliverable includes a DRAFTED
+(not run) selection-variant prereg.
+Result: **PENDING**.
+
+## KEYS registry (committed before any stream runs)
+
+| tag | white (key, grng) | finals ((key, grng) ×3) |
+|---|---|---|
+| aug11 | (5301, 20260880) | (5311,20260881) (5312,20260882) (5313,20260883) |
+| aug12 | (5401, 20260884) | (5411,20260885) (5412,20260886) (5413,20260887) |
+| tidal21 | (5501, 20260888) | (5511,20260889) (5512,20260890) (5513,20260891) |
+| tidal22 | (5601, 20260892) | (5611,20260893) (5612,20260894) (5613,20260895) |
+| casc | — (committed l1pp filter; determinism gate in-probe) | (5711,20260896) (5712,20260897) (5713,20260898) |
+
+No collisions with committed streams (checked against stage3_b_* KEYS).
+
+## Improvisation slot (RIDER v2 §5)
+
+UNSPENT at prereg time. If spent, its own prereg section is appended
+here with weights BEFORE its run (A1/G2). Candidate noted, not chosen:
+a selection-cage variant motivated by CKPT-SWEEP — but MF-based
+selection would burn MF's dev status further and needs the JUDGE-2 tier
+to adjudicate; likelier a draft than a run.
+
+## Budget ledger (cap 4.0 H100-h)
+
+Spent: 0.12 (R47 set, DL-1). Projected: canaries ~0.05; AUG trainings
+2 × ~0.20 (48k steps + 48-ckpt selection sweep); TIDAL 2 × ~0.12 (iff
+gated); chains 4–5 × ~0.05; CKPT-SWEEP ~0.10; CASC probe ~0.05. Total
+projected ≲ 1.3. Queue-stall rule: > 2h ⇒ park that leg.
+
+## Sequencing
+
+Prereg commit → N1 fan-out (5 subagents; files reviewed, suites green,
+committed by main session only) → JUDGE-2 freeze commit → GATE-T
+(pre-stated above) → canaries → trainings (AUG 11/12; TIDAL iff gate) →
+CKPT-SWEEP + CASC in parallel → chains → scoring (A5 order per arm) →
+NIGHT-REPORT-3.md with drafted preregs → commit, push, **STOP**.
