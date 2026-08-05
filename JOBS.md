@@ -405,3 +405,4 @@ This is the load-bearing run and wants a full H100 (`--gpus-per-node=1`, ≤2:59
 - topo_diag_hc.slurm: MIG 30 min, the licensed T1 hc generation (blind x3
   + stage-D context x1, real coarse at every octave). Expected: determinism
   gate PASS, 4 hc stacks. One resubmission (infra).
+- 18402965 SUBMITTED.

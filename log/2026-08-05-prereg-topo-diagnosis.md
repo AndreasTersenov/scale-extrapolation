@@ -82,3 +82,81 @@ T1/T2/T3 → readout appended here (PENDING slots below) → **STOP for
 reconvene adjudication (the lever menu is chosen there).**
 
 Results: T1 PENDING · T2 PENDING · T3 PENDING.
+
+---
+
+## READOUT (appended; verbatim from topo_diag_verdict.json +
+## topo_diag_t2_streams.json; job 18402965, determinism gate exact)
+
+### T1 — mechanical branch: **T1-BOTH-FAIL** (hc 47.27, e2e 6.35, both
+### fail-side) — WITH a construct confound, disclosed
+
+The hc leg's number is not what the pre-stated meaning assumed: T_hc =
+47.27 (native 67.20; stage-D context 27.31) — an order WORSE than e2e,
+with the mechanism visible in T3's map-level row: the hc maps' skewness
+COLLAPSES (real +2.32 → hc +0.83, z = −8.5, while e2e reads −2.4).
+**Instrument lesson (ledger material): the hc-MAP construct is confounded
+by composition misalignment** — each octave's details were sampled against
+the REAL coarse but composed onto intermediate coarse fields that differ
+from it, scrambling the cross-scale alignment that carries map skewness
+and mid-level connectivity. The prereg's claim that the construct
+"isolates conditional-detail quality" was WRONG; per-octave hc STATISTICS
+(the campaign's convention) remain valid, hc MAPS do not follow from them.
+Consequence, stated honestly: the deployment-split question T1 posed is
+UNANSWERED by this probe (the branch's pre-stated meaning transfers to T2,
+which answers it cleanly); the only deployment-mode fact in evidence is
+that e2e — which IS octave-4-conditioned deployment — fails at 6.35.
+
+### T2 — THE DIAGNOSIS: the fragmentation is an octave-1 detail-texture
+### property
+
+| substitution | T_MF | χ(0) shift fraction |
+|---|---|---|
+| single oct-1 | 11.30 | **+1.15** |
+| single oct-2 | 10.19 | −0.91 |
+| single oct-3 | 8.50 | −0.40 |
+| single oct-4 | 6.65 | −0.25 |
+| cumulative ≤2 | 16.32 | +0.49 |
+| cumulative ≤4 (≡ full gen) | 5.40 | +1.00 (sanity) |
+
+Substituting ONLY the finest-octave generated details into otherwise-REAL
+pyramids reproduces MORE than the full fragmentation shift — stream-stable
+across all three blind streams (+1.15 / +1.13 / +1.26
+<!-- src: topo_diag_t2_streams.json -->). Misalignment alone does NOT
+produce the signature: misaligned oct-2/3/4 substitutions push χ(0) the
+OPPOSITE way (which also explains cumulative-≤2's cancellation, 0.49).
+The mid-level topology defect lives in the oct-1 generated detail texture
+itself — the same locus as the cured coloring defect, on the axis the
+spectrum lever measurably does not reach (dissociation 3). Lines: single-
+octave ≥ half FIRED (rec 40 / exec 35 — the minority side on both
+columns, noted for the calibration appendix); executor's cumulative-≤2 ≥
+80% line LOSES (0.49 — the oct-2 cancellation is the reason, now
+measured).
+
+### T3 — the skewness hypothesis: REFUTED as operationalized
+
+Detail-coefficient skewness: all |z| ≤ 1.3 at every octave for every
+generated set — the registered parity argument confirmed (signed detail
+skew vanishes in law for both stacks; real ≈ 0 by statistical parity,
+generated ≈ 0 by the exact D4 sampler). Reconvene line (55) does not
+fire; executor counter-line (20) on the right side. Executor's map-level
+companion line ALSO does not fire: e2e map-skew deficit z = −2.4 ( < 3σ;
+the 55 line loses — recorded). Descriptive: the −2.4σ map-level deficit
+is suggestive texture for the odd-cross-moment reading (coarse–detail²
+couplings), stated as a readout note only. The drafted skewed-base
+lever's premise is measured ABSENT at the detail-marginal level.
+
+### Synthesis for the lever menu (measured directions; the choice is the
+### adjudication's)
+
+The defect: octave-1 generated detail TEXTURE — phase/higher-order, not
+spectrum (exhausted, 5/5-validated calibration unaffected), not detail
+skewness (refuted), not composition misalignment (wrong sign), expressed
+even inside fully-real pyramids. Any lever needs an oct-1 phase/topology
+instrument first (component-size / mid-level connectivity of detail
+contributions — the F20-style decomposition scoped to oct-1 is the
+natural candidate); loss-side interventions would target oct-1 only;
+χ-matching and topology losses remain refused pending that instrument.
+Budget: one MIG job ≈ 0.02 H100-h; everything else CPU on committed maps.
+
+**STOP — reconvene adjudication; the lever menu is chosen there.**

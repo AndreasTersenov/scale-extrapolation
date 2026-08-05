@@ -1,0 +1,17 @@
+{
+ "final1": {
+  "full_shift": 48.625,
+  "oct1_shift": 55.9375,
+  "fraction": 1.1503856041131106
+ },
+ "final2": {
+  "full_shift": 50.109375,
+  "oct1_shift": 56.765625,
+  "fraction": 1.1328344246959776
+ },
+ "final3": {
+  "full_shift": 41.9765625,
+  "oct1_shift": 52.8515625,
+  "fraction": 1.259073143495254
+ }
+}
