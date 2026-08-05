@@ -201,6 +201,47 @@ Result: **PENDING**.
 
 No collisions with committed streams (checked against stage3_b_* KEYS).
 
+## CKPT-SWEEP READOUT (verbatim, night3_ckpt_sweep_scores.json;
+## job 18447330, 3:51)
+
+| dir | selected | MF(dev) @sel-or-nearest | spread | min | pass-cat | Spearman cage↔MF |
+|---|---|---|---|---|---|---|
+| oracle | @5000 (bugged cage) | 4.54 @5000 | 2.07 | 2.89 @15000 | 3/8 | +0.38 (p 0.35) |
+| prod | @16000 (clean cage) | 3.79 @15000 / 3.43 @17500 | 2.96 | 2.33 @20000 | 1/8 | +0.67 (p 0.07) |
+| blind | @10500 | 8.62 @10000 | 7.61 | 5.28 @5000 | 0/8 | +0.50 (p 0.21) |
+
+Pre-stated signatures: **CAGE-SELECTION fires** (oracle: spread > 2, 3
+pass-category ckpts, selected fails at 4.54); capacity's flat-bad does
+NOT hold for oracle/prod (some ckpts render near-clean declared MF);
+dilution's clean monotone does not hold (late-better but non-monotone;
+adjacent late swings 2.89↔4.80 exceed the 0.55 jitter — real
+ckpt-to-ckpt texture variation). A-N3-2's P-55 line FIRES (@15000 2.89
+< @5000 4.54). Blind (2 extrap octaves) never passes at any ckpt —
+consistent with the BL depth ladder. The watched Goodhart line does NOT
+fire: the CORRECT cage is weakly texture-protective (positive rho); the
+harm was the wrong reference selecting early. Cross-cutting finding:
+NATIVE PEAK EXCESS is checkpoint-ROBUST (+14–22% at every ckpt, every
+dir) — it dissociates from MF along the checkpoint axis; the A8
+two-signature structure deepens (topology: selection-/depth-driven;
+peaks: model-class-robust).
+
+## O-CORRECTED probe (adaptive, grant 2; pre-stated BEFORE running;
+## descriptive — R47's O adjudication is NOT reopened tonight)
+
+The oracle chain resampled at the corrected-cage pick @16000
+(ckpt_oct1fix_oracle/armA_gowerstreet_s16000.pkl), final config,
+ORACLE label (oct-1-measured fit target, target_octave 1, lo=1),
+tag **oraclefix**, KEYS: white (5801, 20261300); finals
+((5811, 20261301), (5812, 20261302), (5813, 20261303)). Scored
+descriptively (entries + e2e marginals + starlet + parity/nn; hc
+marginals unavailable at @16000 — noted): night3_oraclefix_score.py.
+Registered expectations: MF(dev) declared ≤ 3.5 on finals — exec P 60;
+native peak excesses REMAIN > half-targets — exec P 80 (checkpoint-
+robust per the sweep). Meaning: both landing ⇒ O-NULL decomposes into
+"topology was the cage artifact; the peak excess is the real
+architecture residue" — the cleanest available account of R47's O.
+Result: **PENDING**.
+
 ## Improvisation slot (RIDER v2 §5)
 
 UNSPENT at prereg time. If spent, its own prereg section is appended
