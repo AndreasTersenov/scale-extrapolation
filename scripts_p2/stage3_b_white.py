@@ -29,7 +29,8 @@ from wfm.model import ConditionalUNet
 
 RES = os.path.join(REPO, "results_p2")
 KEYS = {"dryrun": (4901, 20260841), "blind": (4701, 20260830),
-        "seed1": (4101, 20260820), "seed2": (4201, 20260824)}
+        "seed1": (4101, 20260820), "seed2": (4201, 20260824),
+        "oracle": (5201, 20260870)}
 
 
 def log(m):

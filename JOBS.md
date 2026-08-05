@@ -413,3 +413,5 @@ This is the load-bearing run and wants a full H100 (`--gpus-per-node=1`, ≤2:59
   EXTRAPOLATION DEPTH; both registered lines lose informatively.
 - oct1fix_oracle_train.slurm: MIG 2:45, the ONE oracle training {1,2,3,4}.
 - 18438237 SUBMITTED.
+- 18438237 COMPLETED 10:38 (timing VERIFIED consistent: all single-arm 20k trainings run ~9-10 min; pick @5000 score 0.981).
+- 18440865 SUBMITTED (oracle white).
