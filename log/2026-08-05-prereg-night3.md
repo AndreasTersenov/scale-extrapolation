@@ -261,7 +261,17 @@ from the committed pick in ≥1 of the three legs — exec P 75; under the
 cage story the oracle's corrected pick shows better MF(dev) at the
 nearest CKPT-SWEEP grid step than @5000 — exec P 55 (the sweep is the
 arbiter; its pre-statements stand unchanged).
-Result: **PENDING**.
+Result (verbatim, night3_cage_recheck.json / stdout): **ALL THREE
+DIFFER** — oracle committed @5000 → corrected @16000 (corrected score
+0.031; the committed pick RESCORES to 2.080, i.e. rejected under the
+correct cage); seed1 @3500 → @19500 (0.044; committed rescores 1.920);
+seed2 @5500 → @16000 (0.103; committed rescores 1.694). The exec-75
+line fires. Structural reading (interpretation, labeled): under the
+correct reference all legs pick LATE checkpoints clustered with clean
+seed 0's @16000 — the stage-3 "picks-differ" seed-fragility line was
+largely THE BUG (early ckpts are under-kurtotic ⇒ matched the sandbox's
+low-kurt target); the oracle's bad-texture @5000 checkpoint is now a
+concrete cage-artifact candidate, with the sweep as empirical arbiter.
 
 ## Sequencing
 
