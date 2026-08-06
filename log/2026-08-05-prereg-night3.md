@@ -254,7 +254,17 @@ in-test (splice test extended: rank identity vs raw seed, marginal
 mean/std, finiteness; 5/5 green; repaired base range ±7.3, std 0.996).
 The registered line and its weights are UNCHANGED and will be read on
 the resubmitted probe only.
-Result (resubmission): **PENDING**.
+Result (resubmission; verbatim, night3_casc_verdict.json; job 18481064,
+replay + determinism gates exact): **NOT FIRED** — max |Δ| = 2.72
+(nu1.0_small_frac; next nu0.5_small_frac −2.11, nu1.0_holes +1.95,
+alignment −0.96); C(casc) 0.7428±0.0049 IN the l1pp band (adj committed
+0.7414); MF(dev) casc 2.91 declared vs adj recomputed 3.42 (same
+seeds). The rec-30 / exec-22 line loses on the not-fired side (exec
+closer). Meaning, pre-stated: base spatial-arrangement structure does
+NOT survive the fixed flow — the transfer-function lesson (spectrum is
+input-independent) extends to phase/arrangement at these statistics.
+Inference-only cascade seeding is dead; cascade TRAINING remains an
+open (drafted-only) lever, now with a prior lowered by this null.
 
 ## CKPT-SWEEP READOUT (verbatim, night3_ckpt_sweep_scores.json;
 ## job 18447330, 3:51)

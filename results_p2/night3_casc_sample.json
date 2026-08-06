@@ -1,8 +1,8 @@
 {
  "replay_gate": {
-  "corr_min": 0.9999999900796597,
-  "ratio_mean": 0.9999996781544482,
-  "rel_maxabs": 0.0075140511100149805
+  "corr_min": 0.9999999893099818,
+  "ratio_mean": 0.9999995988365622,
+  "rel_maxabs": 0.006835456571784945
  },
  "determinism_gate_maxabs": 0.0,
  "ckpt": "data_cache/ckpt_c1t_gowerstreet/armA_gowerstreet_s16000.pkl",

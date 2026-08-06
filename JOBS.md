@@ -440,3 +440,5 @@ This is the load-bearing run and wants a full H100 (`--gpus-per-node=1`, ≤2:59
 - AUG machinery finished by main session (subagent hit session limit);
   A-N3-4: 6 slots, 40k steps. night3_aug_canary.slurm: MIG 45 min, sandbox
   canary (dispersion kill <0.6 at s5000).
+- 18481064 COMPLETED (CASC resubmission; gates exact; line NOT FIRED |D|=2.72).
+- 18481033 COMPLETED (oraclefix finals; scored, MF 3.87 / peaks persist).
