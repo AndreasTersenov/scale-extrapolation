@@ -45,11 +45,17 @@ follows was reshaped by chasing this:
    GRF-only validation, 6 tests) and QUARANTINED — applied to nothing
    tonight; bar to be set from a real split-half null inside the
    blind-shot-2 prereg (A4 pattern).
-7. **AUG arm:** ×2 copies proven a Haar-nesting NO-OP in-test (the
-   registered exhibit); fractional band-limited copies (g96 {1,2},
-   g80 {1}; UNet mod-8 constraint found in-test, A-N3-4) trained at
-   seeds 11/12 with the CORRECT truth reference. Verdict: **PENDING**
-   below.
+7. **AUG arm: AUG-NULL, seed-stable — and mechanistically loud.** ×2
+   copies proven a Haar-nesting NO-OP in-test (the registered exhibit);
+   fractional band-limited copies (g96 {1,2}, g80 {1}; UNet mod-8
+   constraint found in-test, A-N3-4) trained at seeds 11/12 with the
+   CORRECT truth reference. Both seeds: marginals/starlet/parity PASS
+   but MF(dev) ~9.2, fragmentation |z| ~16.9, and the native peak
+   excess SIGN-FLIPPED to a ~−15% deficit; seed 11 additionally broke
+   the P-T coloring band (first miss in eight chains). Role-transition
+   training on band-limited degradations teaches the WRONG finest-band
+   law — the strongest evidence yet for "no honest data-side fix at
+   deployment depth".
 
 Infra note, disclosed: the AUG and TIDAL build subagents died on an API
 session limit mid-night (~4h stall); the main session finished the AUG
@@ -66,7 +72,7 @@ tested green and were committed as-is.
 | A-N3-2 sweep-better | — / 55 | FIRES (2.89@15000 < 4.54@5000) |
 | O-CORRECTED MF ≤ 3.5 | — / 60 | does NOT fire (3.87) |
 | O-CORRECTED peaks persist | — / 80 | FIRES (+15.2/+19.1%) |
-| AUG arm branch (15/40/30/5/10 rec; 8/30/47/5/10 exec) | see prereg | **PENDING** |
+| AUG arm branch (15/40/30/5/10 rec; 8/30/47/5/10 exec) | worse-of-seeds | **AUG-NULL** (both seeds; exec 47 pays vs rec 30) |
 
 CKPT-SWEEP (descriptive; night3_ckpt_sweep_scores.json): oracle spread
 2.07, min 2.89@15000, 3/8 pass-cat, shipped 4.54@5000; prod spread 2.96,
@@ -74,16 +80,88 @@ min 2.33@20000, 1/8; blind 0/8, min 5.28. Spearman cage↔MF +0.38/+0.67/
 +0.50 (correct cage weakly protective — the Goodhart watched line does
 NOT fire).
 
-## AUG arm (PENDING — filled verbatim at scoring)
+## AUG arm — **AUG-NULL (worse-of-seeds; both seeds NULL, seed-STABLE)**
 
-- canary: PENDING
-- seed 11: PENDING
-- seed 12: PENDING
-- arm branch (worse-of-seeds): PENDING
+- canary: PASS (dispersion 0.988; 18481134, 5:14).
+- trainings 18481250/51 (12:30/12:20): both seeds pick **@27000** under
+  the CORRECT cage (scores 0.339/0.470); slots 6 × ~6667 (parity as
+  designed).
+- seed 11: MF(dev) declared **9.34** (native 12.66); frag_max|z|
+  **16.89**; native peaks **−15.46%±2.21 / −13.05%±2.05** (the excess
+  SIGN-FLIPPED to a deficit); C 0.9672±0.0184 **FAILS its P-T band**
+  [0.7194, 0.7917] — the first miss after seven consecutive hits;
+  marginals PASS, parity 2.18, starlet PASS, nn 4.86±0.36.
+- seed 12: MF(dev) declared **9.09** (native 12.85); frag 16.86; peaks
+  −15.07/−14.18%; C 0.7678 LANDS; marginals PASS, parity 2.59, starlet
+  PASS, nn 5.50±0.28.
+- Arm branch: **AUG-NULL** (rec 30 / exec 47 — the exec column pays).
+- Rule-wording flaw disclosed (did not bite): the FIXES "excesses <
+  half" clause is one-sided — a large deficit satisfies it textually;
+  MF gated the branch here. Tighten to |excess| in any reuse.
 
 ## Interpretation (executor's analysis; separate from verdicts above)
 
-PENDING — written after the AUG readout.
+**The three causal stories, resolved as far as tonight can resolve
+them.** The campaign entered the night with O-NULL and three unseparated
+readings — capacity, cage-selection, step dilution. Tonight's evidence
+reshapes that space:
+
+1. **The topology signature (MF/fragmentation) is NOT an architecture
+   wall.** The truth bug + sweep + O-CORRECTED chain show: the oracle's
+   catastrophic 5.63 was mostly a mis-referenced selection cage (bugged
+   pick rescores to 2.08 = rejected); at correct picks the oracle sits
+   3.87 on finals with pass-category e2e checkpoints existing (2.89
+   @15000). What remains above the bar is checkpoint-to-checkpoint
+   texture variation (~±1 in T between adjacent late ckpts, 3.5σ of
+   reading jitter) that the marginal-only cage is too weak to control
+   (Spearman cage↔MF only +0.4–0.7). The honest residual disease at
+   data-available scales is "selection cannot see texture", not "the
+   network cannot render texture".
+2. **The native peak excess IS the model-class residue.** It survives
+   every checkpoint (+14–22% across all 24 sweep points), direct oct-1
+   training (bugged +22.8/+24.8; corrected +15.2/+19.1), and is the one
+   number no selection moves. AUG moved it — by OVERSHOOTING into an
+   equal-magnitude deficit while wrecking topology, which is the
+   exception that proves the rule: you can change the finest-band law
+   only by changing what the finest-band role LEARNS, and the only
+   band-limited-safe training data available teaches the wrong law
+   (truncation rolloff ⇒ under-peaked, fragmenting texture). This is
+   the empirical form of R47's structural reading: for true
+   beyond-resolution deployment there is no honest data-side fix.
+3. **Depth is the dominant real driver.** Blind (2 extrapolated
+   octaves) never passes at ANY checkpoint (0/8, min 5.28); orientation
+   decoherence is sub-bar at depth 1 (z 2.67) and above-bar at depth 2
+   (z 4.50); BL's ladder said the same last session. Every texture
+   pathology tonight scales with extrapolation depth, none with
+   data-availability alone.
+4. **The seed-fragility story needs re-writing.** Under the correct
+   cage all four seeds' picks cluster late (@16000/@19500/@16000/@27000
+   incl. AUG's). The stage-3 "picks differ wildly" line (@3500/@5500 vs
+   @16000) was substantially the bug. What fragility remains is the
+   genuine ckpt-axis texture noise in (1).
+5. **Fixed weights are a phase bottleneck (CASC).** Seed arrangement
+   does not reach the output (max |Δ| 2.72); together with L1″'s
+   input-independent spectral action, the flow's output texture is a
+   property of WEIGHTS, not of seeds — corrections must act on weights
+   (training) or on outputs (the D5 corrector), never on inputs.
+6. **Where I was wrong tonight, in the registered numbers:** my GATE-T
+   40 was right (rec 60 wrong); my CASC 22 right (rec 30 wrong); my
+   AUG NULL 47 right (rec 30 wrong); but my O-CORRECTED MF-≤3.5 at 60
+   was wrong (3.87 — I over-trusted the sweep's e2e 2.89 transferring
+   to the finals pipeline), and the prereg's modal O-FIXES 45 from R47
+   was doubly wrong — for a reason nobody priced: the experiment
+   itself was broken. Calibration lesson for the ledger: before
+   weighing branches, VERIFY THE INSTRUMENTED EXPERIMENT (the cage's
+   reference) — #16's "concentrated mechanisms fire" keeps winning
+   only when the apparatus is sound.
+7. **Lever ranking for the morning (my recommendation, not a
+   decision):** D1 (corrected-selection re-ship — cheap, mandatory for
+   record integrity) → D2 (blind shot 2 on JUDGE-2, after D1 ships the
+   config) → D5 (corrector, the only remaining lever for the peak
+   residue at deployment depth) → D3/D4 parked. AUG-style augmentation
+   should be retired: its failure mode (teaching a rolled-off finest
+   band) is intrinsic to band-limited-safe degradations, not a tuning
+   accident.
 
 ## Decision ledger (RIDER v2 grant 1)
 
@@ -124,7 +202,9 @@ PENDING — written after the AUG readout.
 
 GPU (H100-h, MIG-rated): R47 set 0.12 (DL-1) + sweep 0.02 + oraclefix
 white/finals 0.06 + CASC run1+run2 0.08 + canary 0.04 + AUG trainings
-PENDING + AUG chains PENDING. Running total before AUG ≈ 0.32 of 4.0.
+2 × 12.5 min ≈ 0.12 + AUG chains (2 whites + 2 finals) ≈ 0.07.
+**Night total ≈ 0.51 of the 4.0 cap.** The improvisation slot's funding
+went unspent (DL-8).
 
 ## Drafted preregs (NOT run; morning deliverables)
 

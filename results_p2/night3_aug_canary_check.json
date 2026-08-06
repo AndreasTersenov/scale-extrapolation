@@ -1,0 +1,8 @@
+{
+ "ckpt": "/home/tersenov/software/scale-extrapolation/data_cache/ckpt_night3_aug_canary/armA_sandbox_s5000.pkl",
+ "octave": 2,
+ "gen_std_standardized": 0.988291323184967,
+ "real_std_raw": 0.9831274747848511,
+ "dispersion_ratio": 0.988291323184967,
+ "kill": false
+}

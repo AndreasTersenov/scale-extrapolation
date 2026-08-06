@@ -445,3 +445,12 @@ This is the load-bearing run and wants a full H100 (`--gpus-per-node=1`, ≤2:59
 - 18481134 COMPLETED 5:14 (AUG canary PASS, dispersion 0.988).
 - night3_aug_train.slurm x2 (seeds 11, 12; correct gowerstreet truth).
 - 18481250 SUBMITTED (aug11 training). 18481251 SUBMITTED (aug12 training).
+- 18481250/18481251 COMPLETED 12:30/12:20 (aug11/aug12; both pick @27000,
+  scores 0.339/0.470, correct cage; slots 6x~6667).
+- stage3_b_gpu.slurm x2 (aug11/aug12 whites).
+- 18482912 / 18482913 SUBMITTED (aug whites).
+- fits: aug11/aug12 done. 18482985 / 18482986 SUBMITTED (aug finals).
+- 18482912/13 COMPLETED (aug whites; determinism exact). Fits 2.3/2.1%.
+- 18482985/86 COMPLETED (aug finals). Starlet both PASS.
+- AUG scored: BOTH SEEDS AUG-NULL (seed-stable; MF ~9.2, frag ~16.9,
+  peaks sign-flip to -15%; aug11 C band MISS). Night GPU ~0.51 H100-h.

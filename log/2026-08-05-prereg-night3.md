@@ -157,7 +157,30 @@ augmentation that never sees oct-1 likely can't either; the residual
 IMPROVED weight rides on the cage/dilution readings (AUG's denser role
 ladder could regularize selection). TIDAL column stated unconditionally
 but only spends if GATE-T fires.
-Results: AUG **PENDING** · TIDAL **DESCOPED** (GATE-T not fired, z 2.67).
+Results: AUG **AUG-NULL, worse-of-seeds (both seeds NULL)** · TIDAL
+**DESCOPED** (GATE-T not fired, z 2.67).
+AUG readout (verbatim, night3_aug11/12_verdict.json; trainings
+18481250/18481251 both pick @27000 under the correct cage, canary PASS
+0.988, chains 18482912/13 + 18482985/86, gates exact, fits 2.3/2.1%):
+- aug11: MF(dev) declared 9.34 (native 12.66), frag_max|z| 16.89,
+  native peaks **−15.46%±2.21 / −13.05%±2.05** (SIGN-FLIPPED to
+  deficit), C 0.9672±0.0184 **FAILS its P-T band** [0.7194, 0.7917] —
+  the first band miss after seven consecutive hits; marginals PASS,
+  parity 2.18, starlet PASS, nn 4.86±0.36 (elevated).
+- aug12: MF(dev) declared 9.09 (native 12.85), frag_max|z| 16.86,
+  peaks −15.07%±2.25 / −14.18%±2.02, C 0.7678 LANDS; marginals PASS,
+  parity 2.59, starlet PASS, nn 5.50±0.28.
+The null is SEED-STABLE (MF 9.3/9.1; frag 16.9/16.9; peaks −15/−15):
+systematic, not noise. Interpretation labeled: the registered
+degradation caveat realized — band-limited fractional copies carry a
+truncation-rolloff finest band, and training the finest-octave role on
+them teaches a SMOOTHER (under-peaked) finest-band law that fragments
+at threshold crossings; the seed-11 C band miss additionally shows the
+recipe can destabilize the spectral-action input-independence the
+deconvolution tool rests on. Rule-wording flaw disclosed (did not
+bite): the "excesses < half" FIXES clause is one-sided — a large
+DEFICIT satisfies it textually; MF gated the branch here. Exec NULL 47
+vs rec 30: the exec column pays.
 
 ## CASC — inference-only transfer probe (NO cascade training tonight)
 
