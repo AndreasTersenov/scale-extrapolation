@@ -214,6 +214,27 @@ Result: **PENDING**.
 
 No collisions with committed streams (checked against stage3_b_* KEYS).
 
+## A-N3-4 — AUG design constraints found in-test (blind; committed
+## before any AUG training runs)
+
+Two constraints surfaced by the tests-first pass (the AUG subagent died
+on a session limit mid-build; the main session finished the build):
+1. **UNet mod-8 size constraint:** slot sizes must survive three exact
+   halvings (skip-connection shape mismatch otherwise, caught by the
+   trainer smoke test at 12²) ⇒ g96 trains octaves {1,2} (48/24), g80
+   trains {1} (40); the registered {1,2,3}/{1,2} lists lose their
+   smallest slots. Slot count 8 → **6**; per-slot-parity steps 48000 →
+   **40000** (6 × 6667 ≈ baseline); ckpt-every 1000 (40 ckpts, matching
+   the baseline count).
+2. **Resample D4 form:** array-centered rot90/flips do not commute
+   POINTWISE with the Fourier crop — the rotation center is half a
+   pixel off the DFT origin, a different pixel-fraction on the two
+   grids; the discrepancy is a pure TRANSLATION (magnitude spectra
+   agree to 1.3e-7 relative, in-test). The pool's law is D4-exact via
+   the trainer's own per-stack d4_augment; the test asserts the
+   translation-invariant form. The ×2 no-op exhibit, no-leak test, and
+   trainer smoke are green (6/6).
+
 ## A-N3-3 — CASC probe run 1 INVALID (numerics); the one licensed
 ## bug-repair (committed before the resubmission runs)
 

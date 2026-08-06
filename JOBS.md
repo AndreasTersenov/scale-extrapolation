@@ -435,3 +435,8 @@ This is the load-bearing run and wants a full H100 (`--gpus-per-node=1`, ≤2:59
 - stage3_b_gpu.slurm (oraclefix finals).
 - CASC run 1 INVALID (marginal-tail explosion through the copula; A-N3-3);
   rank-gauss repair committed; resubmitting (the one licensed repair).
+- 18481064 SUBMITTED (CASC probe resubmission, repaired base).
+- 18481033 SUBMITTED (oraclefix finals).
+- AUG machinery finished by main session (subagent hit session limit);
+  A-N3-4: 6 slots, 40k steps. night3_aug_canary.slurm: MIG 45 min, sandbox
+  canary (dispersion kill <0.6 at s5000).
