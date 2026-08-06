@@ -1,0 +1,14 @@
+jax devices: [CudaDevice(id=0)]
+E0806 19:24:59.905755  214542 ptx_compiler_helpers.cc:154] *** WARNING *** Invoking ptxas with version 12.6.77, which corresponds to a CUDA version <=12.6.2. CUDA versions 12.x.y up to and including 12.6.2 miscompile certain edge cases around clamping.
+Please upgrade to CUDA 12.6.3 or newer.
+[19:28:19] d1_seed2 final1: done
+[19:30:01] d1_seed2 final2: done
+[19:31:29] d1_seed2 final3: done
+[19:31:29] -> stage3_d1_seed2_final.npz
+E0806 19:31:34.888252  394035 ptx_compiler_helpers.cc:154] *** WARNING *** Invoking ptxas with version 12.6.77, which corresponds to a CUDA version <=12.6.2. CUDA versions 12.x.y up to and including 12.6.2 miscompile certain edge cases around clamping.
+Please upgrade to CUDA 12.6.3 or newer.
+[19:32:01] d1_seed2 hc oct1: vs=1.063 kurt=8.04
+[19:32:13] d1_seed2 hc oct2: vs=0.972 kurt=6.29
+[19:32:21] d1_seed2 hc oct3: vs=0.694 kurt=3.00
+[19:32:29] d1_seed2 hc oct4: vs=0.512 kurt=0.98
+[19:32:29] wrote d1_d1_seed2_hc.json

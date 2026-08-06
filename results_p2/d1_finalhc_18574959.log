@@ -1,0 +1,14 @@
+jax devices: [CudaDevice(id=0)]
+E0806 19:24:59.998686  120617 ptx_compiler_helpers.cc:154] *** WARNING *** Invoking ptxas with version 12.6.77, which corresponds to a CUDA version <=12.6.2. CUDA versions 12.x.y up to and including 12.6.2 miscompile certain edge cases around clamping.
+Please upgrade to CUDA 12.6.3 or newer.
+[19:28:17] d1_oracle final1: done
+[19:30:14] d1_oracle final2: done
+[19:31:50] d1_oracle final3: done
+[19:31:50] -> stage3_d1_oracle_final.npz
+E0806 19:31:55.238560  136374 ptx_compiler_helpers.cc:154] *** WARNING *** Invoking ptxas with version 12.6.77, which corresponds to a CUDA version <=12.6.2. CUDA versions 12.x.y up to and including 12.6.2 miscompile certain edge cases around clamping.
+Please upgrade to CUDA 12.6.3 or newer.
+[19:32:22] d1_oracle hc oct1: vs=1.005 kurt=7.19
+[19:32:34] d1_oracle hc oct2: vs=0.969 kurt=6.20
+[19:32:43] d1_oracle hc oct3: vs=0.731 kurt=3.76
+[19:32:51] d1_oracle hc oct4: vs=0.534 kurt=1.12
+[19:32:51] wrote d1_d1_oracle_hc.json

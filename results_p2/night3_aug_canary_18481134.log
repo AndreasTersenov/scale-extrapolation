@@ -1,0 +1,22 @@
+jax devices: [CudaDevice(id=0)]
+E0806 03:32:28.050072  560537 ptx_compiler_helpers.cc:154] *** WARNING *** Invoking ptxas with version 12.6.77, which corresponds to a CUDA version <=12.6.2. CUDA versions 12.x.y up to and including 12.6.2 miscompile certain edge cases around clamping.
+Please upgrade to CUDA 12.6.3 or newer.
+[03:32:29] config_hash=844769a8bc devices=[CudaDevice(id=0)]
+[03:32:29] config={"field": "sandbox", "gen_from": 4, "channels": [32, 64, 128], "cond_mode": "film", "steps": 6000, "ckpt_every": 1000, "batch": 32, "lr": 0.001, "n_heldout": 64, "sample_steps": 80, "sel_K": 4, "sel_octave": 2, "data": "/home/tersenov/software/scale-extrapolation/data_cache/tiles_sandbox.npz", "coords_file": "/home/tersenov/software/scale-extrapolation/data_cache/running_couplings_sandbox.json", "truth": "/home/tersenov/software/scale-extrapolation/results_p2/sandbox_truth_normconv.json", "out": "/home/tersenov/software/scale-extrapolation/results_p2/night3_aug_canary_arms.npz", "sel_out": "/home/tersenov/software/scale-extrapolation/results_p2/night3_aug_canary_selection.json", "ckpt_dir": "/home/tersenov/software/scale-extrapolation/data_cache/ckpt_night3_aug_canary", "seed": 11}
+[03:32:30] sandbox: 322 train (+322 g96 +322 g80) / 32 val / 32 test; selection reference oct2 vs=1.070 kurt=4.917
+[03:35:12] trained, loss 2.512->1.1118; slot_visits={'(0, 2)': 1000, '(0, 3)': 1000, '(0, 4)': 1000, '(1, 1)': 1000, '(1, 2)': 1000, '(2, 1)': 1000}
+[03:35:23] sel @1000: vs=0.970 kurt=5.45 score=0.941
+[03:35:31] sel @2000: vs=0.939 kurt=4.00 score=1.249
+[03:35:40] sel @3000: vs=0.919 kurt=3.51 score=1.912
+[03:35:48] sel @4000: vs=1.007 kurt=4.21 score=0.955
+[03:35:56] sel @5000: vs=0.952 kurt=3.74 score=1.602
+[03:36:04] sel @6000: vs=0.982 kurt=4.12 score=1.081
+[03:36:04] SELECTED checkpoint: step 1000 (score 0.941)
+[03:36:09] TEST oct2 @sel: vs=0.949 kurt=4.95 q999=5.56
+[03:36:14] TEST oct3 @sel: vs=0.809 kurt=4.08 q999=5.35
+[03:36:19] TEST oct4 @sel: vs=0.594 kurt=2.82 q999=4.85
+[03:36:41] TEST oct1 @sel: vs=1.067 kurt=6.05 q999=5.85
+[03:37:17] wrote /home/tersenov/software/scale-extrapolation/results_p2/night3_aug_canary_arms.npz and /home/tersenov/software/scale-extrapolation/results_p2/night3_aug_canary_selection.json in 287s config_hash=844769a8bc
+E0806 03:37:20.463743  571054 ptx_compiler_helpers.cc:154] *** WARNING *** Invoking ptxas with version 12.6.77, which corresponds to a CUDA version <=12.6.2. CUDA versions 12.x.y up to and including 12.6.2 miscompile certain edge cases around clamping.
+Please upgrade to CUDA 12.6.3 or newer.
+canary dispersion ratio 0.988 -> PASS

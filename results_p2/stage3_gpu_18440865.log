@@ -1,0 +1,5 @@
+jax devices: [CudaDevice(id=0)]
+E0805 18:44:09.268226 1281548 ptx_compiler_helpers.cc:154] *** WARNING *** Invoking ptxas with version 12.6.77, which corresponds to a CUDA version <=12.6.2. CUDA versions 12.x.y up to and including 12.6.2 miscompile certain edge cases around clamping.
+Please upgrade to CUDA 12.6.3 or newer.
+[18:45:39] determinism gate: exact (0.0)
+[18:48:15] white stream done -> stage3_oracle_white.npz

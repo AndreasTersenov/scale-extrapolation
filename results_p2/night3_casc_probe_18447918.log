@@ -1,0 +1,10 @@
+[CudaDevice(id=0)]
+E0805 19:44:57.308862 1345949 ptx_compiler_helpers.cc:154] *** WARNING *** Invoking ptxas with version 12.6.77, which corresponds to a CUDA version <=12.6.2. CUDA versions 12.x.y up to and including 12.6.2 miscompile certain edge cases around clamping.
+Please upgrade to CUDA 12.6.3 or newer.
+[19:48:13] gow replay gate: {'corr_min': 0.9999999900796597, 'ratio_mean': 0.9999996781544482, 'rel_maxabs': 0.0075140511100149805}
+[19:48:13] gow replay gate: PASS
+[19:49:14] determinism gate: exact (0.0)
+[19:51:02] gow casc1: done
+[19:52:25] gow casc2: done
+[19:53:42] gow casc3: done
+[19:53:42] CASC probe done -> night3_casc_gen.npz

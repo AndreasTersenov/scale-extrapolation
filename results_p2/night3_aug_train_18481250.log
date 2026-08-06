@@ -1,0 +1,53 @@
+jax devices: [CudaDevice(id=0)]
+E0806 03:38:07.224465  571965 ptx_compiler_helpers.cc:154] *** WARNING *** Invoking ptxas with version 12.6.77, which corresponds to a CUDA version <=12.6.2. CUDA versions 12.x.y up to and including 12.6.2 miscompile certain edge cases around clamping.
+Please upgrade to CUDA 12.6.3 or newer.
+[03:38:07] config_hash=5f8c704e2e devices=[CudaDevice(id=0)]
+[03:38:07] config={"field": "gowerstreet", "gen_from": 4, "channels": [32, 64, 128], "cond_mode": "film", "steps": 40000, "ckpt_every": 1000, "batch": 32, "lr": 0.001, "n_heldout": 64, "sample_steps": 80, "sel_K": 4, "sel_octave": 2, "data": "/home/tersenov/software/scale-extrapolation/data_cache/tiles_pnull.npz", "coords_file": "/home/tersenov/software/scale-extrapolation/data_cache/running_couplings.json", "truth": "/home/tersenov/software/scale-extrapolation/results_p2/gowerstreet_val_ref.json", "out": "/home/tersenov/software/scale-extrapolation/results_p2/night3_aug11_arms.npz", "sel_out": "/home/tersenov/software/scale-extrapolation/results_p2/night3_aug11_selection.json", "ckpt_dir": "/home/tersenov/software/scale-extrapolation/data_cache/ckpt_night3_aug11", "seed": 11}
+[03:38:09] gowerstreet: 266 train (+266 g96 +266 g80) / 32 val / 32 test; selection reference oct2 vs=1.067 kurt=7.274
+[03:43:46] trained, loss 2.497->0.6793; slot_visits={'(0, 2)': 6667, '(0, 3)': 6667, '(0, 4)': 6667, '(1, 1)': 6667, '(1, 2)': 6666, '(2, 1)': 6666}
+[03:43:57] sel @1000: vs=0.624 kurt=7.49 score=4.153
+[03:44:05] sel @2000: vs=0.806 kurt=4.75 score=2.449
+[03:44:13] sel @3000: vs=0.890 kurt=5.06 score=2.031
+[03:44:22] sel @4000: vs=0.819 kurt=4.25 score=2.773
+[03:44:30] sel @5000: vs=0.990 kurt=6.19 score=0.997
+[03:44:38] sel @6000: vs=0.884 kurt=5.89 score=1.720
+[03:44:46] sel @7000: vs=0.931 kurt=5.33 score=1.782
+[03:44:54] sel @8000: vs=0.920 kurt=5.06 score=2.026
+[03:45:02] sel @9000: vs=0.875 kurt=4.43 score=2.603
+[03:45:10] sel @10000: vs=0.831 kurt=4.13 score=2.885
+[03:45:18] sel @11000: vs=0.905 kurt=4.68 score=2.382
+[03:45:26] sel @12000: vs=0.984 kurt=6.25 score=0.940
+[03:45:34] sel @13000: vs=0.985 kurt=5.66 score=1.477
+[03:45:43] sel @14000: vs=0.907 kurt=4.84 score=2.231
+[03:45:51] sel @15000: vs=0.927 kurt=5.57 score=1.557
+[03:45:59] sel @16000: vs=0.940 kurt=5.04 score=2.049
+[03:46:07] sel @17000: vs=0.975 kurt=5.85 score=1.306
+[03:46:15] sel @18000: vs=0.967 kurt=6.24 score=0.949
+[03:46:23] sel @19000: vs=1.030 kurt=6.98 score=0.344
+[03:46:31] sel @20000: vs=0.974 kurt=5.75 score=1.392
+[03:46:39] sel @21000: vs=0.938 kurt=5.58 score=1.555
+[03:46:47] sel @22000: vs=0.944 kurt=5.66 score=1.478
+[03:46:55] sel @23000: vs=0.986 kurt=6.11 score=1.068
+[03:47:04] sel @24000: vs=0.948 kurt=6.32 score=1.121
+[03:47:12] sel @25000: vs=1.047 kurt=6.66 score=0.562
+[03:47:20] sel @26000: vs=0.970 kurt=6.02 score=1.145
+[03:47:28] sel @27000: vs=1.062 kurt=7.64 score=0.339
+[03:47:36] sel @28000: vs=0.985 kurt=6.32 score=0.877
+[03:47:44] sel @29000: vs=1.019 kurt=6.56 score=0.657
+[03:47:53] sel @30000: vs=0.988 kurt=5.84 score=1.316
+[03:48:01] sel @31000: vs=0.961 kurt=6.15 score=1.032
+[03:48:09] sel @32000: vs=1.005 kurt=6.59 score=0.623
+[03:48:17] sel @33000: vs=0.993 kurt=5.65 score=1.487
+[03:48:25] sel @34000: vs=0.995 kurt=6.61 score=0.675
+[03:48:33] sel @35000: vs=0.993 kurt=6.04 score=1.132
+[03:48:41] sel @36000: vs=0.981 kurt=6.42 score=0.806
+[03:48:49] sel @37000: vs=1.003 kurt=6.62 score=0.598
+[03:48:58] sel @38000: vs=0.999 kurt=6.23 score=0.960
+[03:49:06] sel @39000: vs=0.997 kurt=6.29 score=0.901
+[03:49:14] sel @40000: vs=1.009 kurt=6.32 score=0.875
+[03:49:14] SELECTED checkpoint: step 27000 (score 0.339)
+[03:49:19] TEST oct2 @sel: vs=0.976 kurt=6.03 q999=5.69
+[03:49:24] TEST oct3 @sel: vs=0.792 kurt=3.71 q999=5.21
+[03:49:30] TEST oct4 @sel: vs=0.564 kurt=1.71 q999=4.53
+[03:49:52] TEST oct1 @sel: vs=0.865 kurt=10.55 q999=6.27
+[03:50:29] wrote /home/tersenov/software/scale-extrapolation/results_p2/night3_aug11_arms.npz and /home/tersenov/software/scale-extrapolation/results_p2/night3_aug11_selection.json in 741s config_hash=5f8c704e2e

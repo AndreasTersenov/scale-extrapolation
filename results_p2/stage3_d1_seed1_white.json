@@ -1,0 +1,7 @@
+{
+ "determinism_gate_maxabs": 0.0,
+ "ckpt": "/home/tersenov/software/scale-extrapolation/data_cache/ckpt_stage3_seed1/armA_gowerstreet_s19500.pkl",
+ "train_oct_lo": 2,
+ "key": 6001,
+ "grng": 20261410
+}
