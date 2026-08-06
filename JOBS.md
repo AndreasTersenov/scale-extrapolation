@@ -461,3 +461,8 @@ This is the load-bearing run and wants a full H100 (`--gpus-per-node=1`, ≤2:59
   (lo2,tgt2), d1_seed2 @16000 (lo2,tgt2). Ledger #17 reference assertion.
 - 18574699/18574700/18574701 SUBMITTED (d1 whites: oracle/seed1/seed2).
 - fits done (cal 1.7-1.9%). 18574959/18574960/18574961 SUBMITTED (d1 finals+hc).
+- d1 starlet all PASS; d1 scored (ledger #17 assertion passed all 3):
+  MF corrected 3.66/3.99/4.18 vs bugged 5.59/6.07/6.17 (~40% was the cage);
+  declared-peak rule FAILS 0/3 (seeds significant +5-8% at 0.5px — NOT the
+  bug); peaks persist +16-24% (fires); C lands all 3; tier-0 no violation.
+  D1 readout appended. D2 + conformal drafts committed. STOP.

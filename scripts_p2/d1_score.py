@@ -176,7 +176,7 @@ NN_EDGES = np.array(json.load(open(os.path.join(
 nns = [T_of(s, lambda f: nn_profile(f, k=K_REAL, edges=NN_EDGES))
        for s in streams]
 st_ok = None
-p = os.path.join(RES, f"starlet_l1_d1_{tag}.json")
+p = os.path.join(RES, f"starlet_l1_{tag}.json")
 if os.path.exists(p):
     st_ok = bool(json.load(open(p))["checks"]["gen_A"]["all_scored_pass"])
 out["battery"] = {"marginals": rows, "marg_ok": bool(marg_ok),
