@@ -459,3 +459,5 @@ This is the load-bearing run and wants a full H100 (`--gpus-per-node=1`, ≤2:59
 - tier-0 empty-beam violation instrument tests-first (5 green).
 - 3 corrected-pick chains: d1_oracle @16000 (lo1,tgt1), d1_seed1 @19500
   (lo2,tgt2), d1_seed2 @16000 (lo2,tgt2). Ledger #17 reference assertion.
+- 18574699/18574700/18574701 SUBMITTED (d1 whites: oracle/seed1/seed2).
+- fits done (cal 1.7-1.9%). 18574959/18574960/18574961 SUBMITTED (d1 finals+hc).
