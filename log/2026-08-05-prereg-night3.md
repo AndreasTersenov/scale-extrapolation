@@ -295,7 +295,20 @@ native peak excesses REMAIN > half-targets — exec P 80 (checkpoint-
 robust per the sweep). Meaning: both landing ⇒ O-NULL decomposes into
 "topology was the cage artifact; the peak excess is the real
 architecture residue" — the cleanest available account of R47's O.
-Result: **PENDING**.
+Result (verbatim, night3_oraclefix_verdict.json; jobs 18447906/
+18481033, gates exact, fit 2.1%): MF(dev) declared **3.87** (fail;
+native 4.42; frag_max|z| 2.71) — the exec-60 line does NOT fire, but
+the bugged pick's 5.63 → 3.87 move attributes roughly HALF the
+oracle's topology excess to the cage bug (rest: real, plus ckpt-to-ckpt
+texture noise ~±1 — the sweep's e2e 2.89@15000 vs finals 3.87@16000).
+Native peaks **+15.22%±2.92 / +19.12%±2.73** vs halves 7.65/6.24 — the
+exec-80 peaks-persist line FIRES; the peak excess is
+selection-independent. C = 0.7734±0.0048 **LANDS** in [0.7445, 0.8193]
+(the calibration's SEVENTH consecutive band hit). e2e marginals pass,
+parity 1.93, starlet PASS, alignment z +0.2. Formal re-adjudication of
+R47's O belongs to the morning reconvene; tonight's account: O-NULL =
+cage artifact (topology, mostly) + model-class residue (peaks,
+entirely).
 
 ## Improvisation slot (RIDER v2 §5)
 
