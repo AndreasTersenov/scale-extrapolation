@@ -1,0 +1,26 @@
+{
+ "replay_gate": {
+  "corr_min": 0.9999999900796597,
+  "ratio_mean": 0.9999996781544482,
+  "rel_maxabs": 0.0075140511100149805
+ },
+ "determinism_gate_maxabs": 0.0,
+ "ckpt": "data_cache/ckpt_c1t_gowerstreet/armA_gowerstreet_s16000.pkl",
+ "filter": "results_p2/l1pp_filter.npz",
+ "filter_key": "filt_adj",
+ "lam": 0.4,
+ "streams": {
+  "casc1": [
+   5711,
+   20260896
+  ],
+  "casc2": [
+   5712,
+   20260897
+  ],
+  "casc3": [
+   5713,
+   20260898
+  ]
+ }
+}

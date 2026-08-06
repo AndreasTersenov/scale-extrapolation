@@ -429,3 +429,9 @@ This is the load-bearing run and wants a full H100 (`--gpus-per-node=1`, ≤2:59
 - CASC probe (MIG --wrap, 40 min): inference-only cascade-base transfer probe,
   l1pp chain verbatim, KEYS 5711-13; intent: does base phase structure survive
   fixed weights (rec 30 / exec 22).
+- 18447906 COMPLETED (oraclefix white; determinism exact). Fit cal 2.1%,
+  C_pred 0.7819±0.0374.
+- CASC probe 18447918 COMPLETED 8:52.
+- stage3_b_gpu.slurm (oraclefix finals).
+- CASC run 1 INVALID (marginal-tail explosion through the copula; A-N3-3);
+  rank-gauss repair committed; resubmitting (the one licensed repair).

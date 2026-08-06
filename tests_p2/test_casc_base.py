@@ -101,10 +101,20 @@ def test_e_copula_splice_structural():
     y_ref = np.asarray(colored_t_base(key, shape, ones, Z, X))
     g = np.asarray(jax.random.normal(key, shape))
     assert np.allclose(y_ref, np.interp(g, Z, X), rtol=1e-3, atol=1e-3)
-    # casc_colored_base == the SAME steps applied to the casc seed
+    # casc_colored_base == the SAME steps applied to the RANK-GAUSSIANIZED
+    # casc seed (A-N3-3 repair: exact std-normal marginals, cascade spatial
+    # arrangement kept — the raw GSM marginal exploded the quantile table)
+    from casc_base import _rank_gauss
     y = np.asarray(casc_colored_base(ones, Z, X, LAM)(key, shape))
-    eps = np.asarray(casc_seed(key, shape, LAM))
+    eps = np.asarray(_rank_gauss(casc_seed(key, shape, LAM)))
     assert np.allclose(y, np.interp(eps, Z, X), rtol=1e-3, atol=1e-3)
+    # marginal now exactly rank-normal per map: mean 0, std 1, bounded
+    assert abs(eps.mean()) < 1e-6 and abs(eps.std() - 1) < 1e-2
+    # spatial arrangement preserved: ranks of eps match ranks of raw seed
+    raw = np.asarray(casc_seed(key, shape, LAM))
+    for b in range(shape[0]):
+        assert (np.argsort(eps[b].ravel())
+                == np.argsort(raw[b].ravel())).all()
     # finite, t-tailed-by-table (interp clips at the frozen table range)
     assert np.isfinite(y).all()
     assert np.abs(y).max() <= float(X.max()) * 1.001

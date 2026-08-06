@@ -214,6 +214,27 @@ Result: **PENDING**.
 
 No collisions with committed streams (checked against stage3_b_* KEYS).
 
+## A-N3-3 — CASC probe run 1 INVALID (numerics); the one licensed
+## bug-repair (committed before the resubmission runs)
+
+Run 18447918's gates passed (replay corr_min 0.99999999, determinism
+exact) but the streams are numerically DEGENERATE (verbatim inspection:
+values to ±2746.97, casc2 carries 16384 NaNs = one full map, stds
+3.3/22.1/21.5 vs adj 0.99): the raw cascade seed's Gaussian-scale-
+mixture marginal has heavy tails the copula z→t table (calibrated for
+standard-normal input) cannot take. The scorer's "FIRED (max |Δ| =
+19.76)" is therefore VOID — an explosion artifact, not carried phase
+structure; recorded as INVALID, not as the registered line firing.
+Repair (the single licensed bug-repair for this job): per-map
+rank-Gaussianization of the cascade seed before the filter — exact
+standard-normal marginals, cascade spatial ARRANGEMENT preserved
+(monotone, permutation-equivariant ⇒ D4-in-law survives); verified
+in-test (splice test extended: rank identity vs raw seed, marginal
+mean/std, finiteness; 5/5 green; repaired base range ±7.3, std 0.996).
+The registered line and its weights are UNCHANGED and will be read on
+the resubmitted probe only.
+Result (resubmission): **PENDING**.
+
 ## CKPT-SWEEP READOUT (verbatim, night3_ckpt_sweep_scores.json;
 ## job 18447330, 3:51)
 

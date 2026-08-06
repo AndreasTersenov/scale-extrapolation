@@ -37,6 +37,7 @@ import numpy as np
 
 import jax
 import jax.numpy as jnp
+from jax.scipy.special import ndtri
 
 LAM = 0.4
 
@@ -73,13 +74,32 @@ def casc_seed(key, shape, lam=LAM):
     return eps / eps.std(axis=(1, 2), keepdims=True)
 
 
+def _rank_gauss(eps):
+    """Per-(map,channel) rank-Gaussianization: keep the cascade's spatial
+    ARRANGEMENT, restore exact standard-normal marginals. REPAIR
+    2026-08-06 (the one licensed bug-repair, prereg A-N3-3): the raw
+    Gaussian-scale-mixture marginal has heavy tails that explode through
+    the z->t quantile table (values to ~1e3, NaN maps — first probe run
+    INVALID); the copula chain is calibrated for standard-normal input.
+    Rank-gauss is a spatial permutation-equivariant monotone transform,
+    so D4-in-law and the multifractal arrangement survive."""
+    B, H, W, C = eps.shape
+    flat = eps.reshape(B, H * W, C)
+    order = jnp.argsort(flat, axis=1)
+    ranks = jnp.argsort(order, axis=1)
+    u = (ranks + 0.5) / (H * W)
+    return ndtri(u).reshape(B, H, W, C)
+
+
 def casc_colored_base(filt, z_grid, x_grid, lam=LAM):
     """base_fn(key, shape) for l1p_lib.gen_groupavg_base(base_by_j=...):
     colored_base.colored_t_base's pipeline with the white draw replaced by
-    casc_seed. Filter + quantile-table steps below are VERBATIM from
+    rank-Gaussianized casc_seed (see _rank_gauss — the single variable vs
+    the committed base is the SPATIAL ARRANGEMENT of the seeds). Filter +
+    quantile-table steps below are VERBATIM from
     colored_base.colored_t_base (splice point = the seed only)."""
     def base_fn(key, shape):
-        eps = casc_seed(key, shape, lam)
+        eps = _rank_gauss(casc_seed(key, shape, lam))
         gc = jnp.fft.ifft2(jnp.fft.fft2(eps, axes=(1, 2))
                            * jnp.asarray(filt)[None, :, :, None],
                            axes=(1, 2)).real
