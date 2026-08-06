@@ -442,3 +442,6 @@ This is the load-bearing run and wants a full H100 (`--gpus-per-node=1`, ≤2:59
   canary (dispersion kill <0.6 at s5000).
 - 18481064 COMPLETED (CASC resubmission; gates exact; line NOT FIRED |D|=2.72).
 - 18481033 COMPLETED (oraclefix finals; scored, MF 3.87 / peaks persist).
+- 18481134 COMPLETED 5:14 (AUG canary PASS, dispersion 0.988).
+- night3_aug_train.slurm x2 (seeds 11, 12; correct gowerstreet truth).
+- 18481250 SUBMITTED (aug11 training). 18481251 SUBMITTED (aug12 training).
