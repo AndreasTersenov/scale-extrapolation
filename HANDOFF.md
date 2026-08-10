@@ -172,3 +172,32 @@ and the R47/R48 rulings.
   carrying the pre-R48 claim set until T4 lands.
 - `~/claude-notes/orchestration/reconvene-handbook.md` — how this campaign
   was run (patterns, scars, the calibration ledger).
+
+## 8. The machinery (added at wind-down — use it, it saves tokens)
+
+- `./check.sh` — the ONE verification command (both stacks, correct
+  interpreters, cpu-pinned). Run before committing code.
+- The Stop hook now runs the suites **only when executable files are
+  dirty**. Writing turns skip it. (It used to run ~3 min of pytest on the
+  login node after every turn, including doc-only turns.) The old
+  unconditional version is kept at `.claude/hooks/test-gate.sh.full-backup`.
+- `NUMBERS.md` — canonical paper figures, GENERATED from the artifacts by
+  `scripts_p2/emit_numbers.py`. Never retype a number; regenerate:
+  `~/wl-challenge-env/bin/python scripts_p2/emit_numbers.py > NUMBERS.md`.
+  Anything it cannot find prints MISSING — it never guesses.
+- `CLAUDE.md` (auto-loaded) is now a router: it points here, states the
+  operating rules, and maps where things live. Keep it short — it is
+  loaded into every session and long files there cost tokens forever.
+- Historical campaign docs moved to `docs/archive/` so the root shows only
+  live files (31 → 11).
+
+## 9. Progress checklist (tick as you go — this is the shared state)
+
+- [ ] T1 conformal certification run
+- [ ] T2 W2 theorem + negative lemma (`paper/theory-w2.md`)
+- [ ] T4 paper claim-set update (R48/R49 corrections)
+- [ ] Framing decision A / B / C (Andreas)
+- [ ] T5 texture-aware cage (only if B)
+- [ ] T6 venue + title (Andreas)
+- [ ] T3 the second blind shot (LAST, fires once)
+- [ ] Full draft read + submission decision

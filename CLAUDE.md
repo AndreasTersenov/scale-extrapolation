@@ -1,69 +1,77 @@
 # CLAUDE.md — scale-extrapolation
 
-Stage-0 data study for the RG-consistent generation project (D4). Read `PLAN.md` first,
-always. Wider context (only if needed):
-`~/claude-notes/brainstorms/2026-07-09-dl-project-directions.md` (§D4) and
-`...novelty-sweep-RESULTS.md` (§D4).
+**Read `HANDOFF.md` before doing anything else.** It carries the binding
+state of the project, the operating rules, and the numbered task queue.
+Then read `PROMPTS.md` if you were given a task ID (T1–T6).
 
-## Hard rules
+This project is in **wind-down / low-token mode** (since 2026-08-08). The
+experimental campaign is closed; the remaining work is certification,
+writing, and one final pre-registered run. Optimize for doing ONE task
+well and cheaply, not for exploring.
 
-- `PLAN.md` "FROZEN CORE" (measurements, ladder, predictions, gates) is immutable in
-  this session. Objections go to `log/` and `RESULTS.md`, not into silent redesign.
-  Implementation details are yours.
-- The GRF null gate comes FIRST. No interpretation of real-field drift before the null
-  passes.
-- Every distance/estimator gets bootstrap error bars; a drift claim without error bars
-  doesn't count.
+## Operating rules (binding — see HANDOFF.md §4 for the reasoning)
 
-## Environment & conventions
+1. **One task per session**, taken from HANDOFF.md §5 by its ID. Do not
+   plan a campaign, do not chain tasks, stop when the task is done.
+2. **No subagents, no workflows, no parallel fan-outs.** Not a style
+   preference — a cost rule.
+3. **No new experiments.** If you think of one, append it to
+   `IDEAS-PARKED.md` with a date and a paragraph. That is the whole
+   protocol; it is not a lesser outcome.
+4. **Numbers only by verbatim copy** from a committed artifact, carrying a
+   `<!-- src: file -->` pointer. Never from memory, never recomputed in
+   prose. `NUMBERS.md` holds the canonical ones for the paper.
+5. **JUDGE-2 (persistent homology) is quarantined** — it is applied to NO
+   generated map until the single blind shot (T3). This is absolute.
+6. **Pre-registration still applies to T3 and T5 only** (anything that
+   produces a paper claim from a new run). Writing and measurement on
+   committed artifacts do not need it.
 
-- Rorqual. Data: `/project/rrg-lplevass/shared/wl_chall_data/` (`GRF_HF`, `lognormal`,
-  `gowerstreet*`) — exists on compute nodes; may be absent on login nodes (known gotcha,
-  see `~/experiments/CLAUDE.md`). Big intermediates → `$SCRATCH` via `~/links/scratch`;
-  plots/summaries → in-repo `results/`.
-- SLURM account `rrg-lplevass`; `rorqual-jobs` skill for queue strategy. Most of this is
-  CPU-friendly; GPU fine for batched wavelet transforms (`~/software/wl_stats_torch`).
-- Log format: `log/YYYY-MM-DD-<slug>.md`, hypothesis → setup → expectation → result →
-  updated belief. Commit early and often; local-only repo (no remote yet).
+## Verification
 
-## Git discipline (decided 2026-07-09)
+```bash
+./check.sh          # both test stacks, correct interpreters, cpu-pinned
+```
 
-- **Commit after every meaningful unit**: a validated estimator, a completed measurement
-  grid, a log entry, a RESULTS.md section. WIP commits are fine; uncommitted work at
-  session end is not.
-- **Push after committing** if a remote is configured (`git remote -v`) — currently
-  local-only; Andreas is setting up SSH auth + private GitHub remotes. Never force-push;
-  never rewrite pushed history.
-- Worktrees: NOT used in stage-0 (one sequential agent per repo). They become the tool in
-  the toy phase for parallel variant exploration (note: local-only repos need
-  `worktree.baseRef: "head"` since there is no origin/HEAD yet).
+Run it before committing anything that touches code. The Stop hook runs
+the same gates automatically, but **only when executable files are
+dirty** — writing turns skip it (deliberate: the unconditional version
+burned minutes of login-node CPU per turn for nothing).
 
-## Backpressure (non-negotiable)
+## Environment / cluster
 
-- **Tests-first**: before implementing any estimator, write its validation test in
-  `tests/`. A Stop hook (`.claude/settings.json`) runs pytest and blocks session
-  completion while tests fail — this is deliberate; fix or xfail-with-justification.
-- A number plotted or written into RESULTS.md whose validation test is not green does
-  not exist.
-- Validation gates for THIS repo:
-  1. DWT round-trip: reconstruction error at machine precision.
-  2. GRF null as an executable test: on a synthetic power-law GRF generated in-test,
-     measured drift consistent with zero within bootstrap CI.
-  3. Estimator consistency: doubling the number of maps shrinks bootstrap error ~sqrt(2).
-  4. Symmetry: drift metrics invariant under flips/90-degree rotations within noise.
+- Two interpreter stacks, do not mix them:
+  - `tests/`, `scripts_p2/` analysis → `source env.sh` (numpy/scipy/pywt)
+  - `tests_wfm/`, `tests_p2/`, anything JAX → `~/wl-challenge-env/bin/python`
+- **Login-node rule:** never run pytest, training, or map-wide numerics
+  un-pinned. Use `taskset -c 0-3` (check.sh does this) or SLURM. Real
+  compute goes through `sbatch`; MIG `h100_20gb` with `--time<=2:59` on
+  `rrg-lplevass` starts fastest. CPU jobs → `def-lplevass`.
+- Data: `/project/rrg-lplevass/shared/wl_chall_data/` (compute nodes only).
+  Large intermediates → `$SCRATCH`; committed artifacts → `results_p2/`.
+- Log SLURM jobs in `JOBS.md` before submitting (ID, config, expectation).
 
-## Compact instructions
+## Where things are
 
-When compacting, preserve: modified file paths, test commands and their latest status,
-the measurement/grid currently running, SLURM job IDs, and any deviation-from-PLAN notes.
+| I need… | Read |
+|---|---|
+| current state, rules, task queue | `HANDOFF.md` |
+| the exact prompt for a task | `PROMPTS.md` |
+| a number for the paper | `NUMBERS.md` (then its src artifact) |
+| the science explained in prose | `PROJECT-EXPLAINER.md` |
+| the paper draft | `paper/` (00→07 + `theory-w2.md` when written) |
+| research directions, ranked | `BRIEF-foundations.md` |
+| why a decision was made | `log/` — the binding ones are R43, R47, R48, R49 |
+| historical campaign docs | `docs/archive/` |
 
-## Long jobs
+`log/` holds ~50 dated rulings and readouts. You almost never need to read
+more than the four binding ones listed above; HANDOFF.md §2 summarizes
+what they concluded.
 
-Prefer Bash run_in_background or the Monitor tool to babysit SLURM jobs within a session;
-/loop for periodic in-session polling. Consult the rorqual-jobs skill before submitting.
+## Conventions that still hold
 
-## Scripted-edit rule (added 2026-07-10 after three silent no-op edits)
-
-Every scripted find/replace (sed/python -c/etc.) must be followed by a grep verifying
-the change landed (and, for outputs, a check that results are not byte-identical to the
-prior run when a change was intended). Silent no-ops corrupt attribution.
+- Commit after every meaningful unit; push (remote is configured).
+- Every scripted find/replace is followed by a `grep` verifying it landed.
+- Tests-first for any NEW estimator (this still applies in T1/T5).
+- Log entries: `log/YYYY-MM-DD-<slug>.md`, hypothesis → setup →
+  expectation → result → what changed in our belief.
